@@ -87,12 +87,15 @@ const BlogSection = () => {
       </div>
 
       <div className="text-center mt-10">
-        <Button
-          className="bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105"
-          asChild
-        >
-          <a href="/blog">View All Posts</a>
-        </Button>
+      <Button
+  className="bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105"
+  asChild
+>
+  <a href="https://www.facebook.com/reachnirvrti/photos_by" target="_blank" rel="noopener noreferrer">
+    View All Posts
+  </a>
+</Button>
+
       </div>
     </section>
   )

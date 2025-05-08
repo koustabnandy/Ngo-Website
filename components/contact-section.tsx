@@ -130,18 +130,18 @@ const ContactSection = () => {
             </div>
 
             <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
-            >
-              {isSubmitting ? (
-                "Sending..."
-              ) : (
-                <>
-                  Send Message <Send size={16} />
-                </>
-              )}
-            </Button>
+  className="w-full bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+  asChild
+>
+  <a
+    href="https://wa.me/919876543210?text=Hello%20Nirvrti!"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Send Message <Send size={16} />
+  </a>
+</Button>
+
 
             {submitSuccess && (
               <div className="bg-green-100 text-green-700 p-3 rounded-md text-center">
