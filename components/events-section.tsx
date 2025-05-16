@@ -88,7 +88,7 @@ const EventCard = ({ event }: EventCardProps) => {
 
   return (
     <>
-      <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border-green-100 h-full flex flex-col">
+      <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border-green-100 h-full flex flex-col ">
         <div className="relative h-48 w-full">
           <Image src={event.image || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
         </div>
@@ -164,7 +164,7 @@ const EventCard = ({ event }: EventCardProps) => {
 
 const EventsSection = () => {
   return (
-    <section id="events" className="py-16">
+    <section id="events" className="py-16 bg-blue-50">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-4">Our Events</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">

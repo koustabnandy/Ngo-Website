@@ -5,7 +5,7 @@ export default function VideoSection() {
   const channelUrl = "https://www.youtube.com/@nirvritifoundation9701"
 
   return (
-    <section id="videos" className="py-16 bg-gradient-to-r from-blue-900 to-blue-700">
+    <section id="videos" className="py-16 bg-blue-50">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-yellow-400 mb-8">OUR VIDEOS</h2>
 

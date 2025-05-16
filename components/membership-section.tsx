@@ -13,7 +13,7 @@ const benefits = [
 
 const MembershipSection = () => {
   return (
-    <section id="membership" className="py-16 bg-green-50/50 rounded-xl my-16 p-8">
+    <section id="membership" className="py-16 bg-blue-50 rounded-xl my-16 p-8">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-4">Become a Member</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
