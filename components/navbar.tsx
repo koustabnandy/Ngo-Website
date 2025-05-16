@@ -1,13 +1,20 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useTheme } from "next-themes"
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const navLinks = [
     { name: "Home", href: "#" },
@@ -47,7 +54,7 @@ const Navbar = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
-            <Button className="bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105" >
+            <Button className="bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105">
               Donate Now
             </Button>
           </div>
@@ -74,9 +81,24 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
+
               <Button className="bg-green-600 hover:bg-green-700 text-white w-full" onClick={() => setIsOpen(false)}>
                 Donate Now
               </Button>
+
+              {mounted && (
+                <button
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="transition-all duration-300 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                  aria-label="Toggle Dark Mode"
+                >
+                  {theme === "dark" ? (
+                    <Sun size={18} className="text-yellow-400" />
+                  ) : (
+                    <Moon size={18} className="text-gray-800" />
+                  )}
+                </button>
+              )}
             </div>
           </div>
         )}

@@ -92,7 +92,7 @@ const Footer = () => {
                 <Twitter size={20} />
               </a>
               <a
-                href="https://youtube.com/@nirvrtifoundation"
+                href="https://www.youtube.com/@nirvritifoundation9701"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white p-2 rounded-full text-green-600 hover:text-green-700 hover:bg-green-50 transition-colors"

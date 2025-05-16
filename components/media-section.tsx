@@ -30,12 +30,6 @@ const photos = [
   },
 ]
 
-const videos = [
-  { id: 1, thumbnail: "/placeholder.svg?height=400&width=600", title: "Our Mission", duration: "2:45" },
-  { id: 2, thumbnail: "/placeholder.svg?height=400&width=600", title: "Annual Day Celebration", duration: "5:30" },
-  { id: 3, thumbnail: "/placeholder.svg?height=400&width=600", title: "Volunteer Testimonials", duration: "3:15" },
-]
-
 const reels = [
   { id: 1, thumbnail: "/placeholder.svg?height=400&width=600", title: "A Day at Nirvrti", views: "1.2K" },
   { id: 2, thumbnail: "/placeholder.svg?height=400&width=600", title: "Behind the Scenes", views: "850" },
@@ -63,13 +57,6 @@ const MediaSection = () => {
           >
             <ImageIcon size={16} />
             Photos
-          </TabsTrigger>
-          <TabsTrigger
-            value="videos"
-            className="data-[state=active]:bg-green-100 data-[state=active]:text-green-700 flex items-center gap-2"
-          >
-            <Film size={16} />
-            Videos
           </TabsTrigger>
           <TabsTrigger
             value="reels"
@@ -101,27 +88,6 @@ const MediaSection = () => {
                     <p className="text-white font-medium text-sm">{photo.caption}</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="videos" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.map((video) => (
-              <div key={video.id} className="group cursor-pointer">
-                <div className="relative h-48 rounded-lg overflow-hidden mb-2">
-                  <Image src={video.thumbnail || "/placeholder.svg"} alt={video.title} fill className="object-cover" />
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                    <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full transition-transform duration-300 group-hover:scale-110">
-                      <Play size={24} className="text-white" />
-                    </div>
-                  </div>
-                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                    {video.duration}
-                  </div>
-                </div>
-                <h3 className="font-medium text-green-700">{video.title}</h3>
               </div>
             ))}
           </div>
