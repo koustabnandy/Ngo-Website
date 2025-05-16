@@ -22,8 +22,8 @@ export default function Home() {
         <DonationSection />
         <BlogSection />
         <MediaSection />
-        <VideoSection />
         <ContactSection />
+        <VideoSection />
       </div>
       <Footer />
     </main>
