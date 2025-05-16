@@ -182,7 +182,9 @@ const DonationSection = () => {
   return (
     <section id="donate" className="py-16 bg-blue-50">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-4">Make a Donation</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+          Make <span className="text-yellow-500">a Donation</span>
+        </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Your contribution helps us continue our mission of serving the community and creating positive change.
         </p>
@@ -190,12 +192,12 @@ const DonationSection = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md border border-green-100">
-          <h3 className="text-xl font-semibold text-green-700 mb-6">How Your Donation Helps</h3>
+          <h3 className="text-xl font-semibold text-yellow-300 mb-6">How Your Donation Helps</h3>
 
           <div className="space-y-6">
             <div className="flex items-start gap-4">
-              <div className="bg-green-100 p-3 rounded-full">
-                <Heart size={24} className="text-green-600" />
+              <div className="bg-blue-100 p-3 rounded-full">
+                <Heart size={24} className="text-blue-600" />
               </div>
               <div>
                 <h4 className="font-medium text-gray-800 mb-1">Transform Lives</h4>
@@ -206,8 +208,8 @@ const DonationSection = () => {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="bg-green-100 p-3 rounded-full">
-                <BookOpen size={24} className="text-green-600" />
+              <div className="bg-blue-100 p-3 rounded-full">
+                <BookOpen size={24} className="text-blue-600" />
               </div>
               <div>
                 <h4 className="font-medium text-gray-800 mb-1">Empower Through Education</h4>
@@ -219,8 +221,8 @@ const DonationSection = () => {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="bg-green-100 p-3 rounded-full">
-                <Gift size={24} className="text-green-600" />
+              <div className="bg-blue-100 p-3 rounded-full">
+                <Gift size={24} className="text-blue-600" />
               </div>
               <div>
                 <h4 className="font-medium text-gray-800 mb-1">Create Sustainable Change</h4>
@@ -231,7 +233,7 @@ const DonationSection = () => {
             </div>
           </div>
 
-          <div className="mt-8 p-4 bg-green-50 rounded-lg border border-green-100">
+          <div className="mt-8 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
             <p className="text-sm text-gray-600">
               Nirvrti Foundation is a registered NGO (Registration Number: 5012992). All donations are tax-deductible
               under Section 80G of the Income Tax Act.
@@ -239,10 +241,10 @@ const DonationSection = () => {
           </div>
         </div>
 
-        <Card className="border-green-100 shadow-md">
+        <Card className="border-blue-100 shadow-md">
           <form onSubmit={handleSubmit}>
             <CardHeader>
-              <CardTitle className="text-2xl text-green-700">Donation Form</CardTitle>
+              <CardTitle className="text-2xl text-yellow-300">Donation Form</CardTitle>
               <CardDescription>Choose a category and amount to make your contribution</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -257,9 +259,9 @@ const DonationSection = () => {
                     const Icon = category.icon
                     return (
                       <div key={category.id} className="flex items-center space-x-2">
-                        <RadioGroupItem value={category.id} id={category.id} className="text-green-600" />
+                        <RadioGroupItem value={category.id} id={category.id} className="text-blue-600" />
                         <Label htmlFor={category.id} className="flex items-center gap-2 cursor-pointer">
-                          <Icon size={18} className="text-green-600" />
+                          <Icon size={18} className="text-blue-600" />
                           <span>{category.name}</span>
                         </Label>
                       </div>
@@ -276,10 +278,10 @@ const DonationSection = () => {
                       key={amount}
                       type="button"
                       variant={donationAmount === amount ? "default" : "outline"}
-                      className={`border-green-200 ${
+                      className={`border-blue-200 ${
                         donationAmount === amount
-                          ? "bg-green-600 hover:bg-green-700 text-white"
-                          : "text-green-700 hover:bg-green-50"
+                          ? "bg-yellow-600 hover:bg-yellow-700 text-white"
+                          : "text-blue-700 hover:bg-blue-50"
                       }`}
                       onClick={() => handleAmountSelection(amount)}
                     >
@@ -299,7 +301,7 @@ const DonationSection = () => {
                       placeholder="Enter amount"
                       value={customAmount}
                       onChange={handleCustomAmountChange}
-                      className="border-green-200 focus-visible:ring-green-500"
+                      className="border-blue-200 focus-visible:ring-blue-500"
                     />
                     {formErrors.amount && <p className="text-red-500 text-sm mt-1">{formErrors.amount}</p>}
                   </div>
@@ -312,7 +314,7 @@ const DonationSection = () => {
                   <Input
                     id="fullName"
                     placeholder="Enter your name"
-                    className={`border-green-200 focus-visible:ring-green-500 ${formErrors.fullName ? "border-red-500" : ""}`}
+                    className={`border-blue-200 focus-visible:ring-blue-500 ${formErrors.fullName ? "border-red-500" : ""}`}
                     value={formData.fullName}
                     onChange={handleInputChange}
                   />
@@ -324,7 +326,7 @@ const DonationSection = () => {
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    className={`border-green-200 focus-visible:ring-green-500 ${formErrors.email ? "border-red-500" : ""}`}
+                    className={`border-blue-200 focus-visible:ring-blue-500 ${formErrors.email ? "border-red-500" : ""}`}
                     value={formData.email}
                     onChange={handleInputChange}
                   />
@@ -335,7 +337,7 @@ const DonationSection = () => {
                   <Input
                     id="phoneNumber"
                     placeholder="Enter your phone number"
-                    className={`border-green-200 focus-visible:ring-green-500 ${formErrors.phoneNumber ? "border-red-500" : ""}`}
+                    className={`border-blue-200 focus-visible:ring-blue-500 ${formErrors.phoneNumber ? "border-red-500" : ""}`}
                     value={formData.phoneNumber}
                     onChange={handleInputChange}
                   />
@@ -346,7 +348,7 @@ const DonationSection = () => {
             <CardFooter>
               <Button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 transform hover:scale-105"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (

@@ -53,14 +53,16 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-16 bg-blue-50">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-4">Contact Us</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+          Contact <span className="text-yellow-500">Us</span>
+        </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Have questions or want to get involved? Reach out to us and we'll get back to you as soon as possible.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="p-6 border-green-100 shadow-md">
+        <Card className="p-6 border-blue-100 shadow-md">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -72,7 +74,7 @@ const ContactSection = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="border-green-200 focus-visible:ring-green-500"
+                  className="border-blue-200 focus-visible:ring-blue-500"
                 />
               </div>
               <div className="space-y-2">
@@ -85,7 +87,7 @@ const ContactSection = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="border-green-200 focus-visible:ring-green-500"
+                  className="border-blue-200 focus-visible:ring-blue-500"
                 />
               </div>
             </div>
@@ -99,7 +101,7 @@ const ContactSection = () => {
                   placeholder="Enter your phone number"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="border-green-200 focus-visible:ring-green-500"
+                  className="border-blue-200 focus-visible:ring-blue-500"
                 />
               </div>
               <div className="space-y-2">
@@ -111,7 +113,7 @@ const ContactSection = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="border-green-200 focus-visible:ring-green-500"
+                  className="border-blue-200 focus-visible:ring-blue-500"
                 />
               </div>
             </div>
@@ -125,12 +127,12 @@ const ContactSection = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="min-h-[120px] border-green-200 focus-visible:ring-green-500"
+                className="min-h-[120px] border-blue-200 focus-visible:ring-blue-500"
               />
             </div>
 
             <Button
-  className="w-full bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+  className="w-full bg-yellow-600 hover:bg-yellow text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
   asChild
 >
   <a
@@ -144,7 +146,7 @@ const ContactSection = () => {
 
 
             {submitSuccess && (
-              <div className="bg-green-100 text-green-700 p-3 rounded-md text-center">
+              <div className="bg-blue-100 text-yellow-700 p-3 rounded-md text-center">
                 Thank you for your message! We'll get back to you soon.
               </div>
             )}
@@ -152,13 +154,13 @@ const ContactSection = () => {
         </Card>
 
         <div className="space-y-8">
-          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md border border-green-100">
-            <h3 className="text-xl font-semibold text-green-700 mb-6">Get in Touch</h3>
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md border border-blue-100">
+            <h3 className="text-xl font-semibold text-blue-700 mb-6">Get in Touch</h3>
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <Phone size={20} className="text-green-600" />
+                <div className="bg-yellow-100 p-3 rounded-full">
+                  <Phone size={20} className="text-yellow-600" />
                 </div>
                 <div>
                   <h4 className="font-medium text-gray-800 mb-1">Phone</h4>
@@ -168,8 +170,8 @@ const ContactSection = () => {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <Mail size={20} className="text-green-600" />
+                <div className="bg-yellow-100 p-3 rounded-full">
+                  <Mail size={20} className="text-yellow-600" />
                 </div>
                 <div>
                   <h4 className="font-medium text-gray-800 mb-1">Email</h4>
@@ -178,8 +180,8 @@ const ContactSection = () => {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <MapPin size={20} className="text-green-600" />
+                <div className="bg-yellow-100 p-3 rounded-full">
+                  <MapPin size={20} className="text-yellow-600" />
                 </div>
                 <div>
                   <h4 className="font-medium text-gray-800 mb-1">Location</h4>
@@ -190,7 +192,7 @@ const ContactSection = () => {
           </div>
 
           <div className="bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md border border-green-100">
-            <h3 className="text-xl font-semibold text-green-700 mb-4">Office Hours</h3>
+            <h3 className="text-xl font-semibold text-blue-700 mb-4">Office Hours</h3>
             <ul className="space-y-2">
               <li className="flex justify-between">
                 <span className="text-gray-600">Monday - Friday:</span>

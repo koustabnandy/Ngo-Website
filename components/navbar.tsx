@@ -18,11 +18,8 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "#" },
-    { name: "Events", href: "#events" },
+    { name: "Achievements", href: "#achievements" },
     { name: "Membership", href: "#membership" },
-    { name: "Donate", href: "#donate" },
-    { name: "Blog", href: "#blog" },
-    { name: "Media", href: "#media" },
     { name: "Contact", href: "#contact" },
   ]
 
@@ -39,7 +36,7 @@ const Navbar = () => {
                 className="object-cover"
               />
             </div>
-            <span className="font-bold text-xl text-green-700 dark:text-green-400">Nirvrti</span>
+            <span className="font-bold text-xl text-blue-700 dark:text-blue-400">Nirvrti</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -48,10 +45,10 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300 font-medium relative group"
+                className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium relative group"
               >
                 {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
 
@@ -69,9 +66,12 @@ const Navbar = () => {
               </button>
             )}
 
-            <Button className="bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105">
-              Donate Now
-            </Button>
+            <a href="#donate">
+  <Button className="bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 transform hover:scale-105">
+    Donate Now
+  </Button>
+</a>
+
           </div>
 
           {/* Mobile Navigation Toggle */}
@@ -90,14 +90,14 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 transition-colors py-2 border-b border-gray-100 dark:border-gray-700"
+                  className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-2 border-b border-gray-100 dark:border-gray-700"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
 
-              <Button className="bg-green-600 hover:bg-green-700 text-white w-full" onClick={() => setIsOpen(false)}>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full" onClick={() => setIsOpen(false)}>
                 Donate Now
               </Button>
 

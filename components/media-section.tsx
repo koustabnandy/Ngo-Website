@@ -43,24 +43,26 @@ const MediaSection = () => {
   return (
     <section id="media" className="py-16 bg-blue-50">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-4">Media Gallery</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+          Media <span className="text-yellow-500">Gallery</span>
+        </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Explore our photos, videos, and reels showcasing our work and impact in the community.
         </p>
       </div>
 
       <Tabs defaultValue="photos" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
+        <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger
             value="photos"
-            className="data-[state=active]:bg-green-100 data-[state=active]:text-green-700 flex items-center gap-2"
+            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-blue-700 flex items-center gap-2"
           >
             <ImageIcon size={16} />
             Photos
           </TabsTrigger>
           <TabsTrigger
             value="reels"
-            className="data-[state=active]:bg-green-100 data-[state=active]:text-green-700 flex items-center gap-2"
+            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-blue-700 flex items-center gap-2"
           >
             <Play size={16} />
             Reels

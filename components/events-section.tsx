@@ -88,23 +88,23 @@ const EventCard = ({ event }: EventCardProps) => {
 
   return (
     <>
-      <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border-green-100 h-full flex flex-col ">
+      <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border-blue-100 h-full flex flex-col ">
         <div className="relative h-48 w-full">
           <Image src={event.image || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
         </div>
         <CardHeader>
-          <CardTitle className="text-green-700">{event.title}</CardTitle>
+          <CardTitle className="text-blue-700">{event.title}</CardTitle>
           <CardDescription className="flex flex-col gap-1 mt-2">
             <span className="flex items-center gap-2">
-              <Calendar size={16} className="text-green-600" />
+              <Calendar size={16} className="text-blue-600" />
               {event.date}
             </span>
             <span className="flex items-center gap-2">
-              <Clock size={16} className="text-green-600" />
+              <Clock size={16} className="text-blue-600" />
               {event.time}
             </span>
             <span className="flex items-center gap-2">
-              <MapPin size={16} className="text-green-600" />
+              <MapPin size={16} className="text-blue-600" />
               {event.location}
             </span>
           </CardDescription>
@@ -115,7 +115,7 @@ const EventCard = ({ event }: EventCardProps) => {
         <CardFooter>
           <Button
             onClick={() => setShowModal(true)}
-            className="w-full bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 transform hover:scale-105"
           >
             More Info
           </Button>
@@ -132,7 +132,7 @@ const EventCard = ({ event }: EventCardProps) => {
               <h3 className="text-2xl font-bold text-green-700 mb-2">{event.title}</h3>
               <div className="flex flex-col gap-2 mb-4">
                 <span className="flex items-center gap-2">
-                  <Calendar size={18} className="text-green-600" />
+                  <Calendar size={18} className="text-blue-600" />
                   {event.date}
                 </span>
                 <span className="flex items-center gap-2">
@@ -149,7 +149,7 @@ const EventCard = ({ event }: EventCardProps) => {
                 <Button
                   onClick={() => setShowModal(false)}
                   variant="outline"
-                  className="border-green-600 text-green-600 hover:bg-green-50"
+                  className="border-blue-600 text-blue-600 hover:bg-blue-50"
                 >
                   Close
                 </Button>
@@ -166,7 +166,9 @@ const EventsSection = () => {
   return (
     <section id="events" className="py-16 bg-blue-50">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-4">Our Events</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+          OUR <span className="text-yellow-500">Events</span>
+        </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Explore our past achievements, current initiatives, and upcoming events that make a difference in our
           community.
@@ -175,13 +177,13 @@ const EventsSection = () => {
 
       <Tabs defaultValue="upcoming" className="w-full">
         <TabsList className="grid w-full grid-cols-3 mb-8">
-          <TabsTrigger value="past" className="data-[state=active]:bg-green-100 data-[state=active]:text-green-700">
+          <TabsTrigger value="past" className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
             Past Events
           </TabsTrigger>
-          <TabsTrigger value="present" className="data-[state=active]:bg-green-100 data-[state=active]:text-green-700">
+          <TabsTrigger value="present" className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
             Present Events
           </TabsTrigger>
-          <TabsTrigger value="upcoming" className="data-[state=active]:bg-green-100 data-[state=active]:text-green-700">
+          <TabsTrigger value="upcoming" className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
             Upcoming Events
           </TabsTrigger>
         </TabsList>

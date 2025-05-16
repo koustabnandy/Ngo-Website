@@ -15,7 +15,9 @@ const MembershipSection = () => {
   return (
     <section id="membership" className="py-16 bg-blue-50 rounded-xl my-16 p-8">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-4">Become a Member</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+          Become a <span className="text-yellow-500">Member</span>
+        </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Join our community of passionate individuals dedicated to making a positive impact in society.
         </p>
@@ -25,7 +27,7 @@ const MembershipSection = () => {
         <div className="flex-1">
           <Card className="border-green-100 bg-white/80 backdrop-blur-sm shadow-md">
             <CardHeader>
-              <CardTitle className="text-2xl text-green-700">Membership Benefits</CardTitle>
+              <CardTitle className="text-2xl text-blue-700">Membership Benefits</CardTitle>
               <CardDescription>
                 As a member of Nirvrti Foundation, you'll enjoy these exclusive benefits
               </CardDescription>
@@ -42,7 +44,7 @@ const MembershipSection = () => {
             </CardContent>
             <CardFooter>
               <Button
-                className="w-full bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105"
+                className="w-full bg-yellow-500 hover:bg-yellow-300 text-white transition-all duration-300 transform hover:scale-105"
                 asChild
               >
                 <a href="https://forms.google.com/membership-form" target="_blank" rel="noopener noreferrer">
@@ -54,7 +56,7 @@ const MembershipSection = () => {
         </div>
 
         <div className="flex-1 bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md border border-green-100">
-          <h3 className="text-xl font-semibold text-green-700 mb-4">Why Join Us?</h3>
+          <h3 className="text-xl font-semibold text-blue-700 mb-4">Why Join Us?</h3>
           <p className="text-gray-700 mb-6">
             At Nirvrti Foundation, we believe in the power of collective action. By becoming a member, you're not just
             joining an organization; you're becoming part of a family dedicated to creating meaningful change in our

@@ -39,7 +39,9 @@ const BlogSection = () => {
   return (
     <section id="blog" className="py-16 bg-blue-50">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-green-700 mb-4">Our Blog</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+          OUR <span className="text-yellow-500">Blog</span>
+        </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Stay updated with our latest news, stories, and insights from our work in the community.
         </p>
@@ -49,7 +51,7 @@ const BlogSection = () => {
         {blogPosts.map((post) => (
           <Card
             key={post.id}
-            className="overflow-hidden border-green-100 transition-all duration-300 hover:shadow-lg h-full flex flex-col"
+            className="overflow-hidden border-yellow-300 transition-all duration-300 hover:shadow-lg h-full flex flex-col"
           >
             <div className="relative h-48 w-full">
               <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
@@ -65,7 +67,7 @@ const BlogSection = () => {
                   {post.author}
                 </span>
               </div>
-              <CardTitle className="text-xl text-green-700">{post.title}</CardTitle>
+              <CardTitle className="text-xl text-blue-700">{post.title}</CardTitle>
             </CardHeader>
             <CardContent className="flex-grow">
               <p className="text-gray-600">{post.excerpt}</p>
@@ -73,7 +75,7 @@ const BlogSection = () => {
             <CardFooter>
               <Button
                 variant="outline"
-                className="w-full border-green-200 text-green-700 hover:bg-green-50 transition-all duration-300 group"
+                className="w-full border-yellow-200 text-yellow-700 hover:bg-yellow-50 transition-all duration-300 group"
                 asChild
               >
                 <a href={`/blog/${post.slug}`}>
@@ -88,7 +90,7 @@ const BlogSection = () => {
 
       <div className="text-center mt-10">
       <Button
-  className="bg-green-600 hover:bg-green-700 text-white transition-all duration-300 transform hover:scale-105"
+  className="bg-blue-600 hover:bg-yellow-300 text-white transition-all duration-300 transform hover:scale-105"
   asChild
 >
   <a href="https://www.facebook.com/reachnirvrti/photos_by" target="_blank" rel="noopener noreferrer">

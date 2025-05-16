@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 const carouselItems = [
   {
     id: 1,
-    image: "/front.jpg?height=800&width=1600",
+    image: "/3rd.png?height=800&width=1600",
     title: "Empowering Communities",
     description: "Making a difference in the lives of students and communities in Haridevpur, Kolkata",
     buttonText: "Get Started",
@@ -16,20 +16,21 @@ const carouselItems = [
   },
   {
     id: 2,
-    image: "/education.jpg?height=800&width=1600",
-    title: "Education For All",
+    image: "/2nd.jpg?height=800&width=1600",
+    title: "New Clothes",
     description: "Providing essential educational resources to students of Sampark",
     buttonText: "Learn More",
     buttonLink: "#events",
   },
   {
     id: 3,
-    image: "/join.jpg?height=800&width=1600",
+    image: "/1st.jpg?height=800&width=1600",
     title: "Join Our Mission",
     description: "Become a part of our journey to spread hope and create positive change",
     buttonText: "Donate Now",
     buttonLink: "#donate",
   },
+  
 ]
 
 const HeroCarousel = () => {
@@ -73,7 +74,7 @@ const HeroCarousel = () => {
             <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fadeIn">{item.title}</h1>
             <p className="text-lg md:text-xl max-w-2xl mb-8 animate-fadeIn animation-delay-200">{item.description}</p>
             <Button
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg rounded-md transition-all duration-300 transform hover:scale-105 animate-fadeIn animation-delay-400"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-md transition-all duration-300 transform hover:scale-105 animate-fadeIn animation-delay-400"
               asChild
             >
               <a href={item.buttonLink}>{item.buttonText}</a>
