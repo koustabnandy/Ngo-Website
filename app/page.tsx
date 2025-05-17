@@ -22,7 +22,7 @@ export default function Home() {
         <DonationSection />
         
         <MediaSection />
-        <ContactSection />
+        
         <VideoSection />
       </div>
       <Footer />

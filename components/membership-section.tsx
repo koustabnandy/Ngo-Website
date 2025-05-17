@@ -51,50 +51,86 @@ const MembershipSection = () => {
             </CardContent>
             <CardFooter>
               <Button
-                className="w-full bg-yellow-500 hover:bg-yellow-300 text-white transition-all duration-300 transform hover:scale-105"
-                asChild
-              >
-                <a href="https://forms.google.com/membership-form" target="_blank" rel="noopener noreferrer">
-                  Register Now
-                </a>
-              </Button>
+  className="w-full bg-yellow-500 hover:bg-yellow-300 text-white transition-all duration-300 transform hover:scale-105"
+  asChild
+>
+  <a
+    href="https://wa.me/919876543210?text=Hello%20Nirvriti!%20I'm%20interested%20in%20the%20membership."
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Register Now
+  </a>
+</Button>
+
             </CardFooter>
           </Card>
         </div>
 
-        <div className="flex-1 bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md border border-green-100">
-          <h3 className="text-xl font-semibold text-blue-700 mb-4">Membership Form (Download or Fill)</h3>
-          <p className="text-gray-700 mb-4">
-            Click the button below to open or download the fillable membership form PDF. You can fill it out digitally
-            and email it to us at <strong>haridevpurnirvritifoundation20@gmail.com</strong>.
-          </p>
-          <Button
-            className="mb-4 bg-blue-600 hover:bg-blue-500 text-white transition-all duration-300"
-            asChild
+        <div className="flex-1">
+  <Card className="border-green-100 bg-white/80 backdrop-blur-sm shadow-md">
+    <CardHeader>
+      <CardTitle className="text-2xl text-blue-700">Membership Form (Download or Fill)</CardTitle>
+      <CardDescription>
+        Click the button below to open or download the fillable membership form PDF. You can fill it out digitally
+        and email it to us at <strong>haridevpurnirvritifoundation20@gmail.com</strong>.
+      </CardDescription>
+    </CardHeader>
+
+    <CardContent className="space-y-4">
+      {/* Button Row */}
+      <div className="flex gap-4">
+        {/* View PDF Button */}
+        <Button
+          className="bg-blue-600 hover:bg-blue-500 text-white transition-all duration-300"
+          asChild
+        >
+          <a
+            href="/Nirvriti_Membership_Fillable.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <a
-              href="/Nirvriti_Membership_Fillable.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View PDF Form
-            </a>
-          </Button>
-          <object
-            data="/Nirvriti_Membership_Fillable.pdf"
-            type="application/pdf"
-            width="100%"
-            height="500px"
-            className="rounded border"
+            View PDF Form
+          </a>
+        </Button>
+
+        {/* Download PDF Button */}
+        <Button
+          className="bg-green-600 hover:bg-green-500 text-white transition-all duration-300"
+          asChild
+        >
+          <a
+            href="/Nirvriti_Membership_Fillable.pdf"
+            download
           >
-            <p className="text-gray-700">
-              Your browser does not support embedded PDFs. You can{" "}
-              <a href="/Nirvriti_Membership_Fillable.pdf" className="text-blue-700 underline">
-                download the form here.
-              </a>
-            </p>
-          </object>
-        </div>
+            Download PDF Form
+          </a>
+        </Button>
+      </div>
+
+      {/* Embedded PDF Viewer */}
+      <object
+        data="/Nirvriti_Membership_Fillable.pdf"
+        type="application/pdf"
+        width="100%"
+        height="500px"
+        className="rounded border"
+      >
+        <p className="text-gray-700">
+          Your browser does not support embedded PDFs. You can{" "}
+          <a
+            href="/Nirvriti_Membership_Fillable.pdf"
+            download
+            className="text-blue-700 underline"
+          >
+            download the form here.
+          </a>
+        </p>
+      </object>
+    </CardContent>
+  </Card>
+</div>
+
       </div>
     </section>
   )
