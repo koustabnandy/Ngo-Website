@@ -24,6 +24,7 @@ export default function Home() {
         <MediaSection />
         
         <VideoSection />
+        <ContactSection />
       </div>
       <Footer />
     </main>
