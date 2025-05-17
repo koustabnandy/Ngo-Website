@@ -1,73 +1,86 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, Clock, MapPin } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
-// Sample event data
+// Updated event data with Facebook image URLs
 const pastEvents = [
   {
     id: 1,
-    title: "Education Drive",
+    title: "Menstrual Health Awareness Camp",
     date: "March 15, 2023",
     time: "10:00 AM - 2:00 PM",
-    location: "Haridevpur Public School",
-    description: "Distributed educational materials to 100+ students from underprivileged backgrounds.",
-    image: "/placeholder.svg?height=300&width=500",
+    location: "Haridevpur Public School, Kolkata",
+    description:
+      "Conducted awareness sessions on menstrual health and hygiene for adolescent girls. Distributed sanitary products to 100+ students from underprivileged backgrounds.",
+    image: "https://www.facebook.com/reachnirvrti/photos/1", // Replace with actual image URL
+    facebookUrl: "https://www.facebook.com/events/1", // Replace with actual event URL
   },
   {
     id: 2,
-    title: "Health Camp",
+    title: "Mental Wellbeing Workshop",
     date: "January 20, 2023",
     time: "9:00 AM - 4:00 PM",
-    location: "Community Center, Kolkata",
-    description: "Free health checkups and medicine distribution for local residents.",
-    image: "/placeholder.svg?height=300&width=500",
+    location: "507, Ustad Amir Khan Sarani, Haridevpur, Kolkata",
+    description:
+      "Free mental health counseling sessions and awareness program for local residents focusing on stress management and emotional wellbeing.",
+    image: "https://www.facebook.com/reachnirvrti/photos/2", // Replace with actual image URL
+    facebookUrl: "https://www.facebook.com/events/2", // Replace with actual event URL
   },
 ]
 
 const presentEvents = [
   {
     id: 3,
-    title: "Ongoing Tutoring Program",
+    title: "Educational Opportunities Program",
     date: "April - June 2023",
     time: "Weekdays, 4:00 PM - 6:00 PM",
-    location: "Nirvrti Foundation Center",
-    description: "Daily tutoring sessions for students preparing for board examinations.",
-    image: "/placeholder.svg?height=300&width=500",
+    location: "Nirvrti Foundation Center, Haridevpur",
+    description:
+      "Ongoing tutoring sessions and career guidance for students from underprivileged backgrounds preparing for board examinations.",
+    image: "https://www.facebook.com/reachnirvrti/photos/3", // Replace with actual image URL
+    facebookUrl: "https://www.facebook.com/events/3", // Replace with actual event URL
   },
 ]
 
 const upcomingEvents = [
   {
     id: 4,
-    title: "Annual Charity Gala",
+    title: "Women Empowerment Workshop Series",
     date: "July 10, 2023",
-    time: "6:00 PM - 10:00 PM",
-    location: "Grand Hotel, Kolkata",
-    description: "Join us for our annual fundraising event with dinner, entertainment, and auction.",
-    image: "/placeholder.svg?height=300&width=500",
+    time: "6:00 PM - 8:00 PM",
+    location: "Community Hall, Haridevpur, Kolkata",
+    description:
+      "Join us for our workshop series focusing on skill development, financial literacy, and entrepreneurship opportunities for women.",
+    image: "https://www.facebook.com/reachnirvrti/photos/4", // Replace with actual image URL
+    facebookUrl: "https://www.facebook.com/events/4", // Replace with actual event URL
   },
   {
     id: 5,
-    title: "Summer Camp",
+    title: "Menstrual Health & Hygiene Awareness Camp",
     date: "May 15 - June 15, 2023",
     time: "10:00 AM - 3:00 PM",
-    location: "Nirvrti Foundation Campus",
-    description: "Educational and recreational activities for children during summer vacation.",
-    image: "/placeholder.svg?height=300&width=500",
+    location: "Various Schools in Haridevpur, Kolkata",
+    description:
+      "A series of awareness programs on menstrual health & hygiene for adolescent girls in local schools, including distribution of sanitary products.",
+    image: "https://www.facebook.com/reachnirvrti/photos/5", // Replace with actual image URL
+    facebookUrl: "https://www.facebook.com/events/5", // Replace with actual event URL
   },
   {
     id: 6,
-    title: "Career Counseling Workshop",
+    title: "Mental Wellbeing Counseling Sessions",
     date: "June 25, 2023",
     time: "11:00 AM - 2:00 PM",
-    location: "Community Hall, Haridevpur",
-    description: "Professional guidance for high school students about career options and opportunities.",
-    image: "/placeholder.svg?height=300&width=500",
+    location: "507, Ustad Amir Khan Sarani, Haridevpur, Kolkata",
+    description:
+      "Free counseling sessions with professional mental health experts focusing on stress management, anxiety, and depression.",
+    image: "https://www.facebook.com/reachnirvrti/photos/6", // Replace with actual image URL
+    facebookUrl: "https://www.facebook.com/events/6", // Replace with actual event URL
   },
 ]
 
@@ -80,6 +93,7 @@ interface EventCardProps {
     location: string
     description: string
     image: string
+    facebookUrl: string
   }
 }
 
@@ -88,45 +102,50 @@ const EventCard = ({ event }: EventCardProps) => {
 
   return (
     <>
-      <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border-blue-100 h-full flex flex-col ">
-        <div className="relative h-48 w-full">
-          <Image src={event.image || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
-        </div>
-        <CardHeader>
-          <CardTitle className="text-blue-700">{event.title}</CardTitle>
-          <CardDescription className="flex flex-col gap-1 mt-2">
-            <span className="flex items-center gap-2">
-              <Calendar size={16} className="text-blue-600" />
-              {event.date}
-            </span>
-            <span className="flex items-center gap-2">
-              <Clock size={16} className="text-blue-600" />
-              {event.time}
-            </span>
-            <span className="flex items-center gap-2">
-              <MapPin size={16} className="text-blue-600" />
-              {event.location}
-            </span>
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex-grow">
-          <p className="text-gray-700 line-clamp-3">{event.description}</p>
-        </CardContent>
-        <CardFooter>
-          <Button
-            onClick={() => setShowModal(true)}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 transform hover:scale-105"
-          >
-            More Info
-          </Button>
-        </CardFooter>
-      </Card>
+      <Link href={event.facebookUrl} target="_blank" rel="noopener noreferrer" className="inline-block">
+        <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border-blue-100 h-full flex flex-col cursor-pointer">
+          <div className="relative h-48 w-full">
+            <Image src={event.image} alt={event.title} fill className="object-cover" />
+          </div>
+          <CardHeader>
+            <CardTitle className="text-blue-700">{event.title}</CardTitle>
+            <CardDescription className="flex flex-col gap-1 mt-2">
+              <span className="flex items-center gap-2">
+                <Calendar size={16} className="text-blue-600" />
+                {event.date}
+              </span>
+              <span className="flex items-center gap-2">
+                <Clock size={16} className="text-blue-600" />
+                {event.time}
+              </span>
+              <span className="flex items-center gap-2">
+                <MapPin size={16} className="text-blue-600" />
+                {event.location}
+              </span>
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow">
+            <p className="text-gray-700 line-clamp-3">{event.description}</p>
+          </CardContent>
+          <CardFooter>
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                setShowModal(true)
+              }}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 transform hover:scale-105"
+            >
+              More Info
+            </Button>
+          </CardFooter>
+        </Card>
+      </Link>
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-auto">
             <div className="relative h-64 w-full">
-              <Image src={event.image || "/placeholder.svg"} alt={event.title} fill className="object-cover" />
+              <Image src={event.image} alt={event.title} fill className="object-cover" />
             </div>
             <div className="p-6">
               <h3 className="text-2xl font-bold text-green-700 mb-2">{event.title}</h3>
@@ -170,8 +189,8 @@ const EventsSection = () => {
           OUR <span className="text-yellow-500">Events</span>
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Explore our past achievements, current initiatives, and upcoming events that make a difference in our
-          community.
+          Explore our initiatives and events focused on menstrual health & hygiene, mental wellbeing, and educational
+          opportunities that make a difference in our community.
         </p>
       </div>
 
@@ -180,10 +199,16 @@ const EventsSection = () => {
           <TabsTrigger value="past" className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
             Past Events
           </TabsTrigger>
-          <TabsTrigger value="present" className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
+          <TabsTrigger
+            value="present"
+            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700"
+          >
             Present Events
           </TabsTrigger>
-          <TabsTrigger value="upcoming" className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
+          <TabsTrigger
+            value="upcoming"
+            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700"
+          >
             Upcoming Events
           </TabsTrigger>
         </TabsList>

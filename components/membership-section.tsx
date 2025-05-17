@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card"
 import { Check } from "lucide-react"
 
 const benefits = [
@@ -56,21 +63,37 @@ const MembershipSection = () => {
         </div>
 
         <div className="flex-1 bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md border border-green-100">
-          <h3 className="text-xl font-semibold text-blue-700 mb-4">Why Join Us?</h3>
-          <p className="text-gray-700 mb-6">
-            At Nirvrti Foundation, we believe in the power of collective action. By becoming a member, you're not just
-            joining an organization; you're becoming part of a family dedicated to creating meaningful change in our
-            community.
+          <h3 className="text-xl font-semibold text-blue-700 mb-4">Membership Form (Download or Fill)</h3>
+          <p className="text-gray-700 mb-4">
+            Click the button below to open or download the fillable membership form PDF. You can fill it out digitally
+            and email it to us at <strong>haridevpurnirvritifoundation20@gmail.com</strong>.
           </p>
-          <p className="text-gray-700 mb-6">
-            Our members come from diverse backgrounds but share a common goal: to make a positive impact in the lives of
-            those in need. Whether you can contribute your time, skills, or resources, there's a place for you in our
-            community.
-          </p>
-          <p className="text-gray-700">
-            Membership is open to all individuals aged 18 and above who share our vision and values. Join us today and
-            be a catalyst for positive change!
-          </p>
+          <Button
+            className="mb-4 bg-blue-600 hover:bg-blue-500 text-white transition-all duration-300"
+            asChild
+          >
+            <a
+              href="/Nirvriti_Membership_Fillable.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View PDF Form
+            </a>
+          </Button>
+          <object
+            data="/Nirvriti_Membership_Fillable.pdf"
+            type="application/pdf"
+            width="100%"
+            height="500px"
+            className="rounded border"
+          >
+            <p className="text-gray-700">
+              Your browser does not support embedded PDFs. You can{" "}
+              <a href="/Nirvriti_Membership_Fillable.pdf" className="text-blue-700 underline">
+                download the form here.
+              </a>
+            </p>
+          </object>
         </div>
       </div>
     </section>
