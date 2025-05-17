@@ -20,7 +20,7 @@ export default function Home() {
         <Achievements />
         <MembershipSection />
         <DonationSection />
-        <BlogSection />
+        
         <MediaSection />
         <ContactSection />
         <VideoSection />

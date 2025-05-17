@@ -60,13 +60,16 @@ const MediaSection = () => {
             <ImageIcon size={16} />
             Photos
           </TabsTrigger>
+          
           <TabsTrigger
             value="reels"
             className="data-[state=active]:bg-yellow-100 data-[state=active]:text-blue-700 flex items-center gap-2"
           >
+            
             <Play size={16} />
-            Reels
+            Blog
           </TabsTrigger>
+          
         </TabsList>
 
         <TabsContent value="photos" className="mt-0">
