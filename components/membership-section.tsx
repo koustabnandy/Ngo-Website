@@ -59,7 +59,7 @@ const MembershipSection = () => {
     target="_blank"
     rel="noopener noreferrer"
   >
-    Register Now
+    Submit your filled up form
   </a>
 </Button>
 

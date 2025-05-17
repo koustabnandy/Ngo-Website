@@ -17,7 +17,7 @@ export default function Home() {
       <HeroCarousel />
       <div className="container mx-auto px-4 py-8">
         <EventsSection />
-        <Achievements />
+        
         <MembershipSection />
         <DonationSection />
         
@@ -25,6 +25,7 @@ export default function Home() {
         
         <VideoSection />
         <ContactSection />
+        <Achievements />
       </div>
       <Footer />
     </main>

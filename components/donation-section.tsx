@@ -1,425 +1,270 @@
 "use client"
 
-import type React from "react"
-
-import { useState, FormEvent } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Heart, BookOpen, Utensils, Home, Users, Gift, Loader2 } from "lucide-react"
+import React, { useState, FormEvent } from "react"
 import Image from "next/image"
-import { toast } from "@/components/ui/use-toast" // You'll need to add this component if you don't have it
+import { toast } from "@/components/ui/use-toast"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Loader2 } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 
-const donationCategories = [
-  { id: "education", name: "Education", icon: BookOpen, description: "Support educational programs and resources" },
-  { id: "food", name: "Food & Nutrition", icon: Utensils, description: "Provide meals to those in need" },
-  { id: "shelter", name: "Shelter", icon: Home, description: "Help provide safe housing solutions" },
-  { id: "community", name: "Community Development", icon: Users, description: "Support local community initiatives" },
-]
-
-const donationAmounts = [500, 1000, 2000, 5000]
-
-interface FormData {
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  category: string;
-  amount: number;
-}
-
-const DonationSection = () => {
-  const [selectedCategory, setSelectedCategory] = useState("education")
+export default function DonationPage() {
   const [donationAmount, setDonationAmount] = useState(1000)
   const [customAmount, setCustomAmount] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("education")
   const [showDonateModal, setShowDonateModal] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formErrors, setFormErrors] = useState<Partial<FormData>>({})
-  
-  // Form state
-  const [formData, setFormData] = useState<FormData>({
+  const [transactionId, setTransactionId] = useState("")
+
+  const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     phoneNumber: "",
     category: "education",
-    amount: 1000
+    amount: 1000,
   })
 
-  const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomAmount(e.target.value)
-    setDonationAmount(0) // Reset predefined amounts when custom amount is entered
-    
-    // Update form data
-    setFormData({
-      ...formData,
-      amount: Number(e.target.value) || 0
-    })
-  }
+  const donationCategories = [
+    { label: "Education", value: "education" },
+    { label: "Healthcare", value: "healthcare" },
+    { label: "Food & Nutrition", value: "food" },
+  ]
 
-  const handleAmountSelection = (amount: number) => {
+  const donationAmounts = [1000, 2000, 5000, 10000]
+
+  const handleAmountChange = (amount: number) => {
     setDonationAmount(amount)
-    setCustomAmount("") // Reset custom amount when predefined amount is selected
-    
-    // Update form data
-    setFormData({
-      ...formData,
-      amount: amount
-    })
+    setCustomAmount("")
   }
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category)
-    
-    // Update form data
-    setFormData({
-      ...formData,
-      category: category
-    })
+  const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (/^\d*$/.test(value)) {
+      setCustomAmount(value)
+      setDonationAmount(Number(value))
+    }
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target
-    
-    setFormData({
-      ...formData,
-      [id]: value
-    })
-    
-    // Clear error when user types
-    if (formErrors[id as keyof FormData]) {
-      setFormErrors({
-        ...formErrors,
-        [id]: undefined
+  const validateForm = () => {
+    if (!formData.fullName || !formData.email || !formData.phoneNumber) {
+      toast({
+        title: "Missing Fields",
+        description: "Please fill out all fields before proceeding.",
+        variant: "destructive",
       })
+      return false
     }
+    return true
   }
 
-  const validateForm = (): boolean => {
-    const errors: Partial<FormData> = {}
-    
-    if (!formData.fullName.trim()) {
-      errors.fullName = "Name is required"
-    }
-    
-    if (!formData.email.trim()) {
-      errors.email = "Email is required"
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      errors.email = "Invalid email format"
-    }
-    
-    if (!formData.phoneNumber.trim()) {
-      errors.phoneNumber = "Phone number is required"
-    }
-    
-    if (formData.amount <= 0) {
-      errors.amount = "Please select or enter a valid amount"
-    }
-    
-    setFormErrors(errors)
-    return Object.keys(errors).length === 0
-  }
-  const handleSubmit = async (e?: FormEvent) => {
+  const handleSubmit = (e?: FormEvent) => {
     if (e) e.preventDefault()
-    
-    if (!validateForm()) {
+    if (!validateForm()) return
+    setShowDonateModal(true)
+  }
+
+  const submitToGoogleSheets = async () => {
+    if (!transactionId.trim()) {
+      toast({
+        title: "Transaction ID Required",
+        description: "Please enter your transaction ID before confirming donation.",
+        variant: "destructive",
+      })
       return
     }
-    
-    const finalAmount = customAmount ? Number.parseInt(customAmount) : donationAmount
-    
+
+    const finalAmount = customAmount ? parseInt(customAmount) : donationAmount
     setIsSubmitting(true)
-    
+
+    const formDataToSubmit = {
+      name: formData.fullName,
+      email: formData.email,
+      phone: formData.phoneNumber,
+      category: selectedCategory,
+      amount: finalAmount,
+      date: new Date().toISOString(),
+    }
+
     try {
-      // Prepare data for Google Sheets
-      const formDataToSubmit = {
-        name: formData.fullName,         // Changed from fullName to name
-        email: formData.email,
-        phone: formData.phoneNumber,     // Changed from phoneNumber to phone
-        category: selectedCategory,
-        amount: finalAmount,
-        date: new Date().toISOString()
-      }
-      
-      // Log the form data for debugging
-      console.log("Submitting form data:", formDataToSubmit);
-      
-      // Submit data to Google Sheets via the Apps Script web app
-      const response = await fetch(
+      await fetch(
         "https://script.google.com/macros/s/AKfycbwAfC1eWtBLEv8lnQ3MkqkHSj0WEvLcyS24AHEFx3rbgcow8WANlSHQkrFHz4uOQRJQ/exec",
         {
           method: "POST",
-          mode: "no-cors", // Important for CORS issues with Google Scripts
+          mode: "no-cors",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formDataToSubmit),
         }
       )
-      
-      // Show donation modal with QR code
-      setShowDonateModal(true)
-      
-      // You can add toast notification here
-      // toast({
-      //   title: "Form submitted successfully",
-      //   description: "Your donation details have been recorded.",
-      // })
+
+      toast({
+        title: "Donation Recorded",
+        description: "Your donation has been submitted successfully.",
+      })
     } catch (error) {
       console.error("Error submitting form:", error)
-      // toast({
-      //   title: "Error",
-      //   description: "There was an error submitting your donation. Please try again.",
-      //   variant: "destructive"
-      // })
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your donation.",
+        variant: "destructive",
+      })
     } finally {
       setIsSubmitting(false)
+      setShowDonateModal(false)
+      setFormData({
+        fullName: "",
+        email: "",
+        phoneNumber: "",
+        category: "education",
+        amount: 1000,
+      })
+      setDonationAmount(1000)
+      setCustomAmount("")
+      setTransactionId("")
     }
   }
 
-  const finalAmount = customAmount ? Number.parseInt(customAmount) : donationAmount
-
   return (
-    <section id="donate" className="py-16 bg-blue-50">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
-          Make <span className="text-yellow-500">a Donation</span>
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Your contribution helps us continue our mission of serving the community and creating positive change.
-        </p>
-      </div>
+    <div className="container py-10 max-w-2xl">
+      <h1 className="text-4xl font-bold mb-6 text-center">Make a Donation</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md border border-green-100">
-          <h3 className="text-xl font-semibold text-yellow-300 mb-6">How Your Donation Helps</h3>
-
-          <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="bg-blue-100 p-3 rounded-full">
-                <Heart size={24} className="text-blue-600" />
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-800 mb-1">Transform Lives</h4>
-                <p className="text-gray-600">
-                  Your donation directly impacts the lives of those in need, providing essential resources and support.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="bg-blue-100 p-3 rounded-full">
-                <BookOpen size={24} className="text-blue-600" />
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-800 mb-1">Empower Through Education</h4>
-                <p className="text-gray-600">
-                  Help provide educational materials, scholarships, and learning opportunities to underprivileged
-                  students.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="bg-blue-100 p-3 rounded-full">
-                <Gift size={24} className="text-blue-600" />
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-800 mb-1">Create Sustainable Change</h4>
-                <p className="text-gray-600">
-                  Your contribution helps us develop and implement long-term solutions to community challenges.
-                </p>
-              </div>
-            </div>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="fullName">Full Name</Label>
+            <Input
+              id="fullName"
+              placeholder="Your Name"
+              value={formData.fullName}
+              onChange={(e) =>
+                setFormData({ ...formData, fullName: e.target.value })
+              }
+              required
+            />
           </div>
-
-          <div className="mt-8 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
-            <p className="text-sm text-gray-600">
-              Nirvrti Foundation is a registered NGO (Registration Number: 5012992). All donations are tax-deductible
-              under Section 80G of the Income Tax Act.
-            </p>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="phoneNumber">Phone Number</Label>
+            <Input
+              id="phoneNumber"
+              type="tel"
+              placeholder="1234567890"
+              value={formData.phoneNumber}
+              onChange={(e) =>
+                setFormData({ ...formData, phoneNumber: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div>
+            <Label>Category</Label>
+            <RadioGroup
+              defaultValue="education"
+              onValueChange={(val) => {
+                setFormData({ ...formData, category: val })
+                setSelectedCategory(val)
+              }}
+              className="flex flex-col space-y-2"
+            >
+              {donationCategories.map((cat) => (
+                <div key={cat.value} className="flex items-center space-x-2">
+                  <RadioGroupItem value={cat.value} id={cat.value} />
+                  <Label htmlFor={cat.value}>{cat.label}</Label>
+                </div>
+              ))}
+            </RadioGroup>
           </div>
         </div>
 
-        <Card className="border-blue-100 shadow-md">
-          <form onSubmit={handleSubmit}>
-            <CardHeader>
-              <CardTitle className="text-2xl text-yellow-300">Donation Form</CardTitle>
-              <CardDescription>Choose a category and amount to make your contribution</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h4 className="text-sm font-medium mb-3">Select Donation Category</h4>
-                <RadioGroup
-                  value={selectedCategory}
-                  onValueChange={handleCategoryChange}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
-                >
-                  {donationCategories.map((category) => {
-                    const Icon = category.icon
-                    return (
-                      <div key={category.id} className="flex items-center space-x-2">
-                        <RadioGroupItem value={category.id} id={category.id} className="text-blue-600" />
-                        <Label htmlFor={category.id} className="flex items-center gap-2 cursor-pointer">
-                          <Icon size={18} className="text-blue-600" />
-                          <span>{category.name}</span>
-                        </Label>
-                      </div>
-                    )
-                  })}
-                </RadioGroup>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium mb-3">Select Amount (₹)</h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                  {donationAmounts.map((amount) => (
-                    <Button
-                      key={amount}
-                      type="button"
-                      variant={donationAmount === amount ? "default" : "outline"}
-                      className={`border-blue-200 ${
-                        donationAmount === amount
-                          ? "bg-yellow-600 hover:bg-yellow-700 text-white"
-                          : "text-blue-700 hover:bg-blue-50"
-                      }`}
-                      onClick={() => handleAmountSelection(amount)}
-                    >
-                      ₹{amount}
-                    </Button>
-                  ))}
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Label htmlFor="customAmount" className="whitespace-nowrap">
-                    Custom Amount:
-                  </Label>
-                  <div className="w-full">
-                    <Input
-                      id="customAmount"
-                      type="number"
-                      placeholder="Enter amount"
-                      value={customAmount}
-                      onChange={handleCustomAmountChange}
-                      className="border-blue-200 focus-visible:ring-blue-500"
-                    />
-                    {formErrors.amount && <p className="text-red-500 text-sm mt-1">{formErrors.amount}</p>}
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <div>
-                  <Label htmlFor="fullName">Full Name</Label>
-                  <Input
-                    id="fullName"
-                    placeholder="Enter your name"
-                    className={`border-blue-200 focus-visible:ring-blue-500 ${formErrors.fullName ? "border-red-500" : ""}`}
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                  />
-                  {formErrors.fullName && <p className="text-red-500 text-sm mt-1">{formErrors.fullName}</p>}
-                </div>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    className={`border-blue-200 focus-visible:ring-blue-500 ${formErrors.email ? "border-red-500" : ""}`}
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
-                  {formErrors.email && <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>}
-                </div>
-                <div>
-                  <Label htmlFor="phoneNumber">Phone Number</Label>
-                  <Input
-                    id="phoneNumber"
-                    placeholder="Enter your phone number"
-                    className={`border-blue-200 focus-visible:ring-blue-500 ${formErrors.phoneNumber ? "border-red-500" : ""}`}
-                    value={formData.phoneNumber}
-                    onChange={handleInputChange}
-                  />
-                  {formErrors.phoneNumber && <p className="text-red-500 text-sm mt-1">{formErrors.phoneNumber}</p>}
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 transform hover:scale-105"
-                disabled={isSubmitting}
+        <div>
+          <Label>Select Donation Amount</Label>
+          <div className="flex gap-4 mt-2 flex-wrap">
+            {donationAmounts.map((amount) => (
+              <Card
+                key={amount}
+                className={`cursor-pointer p-4 border-2 ${
+                  donationAmount === amount && !customAmount
+                    ? "border-green-600"
+                    : ""
+                }`}
+                onClick={() => handleAmountChange(amount)}
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...
-                  </>
-                ) : (
-                  <>Donate ₹{finalAmount}</>
-                )}
-              </Button>
-            </CardFooter>
-          </form>
-        </Card>
-      </div>
-      {showDonateModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-auto">
-            <div className="relative h-64 w-full">
-              <Image
-                src="/placeholder.svg?height=600&width=800"
-                alt="Donation QR Code"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-2xl font-bold text-green-700 mb-4">Complete Your Donation</h3>
-              <p className="text-gray-700 mb-6">
-                Scan the QR code above or use the details below to complete your donation of ₹{finalAmount}.
-              </p>
-              <div className="bg-green-50 p-4 rounded-lg mb-6">
-                <h4 className="font-medium text-green-700 mb-2">Bank Details:</h4>
-                <p className="text-gray-700">Account Name: HARIDEVPUR NIRVRITI FOUNDATION</p>
-                <p className="text-gray-700">Account Number: 41449951224</p>
-                <p className="text-gray-700">Bank: STATE BANK OF INDIA</p>
-                <p className="text-gray-700">Location: JEEVANDEEP (KOLKATA)</p>
-                <p className="text-gray-700">IFSC Code: SBIN0003762</p>
-              </div>
-              <div className="flex justify-end">
-                <Button
-                  onClick={() => setShowDonateModal(false)}
-                  variant="outline"
-                  className="border-green-600 text-green-600 hover:bg-green-50 mr-2"
-                >
-                  Close
-                </Button>
-                <Button
-                  className="bg-green-600 hover:bg-green-700 text-white"
-                  onClick={() => {
-                    setShowDonateModal(false)
-                    // Reset form after successful donation
-                    setFormData({
-                      fullName: "",
-                      email: "",
-                      phoneNumber: "",
-                      category: "education",
-                      amount: 1000
-                    })
-                    setDonationAmount(1000)
-                    setCustomAmount("")
-                  }}
-                >
-                  Confirm Donation
-                </Button>
-              </div>
-            </div>
+                ₹{amount}
+              </Card>
+            ))}
+            <Input
+              type="text"
+              placeholder="Custom Amount"
+              value={customAmount}
+              onChange={handleCustomAmountChange}
+              className="w-40"
+            />
           </div>
         </div>
-      )}
-    </section>
+
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
+            </>
+          ) : (
+            "Donate Now"
+          )}
+        </Button>
+      </form>
+
+      <Dialog open={showDonateModal} onOpenChange={setShowDonateModal}>
+        <DialogContent>
+          <h2 className="text-xl font-semibold mb-4">Scan to Donate</h2>
+          <Image
+            src="/qr-code.png"
+            alt="QR Code"
+            width={200}
+            height={200}
+            className="mx-auto"
+          />
+          <div className="mt-4">
+            <Label htmlFor="transactionId">Transaction ID</Label>
+            <Input
+              id="transactionId"
+              placeholder="Enter transaction ID"
+              value={transactionId}
+              onChange={(e) => setTransactionId(e.target.value)}
+              required
+            />
+          </div>
+          <Button
+            className="bg-green-600 hover:bg-green-700 text-white mt-4 w-full"
+            onClick={submitToGoogleSheets}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              "Confirm Donation"
+            )}
+          </Button>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }
-
-export default DonationSection

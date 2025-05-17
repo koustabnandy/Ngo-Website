@@ -139,7 +139,7 @@ const ContactSection = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Send Message <Send size={16} />
+                Register for volunteer <Send size={16} />
               </a>
             </Button>
 

@@ -8,7 +8,6 @@ import { Calendar, Clock, MapPin } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
-// Updated event data with Facebook image URLs
 const pastEvents = [
   {
     id: 1,
@@ -18,8 +17,8 @@ const pastEvents = [
     location: "Haridevpur Public School, Kolkata",
     description:
       "Conducted awareness sessions on menstrual health and hygiene for adolescent girls. Distributed sanitary products to 100+ students from underprivileged backgrounds.",
-    image: "https://www.facebook.com/reachnirvrti/photos/1", // Replace with actual image URL
-    facebookUrl: "https://www.facebook.com/events/1", // Replace with actual event URL
+    image: "https://www.facebook.com/reachnirvrti/photos/1",
+    facebookUrl: "https://www.facebook.com/events/1",
   },
   {
     id: 2,
@@ -29,22 +28,8 @@ const pastEvents = [
     location: "507, Ustad Amir Khan Sarani, Haridevpur, Kolkata",
     description:
       "Free mental health counseling sessions and awareness program for local residents focusing on stress management and emotional wellbeing.",
-    image: "https://www.facebook.com/reachnirvrti/photos/2", // Replace with actual image URL
-    facebookUrl: "https://www.facebook.com/events/2", // Replace with actual event URL
-  },
-]
-
-const presentEvents = [
-  {
-    id: 3,
-    title: "Educational Opportunities Program",
-    date: "April - June 2023",
-    time: "Weekdays, 4:00 PM - 6:00 PM",
-    location: "Nirvrti Foundation Center, Haridevpur",
-    description:
-      "Ongoing tutoring sessions and career guidance for students from underprivileged backgrounds preparing for board examinations.",
-    image: "https://www.facebook.com/reachnirvrti/photos/3", // Replace with actual image URL
-    facebookUrl: "https://www.facebook.com/events/3", // Replace with actual event URL
+    image: "https://www.facebook.com/reachnirvrti/photos/2",
+    facebookUrl: "https://www.facebook.com/events/2",
   },
 ]
 
@@ -57,8 +42,8 @@ const upcomingEvents = [
     location: "Community Hall, Haridevpur, Kolkata",
     description:
       "Join us for our workshop series focusing on skill development, financial literacy, and entrepreneurship opportunities for women.",
-    image: "https://www.facebook.com/reachnirvrti/photos/4", // Replace with actual image URL
-    facebookUrl: "https://www.facebook.com/events/4", // Replace with actual event URL
+    image: "https://www.facebook.com/reachnirvrti/photos/4",
+    facebookUrl: "https://www.facebook.com/events/4",
   },
   {
     id: 5,
@@ -68,8 +53,8 @@ const upcomingEvents = [
     location: "Various Schools in Haridevpur, Kolkata",
     description:
       "A series of awareness programs on menstrual health & hygiene for adolescent girls in local schools, including distribution of sanitary products.",
-    image: "https://www.facebook.com/reachnirvrti/photos/5", // Replace with actual image URL
-    facebookUrl: "https://www.facebook.com/events/5", // Replace with actual event URL
+    image: "https://www.facebook.com/reachnirvrti/photos/5",
+    facebookUrl: "https://www.facebook.com/events/5",
   },
   {
     id: 6,
@@ -79,8 +64,8 @@ const upcomingEvents = [
     location: "507, Ustad Amir Khan Sarani, Haridevpur, Kolkata",
     description:
       "Free counseling sessions with professional mental health experts focusing on stress management, anxiety, and depression.",
-    image: "https://www.facebook.com/reachnirvrti/photos/6", // Replace with actual image URL
-    facebookUrl: "https://www.facebook.com/events/6", // Replace with actual event URL
+    image: "https://www.facebook.com/reachnirvrti/photos/6",
+    facebookUrl: "https://www.facebook.com/events/6",
   },
 ]
 
@@ -195,20 +180,11 @@ const EventsSection = () => {
       </div>
 
       <Tabs defaultValue="upcoming" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
+        <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger value="past" className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
             Past Events
           </TabsTrigger>
-          <TabsTrigger
-            value="present"
-            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700"
-          >
-            Present Events
-          </TabsTrigger>
-          <TabsTrigger
-            value="upcoming"
-            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700"
-          >
+          <TabsTrigger value="upcoming" className="data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
             Upcoming Events
           </TabsTrigger>
         </TabsList>
@@ -216,14 +192,6 @@ const EventsSection = () => {
         <TabsContent value="past" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pastEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="present" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {presentEvents.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>
