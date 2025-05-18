@@ -12,7 +12,7 @@ import VideoSection from "@/components/video-section"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-blue-50">
       <Navbar />
       <HeroCarousel />
       <div className="container mx-auto px-4 py-8">

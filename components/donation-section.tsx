@@ -129,9 +129,10 @@ export default function DonationPage() {
   }
 
   return (
-    <div className="container py-10 max-w-2xl">
-      <h1 className="text-4xl font-bold mb-6 text-center">Make a Donation</h1>
-
+    <div className="container py-23 bg-blue-50 max-w-2xl">
+      <h1 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+          Make a <span className="text-yellow-500">Donation</span>
+        </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -180,7 +181,7 @@ export default function DonationPage() {
                 setFormData({ ...formData, category: val })
                 setSelectedCategory(val)
               }}
-              className="flex flex-col space-y-2"
+              className="flex flex-col space-y-2 "
             >
               {donationCategories.map((cat) => (
                 <div key={cat.value} className="flex items-center space-x-2">
@@ -200,7 +201,7 @@ export default function DonationPage() {
                 key={amount}
                 className={`cursor-pointer p-4 border-2 ${
                   donationAmount === amount && !customAmount
-                    ? "border-green-600"
+                    ? "border-yellow-300"
                     : ""
                 }`}
                 onClick={() => handleAmountChange(amount)}
@@ -250,7 +251,7 @@ export default function DonationPage() {
             />
           </div>
           <Button
-            className="bg-green-600 hover:bg-green-700 text-white mt-4 w-full"
+            className="bg-blue-600 hover:bg-yellow-300 text-white mt-4 w-full"
             onClick={submitToGoogleSheets}
             disabled={isSubmitting}
           >
