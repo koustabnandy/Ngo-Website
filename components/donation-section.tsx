@@ -129,7 +129,8 @@ export default function DonationPage() {
   }
 
   return (
-    <div className="container py-23 bg-blue-50 max-w-2xl">
+    <div id="donate" className="container py-23 bg-blue-50 max-w-2xl">
+
       <h1 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
           Make a <span className="text-yellow-500">Donation</span>
         </h1>
@@ -234,7 +235,7 @@ export default function DonationPage() {
         <DialogContent>
           <h2 className="text-xl font-semibold mb-4">Scan to Donate</h2>
           <Image
-            src="/qr-code.png"
+            src="/NIRVRITI_QR.jpg"
             alt="QR Code"
             width={200}
             height={200}
