@@ -38,7 +38,7 @@ const blogPosts = [
     date: "September 18, 2022",
     author: "Nirvrti Team",
     image: "/health.jpg",
-    slug: "https://www.facebook.com/reachnirvrti/reels/", // Placeholder
+    slug: "https://www.facebook.com/reachnirvrti/reels", // Placeholder
   },
   {
     id: 2,
