@@ -38,7 +38,7 @@ const blogPosts = [
     date: "September 18, 2022",
     author: "Nirvrti Team",
     image: "/health.jpg",
-    slug: "#", // Placeholder
+    slug: "https://www.facebook.com/reachnirvrti/reels/", // Placeholder
   },
   {
     id: 2,
@@ -48,7 +48,7 @@ const blogPosts = [
     date: "January 5, 2023",
     author: "Nirvrti Volunteers",
     image: "/clothes.jpg", // You mentioned to use this
-    slug: "https://www.facebook.com/reachnirvrti/posts/pfbid0wJ",
+    slug: "https://www.facebook.com/reel/1060444942573390",
   },
   {
     id: 3,
@@ -58,7 +58,7 @@ const blogPosts = [
     date: "August 15, 2023",
     author: "Community Leaders",
     image: "/meeting.jpeg",
-    slug: "https://www.facebook.com/reachnirvrti/posts/pfbid02k",
+    slug: "https://www.facebook.com/reachnirvrti/reels/",
   },
   
  
