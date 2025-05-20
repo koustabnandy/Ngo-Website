@@ -3,9 +3,8 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Play, ImageIcon, Film } from "lucide-react"
+import { ImageIcon, FileText } from "lucide-react"
 
-// Sample media data
 const photos = [
   {
     id: 1,
@@ -30,11 +29,40 @@ const photos = [
   },
 ]
 
-const reels = [
-  { id: 1, thumbnail: "/placeholder.svg?height=400&width=600", title: "A Day at Nirvrti", views: "1.2K" },
-  { id: 2, thumbnail: "/placeholder.svg?height=400&width=600", title: "Behind the Scenes", views: "850" },
-  { id: 3, thumbnail: "/placeholder.svg?height=400&width=600", title: "Student Success Stories", views: "2.3K" },
-  { id: 4, thumbnail: "/placeholder.svg?height=400&width=600", title: "Community Impact", views: "1.5K" },
+const blogPosts = [
+  {
+    id: 1,
+    title: "Annual Health Camp",
+    excerpt:
+      "A community-driven literacy program that impacted over 100 children in Haridevpur, fostering a culture of reading and learning.",
+    date: "September 18, 2022",
+    author: "Nirvrti Team",
+    image: "/health.jpg",
+    slug: "#", // Placeholder
+  },
+  {
+    id: 2,
+    title: "Clothes Donation Camp",
+    excerpt:
+      "This winter, our volunteers came together to distribute warm clothes and blankets to over 200 individuals in need.",
+    date: "January 5, 2023",
+    author: "Nirvrti Volunteers",
+    image: "/clothes.jpg", // You mentioned to use this
+    slug: "https://www.facebook.com/reachnirvrti/posts/pfbid0wJ",
+  },
+  {
+    id: 3,
+    title: "Community Meeting",
+    excerpt:
+      "A celebration filled with cultural programs, flag hoisting, and community meals to foster patriotism and unity.",
+    date: "August 15, 2023",
+    author: "Community Leaders",
+    image: "/meeting.jpeg",
+    slug: "https://www.facebook.com/reachnirvrti/posts/pfbid02k",
+  },
+  
+ 
+  
 ]
 
 const MediaSection = () => {
@@ -47,7 +75,7 @@ const MediaSection = () => {
           Media <span className="text-yellow-500">Gallery</span>
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Explore our photos, videos, and reels showcasing our work and impact in the community.
+          Explore our photos and blog stories showcasing our work and impact in the community.
         </p>
       </div>
 
@@ -60,18 +88,17 @@ const MediaSection = () => {
             <ImageIcon size={16} />
             Photos
           </TabsTrigger>
-          
+
           <TabsTrigger
-            value="reels"
+            value="blog"
             className="data-[state=active]:bg-yellow-100 data-[state=active]:text-blue-700 flex items-center gap-2"
           >
-            
-            <Play size={16} />
+            <FileText size={16} />
             Blog
           </TabsTrigger>
-          
         </TabsList>
 
+        {/* Photos Tab */}
         <TabsContent value="photos" className="mt-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {photos.map((photo) => (
@@ -98,26 +125,37 @@ const MediaSection = () => {
           </div>
         </TabsContent>
 
-        <TabsContent value="reels" className="mt-0">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {reels.map((reel) => (
-              <div key={reel.id} className="group cursor-pointer">
-                <div className="relative h-64 rounded-lg overflow-hidden mb-2">
-                  <Image src={reel.thumbnail || "/placeholder.svg"} alt={reel.title} fill className="object-cover" />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full transition-transform duration-300 group-hover:scale-110">
-                      <Play size={20} className="text-white" />
-                    </div>
-                  </div>
+        {/* Blog Tab */}
+        <TabsContent value="blog" className="mt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogPosts.map((post) => (
+              <a
+                key={post.id}
+                href={post.slug}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition"
+              >
+                <div className="relative h-48 w-full">
+                  <Image
+                    src={post.image || "/placeholder.svg"}
+                    alt={post.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform"
+                  />
                 </div>
-                <h3 className="font-medium text-green-700 text-sm">{reel.title}</h3>
-                <p className="text-gray-500 text-xs">{reel.views} views</p>
-              </div>
+                <div className="p-4">
+                  <h3 className="text-blue-800 font-semibold text-sm mb-1">{post.title}</h3>
+                  <p className="text-gray-500 text-xs mb-2">{post.date}</p>
+                  <p className="text-gray-600 text-sm line-clamp-3">{post.excerpt}</p>
+                </div>
+              </a>
             ))}
           </div>
         </TabsContent>
       </Tabs>
 
+      {/* Photo Modal */}
       {selectedPhoto && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
