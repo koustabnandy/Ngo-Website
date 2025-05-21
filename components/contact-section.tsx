@@ -49,23 +49,23 @@ const ContactSection = () => {
   }
 
   return (
-    <section id="contact" className="py-16 bg-blue-50">
+    <section id="contact" className="py-16 bg-blue-50 dark:bg-gray-900">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-blue-800">
-          GET IN <span className="text-yellow-500">Touch</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-blue-800 dark:text-blue-400">
+          GET IN <span className="text-yellow-500 dark:text-yellow-400">Touch</span>
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mt-4">
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-4">
           Have questions or want to get involved? Reach out to us and we'll get back to you as soon as possible.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 container mx-auto px-4">
         {/* Contact Form */}
-        <Card className="p-6 border-blue-100 shadow-md">
+        <Card className="p-6 border-blue-100 dark:border-blue-900 shadow-md dark:bg-gray-800">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Your Name</Label>
+                <Label htmlFor="name" className="text-gray-700 dark:text-gray-200">Your Name</Label>
                 <Input
                   id="name"
                   name="name"
@@ -77,7 +77,7 @@ const ContactSection = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email" className="text-gray-700 dark:text-gray-200">Email Address</Label>
                 <Input
                   id="email"
                   name="email"
@@ -93,7 +93,7 @@ const ContactSection = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="phone" className="text-gray-700 dark:text-gray-200">Phone Number</Label>
                 <Input
                   id="phone"
                   name="phone"
@@ -104,7 +104,7 @@ const ContactSection = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
+                <Label htmlFor="subject" className="text-gray-700 dark:text-gray-200">Subject</Label>
                 <Input
                   id="subject"
                   name="subject"
@@ -118,7 +118,7 @@ const ContactSection = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="message">Message</Label>
+              <Label htmlFor="message" className="text-gray-700 dark:text-gray-200">Message</Label>
               <Textarea
                 id="message"
                 name="message"
@@ -144,7 +144,7 @@ const ContactSection = () => {
             </Button>
 
             {submitSuccess && (
-              <div className="bg-blue-100 text-yellow-700 p-3 rounded-md text-center">
+              <div className="bg-blue-100 dark:bg-blue-900 text-yellow-700 dark:text-yellow-400 p-3 rounded-md text-center">
                 Thank you for your message! We'll get back to you soon.
               </div>
             )}
@@ -154,9 +154,9 @@ const ContactSection = () => {
         {/* Contact Details + Map + Registration */}
         <div className="space-y-6">
           {/* Contact Details */}
-          <Card className="p-6 border-blue-100 bg-white/80 shadow-md">
-            <h3 className="text-xl font-semibold text-blue-700 mb-4">Contact Details</h3>
-            <div className="space-y-4 text-gray-700">
+          <Card className="p-6 border-blue-100 dark:border-blue-900 bg-white/80 dark:bg-gray-800 shadow-md">
+            <h3 className="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-4">Contact Details</h3>
+            <div className="space-y-4 text-gray-700 dark:text-gray-300">
               <p>
                 <strong>Registered Address:</strong><br />
                 507, Ustad Amir Khan Sarani, K.K. Road, Kolkata – 700082
@@ -176,7 +176,7 @@ const ContactSection = () => {
           </Card>
 
           {/* Google Maps */}
-          <Card className="p-0 overflow-hidden border-green-100 shadow-md">
+          <Card className="p-0 overflow-hidden border-green-100 dark:border-green-900 shadow-md">
             <iframe
               src="https://maps.google.com/maps?q=Haridevpur%20Road,%20Kolkata%20-%20700082&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
@@ -188,9 +188,9 @@ const ContactSection = () => {
           </Card>
 
           {/* Govt & Registration Info */}
-          <Card className="p-6 border-yellow-100 bg-white/80 shadow-md">
-            <h3 className="text-xl font-semibold text-blue-700 mb-4">Govt. Registration Details</h3>
-            <ul className="text-gray-700 space-y-2">
+          <Card className="p-6 border-yellow-100 dark:border-yellow-900 bg-white/80 dark:bg-gray-800 shadow-md">
+            <h3 className="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-4">Govt. Registration Details</h3>
+            <ul className="text-gray-700 dark:text-gray-300 space-y-2">
               <li><strong>Registration Number:</strong> SO023992 of 2021-2022</li>
               <li><strong>80G Details:</strong> AADAH9079EF2024101</li>
               <li><strong>NGO DARPAN Unique ID:</strong> WB/2023/0378038</li>

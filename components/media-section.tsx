@@ -69,21 +69,21 @@ const MediaSection = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<null | { src: string; alt: string; caption: string }>(null)
 
   return (
-    <section id="media" className="py-16 bg-blue-50">
+    <section id="media" className="py-16 bg-blue-50 dark:bg-gray-900">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
-          Media <span className="text-yellow-500">Gallery</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 dark:text-blue-400 mb-12">
+          Media <span className="text-yellow-500 dark:text-yellow-400">Gallery</span>
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Explore our photos and blog stories showcasing our work and impact in the community.
         </p>
       </div>
 
       <Tabs defaultValue="photos" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-8">
+        <TabsList className="grid w-full grid-cols-2 mb-8 dark:bg-gray-800">
           <TabsTrigger
             value="photos"
-            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-blue-700 flex items-center gap-2"
+            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-blue-700 dark:data-[state=active]:bg-yellow-900 dark:data-[state=active]:text-blue-400 dark:text-gray-200 flex items-center gap-2"
           >
             <ImageIcon size={16} />
             Photos
@@ -91,7 +91,7 @@ const MediaSection = () => {
 
           <TabsTrigger
             value="blog"
-            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-blue-700 flex items-center gap-2"
+            className="data-[state=active]:bg-yellow-100 data-[state=active]:text-blue-700 dark:data-[state=active]:bg-yellow-900 dark:data-[state=active]:text-blue-400 dark:text-gray-200 flex items-center gap-2"
           >
             <FileText size={16} />
             Blog
@@ -134,7 +134,7 @@ const MediaSection = () => {
                 href={post.slug}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition"
+                className="group block rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow hover:shadow-lg transition"
               >
                 <div className="relative h-48 w-full">
                   <Image
@@ -145,9 +145,9 @@ const MediaSection = () => {
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="text-blue-800 font-semibold text-sm mb-1">{post.title}</h3>
-                  <p className="text-gray-500 text-xs mb-2">{post.date}</p>
-                  <p className="text-gray-600 text-sm line-clamp-3">{post.excerpt}</p>
+                  <h3 className="text-blue-800 dark:text-blue-400 font-semibold text-sm mb-1">{post.title}</h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs mb-2">{post.date}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-3">{post.excerpt}</p>
                 </div>
               </a>
             ))}
@@ -170,8 +170,8 @@ const MediaSection = () => {
                 className="object-contain"
               />
             </div>
-            <div className="bg-white p-4 rounded-b-lg">
-              <p className="text-gray-800 font-medium">{selectedPhoto.caption}</p>
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-b-lg">
+              <p className="text-gray-800 dark:text-gray-200 font-medium">{selectedPhoto.caption}</p>
             </div>
           </div>
           <button

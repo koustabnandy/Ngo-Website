@@ -190,29 +190,29 @@ const EventCard = ({ event }: EventCardProps) => {
 
 const EventsSection = () => {
   return (
-    <section id="events" className="py-16 bg-blue-50">
+    <section id="events" className="py-16 bg-blue-50 dark:bg-gray-900">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
-          OUR <span className="text-yellow-500">Events</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 dark:text-blue-400 mb-12">
+          OUR <span className="text-yellow-500 dark:text-yellow-400">Events</span>
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Explore our initiatives and events focused on community support, cultural engagement,
           and social welfare that make a difference in our community.
         </p>
       </div>
 
       <Tabs defaultValue="past" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-8">
-          <TabsTrigger value="upcoming" className="data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700">
+        <TabsList className="grid w-full grid-cols-2 mb-8 dark:bg-gray-800">
+          <TabsTrigger value="upcoming" className="data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-400 dark:text-gray-200">
             Upcoming Events
           </TabsTrigger>
-          <TabsTrigger value="past" className="data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700">
+          <TabsTrigger value="past" className="data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 dark:data-[state=active]:bg-blue-900 dark:data-[state=active]:text-blue-400 dark:text-gray-200">
             Past Events
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="upcoming" className="mt-0">
-          <div className="text-center text-gray-600 py-10">
+          <div className="text-center text-gray-600 dark:text-gray-300 py-10">
             <p>No upcoming events at the moment. Stay tuned!</p>
           </div>
         </TabsContent>

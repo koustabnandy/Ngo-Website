@@ -20,22 +20,22 @@ const benefits = [
 
 const MembershipSection = () => {
   return (
-    <section id="membership" className="py-16 bg-blue-50 rounded-xl my-16 p-8">
+    <section id="membership" className="py-16 bg-blue-50 dark:bg-gray-900 rounded-xl my-16 p-8">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
-          Become a <span className="text-yellow-500">Member</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 dark:text-blue-400 mb-12">
+          Become a <span className="text-yellow-500 dark:text-yellow-400">Member</span>
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Join our community of passionate individuals dedicated to making a positive impact in society.
         </p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-8 items-center">
         <div className="flex-1">
-          <Card className="border-green-100 bg-white/80 backdrop-blur-sm shadow-md">
+          <Card className="border-green-100 dark:border-green-900 bg-white/80 dark:bg-gray-800 backdrop-blur-sm shadow-md">
             <CardHeader>
-              <CardTitle className="text-2xl text-blue-700">Membership Benefits</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-2xl text-blue-700 dark:text-blue-400">Membership Benefits</CardTitle>
+              <CardDescription className="dark:text-gray-300">
                 As a member of Nirvrti Foundation, you'll enjoy these exclusive benefits
               </CardDescription>
             </CardHeader>
@@ -43,8 +43,8 @@ const MembershipSection = () => {
               <ul className="space-y-3">
                 {benefits.map((benefit, index) => (
                   <li key={index} className="flex items-start gap-2">
-                    <Check size={20} className="text-green-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{benefit}</span>
+                    <Check size={20} className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700 dark:text-gray-300">{benefit}</span>
                   </li>
                 ))}
               </ul>

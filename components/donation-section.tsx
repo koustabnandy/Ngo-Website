@@ -129,15 +129,15 @@ export default function DonationPage() {
   }
 
   return (
-    <div id="donate" className="container py-23 bg-blue-50 max-w-2xl">
+    <div id="donate" className="container py-23 bg-blue-50 dark:bg-gray-800 max-w-2xl">
 
-      <h1 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+      <h1 className="text-3xl md:text-4xl font-bold text-center text-blue-800 dark:text-blue-400 mb-12">
           Support <span className="text-yellow-500">our NGO</span>
         </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="fullName">Full Name</Label>
+            <Label htmlFor="fullName" className="text-gray-700 dark:text-gray-200">Full Name</Label>
             <Input
               id="fullName"
               placeholder="Your Name"
@@ -149,7 +149,7 @@ export default function DonationPage() {
             />
           </div>
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-gray-700 dark:text-gray-200">Email</Label>
             <Input
               id="email"
               type="email"
@@ -162,7 +162,7 @@ export default function DonationPage() {
             />
           </div>
           <div>
-            <Label htmlFor="phoneNumber">Phone Number</Label>
+            <Label htmlFor="phoneNumber" className="text-gray-700 dark:text-gray-200">Phone Number</Label>
             <Input
               id="phoneNumber"
               type="tel"
@@ -175,7 +175,7 @@ export default function DonationPage() {
             />
           </div>
           <div>
-            <Label>Category</Label>
+            <Label className="text-gray-700 dark:text-gray-200">Category</Label>
             <RadioGroup
               defaultValue="education"
               onValueChange={(val) => {
@@ -187,7 +187,7 @@ export default function DonationPage() {
               {donationCategories.map((cat) => (
                 <div key={cat.value} className="flex items-center space-x-2">
                   <RadioGroupItem value={cat.value} id={cat.value} />
-                  <Label htmlFor={cat.value}>{cat.label}</Label>
+                  <Label htmlFor={cat.value} className="text-gray-700 dark:text-gray-200">{cat.label}</Label>
                 </div>
               ))}
             </RadioGroup>
@@ -195,19 +195,19 @@ export default function DonationPage() {
         </div>
 
         <div>
-          <Label>Select Donation Amount</Label>
+          <Label className="text-gray-700 dark:text-gray-200">Select Donation Amount</Label>
           <div className="flex gap-4 mt-2 flex-wrap">
             {donationAmounts.map((amount) => (
               <Card
                 key={amount}
                 className={`cursor-pointer p-4 border-2 ${
                   donationAmount === amount && !customAmount
-                    ? "border-yellow-300"
-                    : ""
-                }`}
+                    ? "border-yellow-300 dark:border-yellow-500"
+                    : "dark:border-gray-700"
+                } dark:bg-gray-700 dark:text-white`}
                 onClick={() => handleAmountChange(amount)}
               >
-                ₹{amount}
+                <span className="text-gray-800 dark:text-gray-200">₹{amount}</span>
               </Card>
             ))}
             <Input
@@ -223,7 +223,7 @@ export default function DonationPage() {
         <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-blue-600 hover:bg-yellow-300 text-white transition-colors duration-300"
+            className="bg-blue-600 hover:bg-yellow-300 hover:text-gray-800 text-white transition-colors duration-300"
           >
             {isSubmitting ? (
             <>
@@ -237,16 +237,18 @@ export default function DonationPage() {
 
       <Dialog open={showDonateModal} onOpenChange={setShowDonateModal}>
         <DialogContent>
-          <h2 className="text-xl font-semibold mb-4">Scan to Donate</h2>
-          <Image
-            src="/NIRVRITI_QR.jpg"
-            alt="QR Code"
-            width={200}
-            height={200}
-            className="mx-auto"
-          />
+          <h2 className="text-xl font-semibold mb-4 text-center text-blue-700 dark:text-blue-400">Scan to Donate</h2>
+          <div className="bg-white p-4 rounded-lg mx-auto w-fit">
+            <Image
+              src="/NIRVRITI_QR.jpg"
+              alt="QR Code"
+              width={200}
+              height={200}
+              className="mx-auto"
+            />
+          </div>
           <div className="mt-4">
-            <Label htmlFor="transactionId">Transaction ID</Label>
+            <Label htmlFor="transactionId" className="text-gray-700 dark:text-gray-200">Transaction ID</Label>
             <Input
               id="transactionId"
               placeholder="Enter transaction ID"
@@ -256,7 +258,7 @@ export default function DonationPage() {
             />
           </div>
           <Button
-            className="bg-blue-600 hover:bg-yellow-300 text-white mt-4 w-full"
+            className="bg-blue-600 hover:bg-yellow-300 hover:text-gray-800 text-white mt-4 w-full"
             onClick={submitToGoogleSheets}
             disabled={isSubmitting}
           >
