@@ -1,34 +1,57 @@
+// c:/Users/rajde/OneDrive/Desktop/Frontend/ngo/Ngo-Website/app/page.tsx
+// Update your main page to include the new components
+
 import Navbar from "@/components/navbar"
 import HeroCarousel from "@/components/hero-carousel"
+import WhatWeDo from "@/components/what-we-do"
 import EventsSection from "@/components/events-section"
 import MembershipSection from "@/components/membership-section"
 import DonationSection from "@/components/donation-section"
-import BlogSection from "@/components/blog-section"
 import MediaSection from "@/components/media-section"
 import ContactSection from "@/components/contact-section"
 import Footer from "@/components/footer"  
 import Achievements from "@/components/achievements"
 import VideoSection from "@/components/video-section"
+import ScrollToTop from "@/components/scroll-to-top"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-blue-50">
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       <Navbar />
       <HeroCarousel />
-      <div className="container mx-auto px-4 py-8">
-        <EventsSection />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WhatWeDo />
         
-        <MembershipSection />
-        <DonationSection />
+        <div className="my-20">
+          <EventsSection />
+        </div>
         
-        <MediaSection />
+        <div className="my-20">
+          <MembershipSection />
+        </div>
         
-        <VideoSection />
-        <Achievements />
-        <ContactSection />
+        <div className="my-20">
+          <DonationSection />
+        </div>
         
+        <div className="my-20">
+          <MediaSection />
+        </div>
+        
+        <div className="my-20">
+          <VideoSection />
+        </div>
+        
+        <div className="my-20">
+          <Achievements />
+        </div>
+        
+        <div className="my-20">
+          <ContactSection />
+        </div>
       </div>
       <Footer />
+      <ScrollToTop />
     </main>
   )
 }

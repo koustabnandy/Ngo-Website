@@ -3,48 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 142.1 76.2% 36.3%;
-  --primary-foreground: 355.7 100% 97.3%;
-  --secondary: 142.1 76.2% 96.3%;
-  --secondary-foreground: 142.1 76.2% 36.3%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 142.1 76.2% 36.3%;
-  --radius: 0.5rem;
+  --primary: 221 83% 53%;      /* blue-600 */
+  --primary-light: 214 95% 93%; /* blue-100 */
+  --secondary: 43 96% 58%;     /* yellow-400 */
+  --accent: 0 84% 60%;         /* red-500 */
+  --background: 210 20% 98%;   /* blue-50 */
+  --foreground: 222 47% 11%;   /* gray-900 */
 }
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 142.1 76.2% 36.3%;
-  --primary-foreground: 355.7 100% 97.3%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 142.1 76.2% 36.3%;
+  --primary: 217 91% 60%;      /* blue-500 */
+  --primary-light: 213 94% 68%; /* blue-400 */
+  --secondary: 43 96% 58%;     /* yellow-400 */
+  --accent: 0 84% 60%;         /* red-500 */
+  --background: 222 47% 11%;   /* gray-900 */
+  --foreground: 210 40% 98%;   /* gray-50 */
 }
 
 @layer base {
@@ -58,10 +31,10 @@
 }
 
 /* Custom animations */
-@keyframes fadeIn {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -69,15 +42,24 @@
   }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.8s ease-out forwards;
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.animation-delay-200 {
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
   animation-delay: 0.2s;
 }
 
-.animation-delay-400 {
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
   animation-delay: 0.4s;
 }
 

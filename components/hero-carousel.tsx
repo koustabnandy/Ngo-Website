@@ -74,21 +74,21 @@ const HeroCarousel = () => {
             <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fadeIn">{item.title}</h1>
             <p className="text-lg md:text-xl max-w-2xl mb-8 animate-fadeIn animation-delay-200">{item.description}</p>
             <Button
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-md transition-all duration-300 transform hover:scale-105 animate-fadeIn animation-delay-400"
-              asChild
-            >
-              <a href={item.buttonLink}>{item.buttonText}</a>
-            </Button>
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-full transition-all duration-300 transform hover:scale-105 animate-fadeIn animation-delay-400 shadow-lg"
+            asChild
+          >
+            <a href={item.buttonLink}>{item.buttonText}</a>
+          </Button>
           </div>
         </div>
       ))}
 
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-2 rounded-full transition-all duration-300"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 shadow-md"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={24} />
+        <ChevronLeft size={20} />
       </button>
       <button
         onClick={nextSlide}

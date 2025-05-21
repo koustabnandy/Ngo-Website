@@ -145,39 +145,43 @@ const EventCard = ({ event }: EventCardProps) => {
       href={event.facebookUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-block"
+      className="inline-block w-full"
       aria-label={`View more about ${event.title}`}
     >
-      <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border-yellow-100 h-full flex flex-col cursor-pointer">
-        <div className="relative h-48 w-full">
-          <Image src={event.image} alt={event.title} fill className="object-cover" />
+      <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl border-transparent h-full flex flex-col cursor-pointer bg-white dark:bg-gray-800 rounded-xl">
+        <div className="relative h-56 w-full overflow-hidden">
+          <Image 
+            src={event.image} 
+            alt={event.title} 
+            fill 
+            className="object-cover transition-transform duration-500 hover:scale-110" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <CardHeader>
-          <CardTitle className="text-yellow-700">{event.title}</CardTitle>
-          <CardDescription className="flex flex-col gap-1 mt-2">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-blue-700 dark:text-blue-400 text-xl">{event.title}</CardTitle>
+          <CardDescription className="flex flex-col gap-1 mt-2 text-gray-600 dark:text-gray-300">
             <span className="flex items-center gap-2">
-              <Calendar size={16} className="text-yellow-600" />
+              <Calendar size={16} className="text-yellow-600 dark:text-yellow-400" />
               {event.date}
             </span>
             <span className="flex items-center gap-2">
-              <Clock size={16} className="text-yellow-600" />
+              <Clock size={16} className="text-yellow-600 dark:text-yellow-400" />
               {event.time}
             </span>
             <span className="flex items-center gap-2">
-              <MapPin size={16} className="text-yellow-600" />
+              <MapPin size={16} className="text-yellow-600 dark:text-yellow-400" />
               {event.location}
             </span>
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-grow">
-          <p className="text-gray-700 line-clamp-3">{event.description}</p>
+        <CardContent className="flex-grow pb-4">
+          <p className="text-gray-700 dark:text-gray-200 line-clamp-3">{event.description}</p>
         </CardContent>
-        <CardFooter>
-          <div className="w-full">
-            <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white transition-all duration-300 transform hover:scale-105">
-              More Info
-            </Button>
-          </div>
+        <CardFooter className="pt-0">
+          <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white transition-all duration-300 rounded-full">
+            More Info
+          </Button>
         </CardFooter>
       </Card>
     </Link>
