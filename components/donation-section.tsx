@@ -132,7 +132,7 @@ export default function DonationPage() {
     <div id="donate" className="container py-23 bg-blue-50 max-w-2xl">
 
       <h1 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
-          Make a <span className="text-yellow-500">Donation</span>
+          Support <span className="text-yellow-500">our NGO</span>
         </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

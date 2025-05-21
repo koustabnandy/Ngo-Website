@@ -28,7 +28,7 @@ const carouselItems = [
     title: "Join Our Mission",
     description: "Become a part of our journey to spread hope and create positive change",
     buttonText: "Donate Now",
-    buttonLink: "#donate",
+    buttonLink: "/donate",
   },
   
 ]

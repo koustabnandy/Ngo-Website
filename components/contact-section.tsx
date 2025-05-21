@@ -52,7 +52,7 @@ const ContactSection = () => {
     <section id="contact" className="py-16 bg-blue-50">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-blue-800">
-          Contact <span className="text-yellow-500">Us</span>
+          GET IN <span className="text-yellow-500">Touch</span>
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto mt-4">
           Have questions or want to get involved? Reach out to us and we'll get back to you as soon as possible.

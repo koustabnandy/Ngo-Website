@@ -1,5 +1,4 @@
 // c:/Users/rajde/OneDrive/Desktop/Frontend/ngo/Ngo-Website/app/page.tsx
-// Update your main page to include the new components
 
 import Navbar from "@/components/navbar"
 import HeroCarousel from "@/components/hero-carousel"
@@ -13,27 +12,43 @@ import Footer from "@/components/footer"
 import Achievements from "@/components/achievements"
 import VideoSection from "@/components/video-section"
 import ScrollToTop from "@/components/scroll-to-top"
+import ImpactStats from "@/components/impact-stats"
+import TestimonialsSection from "@/components/testimonials"
+import AccessibilityWidget from "@/components/accessibility-widget"
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       <Navbar />
       <HeroCarousel />
+      
+      <WhatWeDo />
+      
+      
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <WhatWeDo />
-        
         <div className="my-20">
           <EventsSection />
         </div>
         
         <div className="my-20">
+          <Achievements />
+        </div>
+      </div> 
+      
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="my-20">
           <MembershipSection />
         </div>
-        
-        <div className="my-20">
-          <DonationSection />
-        </div>
-        
+      </div>
+      
+      <div className="my-20">
+        <DonationSection />
+      </div>
+      
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="my-20">
           <MediaSection />
         </div>
@@ -41,16 +56,12 @@ export default function Home() {
         <div className="my-20">
           <VideoSection />
         </div>
-        
-        <div className="my-20">
-          <Achievements />
-        </div>
-        
-        <div className="my-20">
-          <ContactSection />
-        </div>
       </div>
+      
+      <ContactSection />
+      
       <Footer />
+      <AccessibilityWidget />
       <ScrollToTop />
     </main>
   )

@@ -66,11 +66,11 @@ const Navbar = () => {
               </button>
             )}
 
-            <a href="#donate">
+            <Link href="/donate">
   <Button className="bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 transform hover:scale-105">
     Donate Now
   </Button>
-</a>
+</Link>
 
 
           </div>
@@ -98,9 +98,11 @@ const Navbar = () => {
         </Link>
       ))}
 
-      <Button className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white w-full py-6 rounded-full text-lg font-medium shadow-md" onClick={() => setIsOpen(false)}>
-        Donate Now
-      </Button>
+      <Link href="/donate">
+        <Button className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white w-full py-6 rounded-full text-lg font-medium shadow-md" onClick={() => setIsOpen(false)}>
+          Donate Now
+        </Button>
+      </Link>
 
               {mounted && (
                 <button
