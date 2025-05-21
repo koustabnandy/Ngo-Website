@@ -82,7 +82,7 @@ const MembershipSection = () => {
       <div className="flex gap-4">
         {/* View PDF Button */}
         <Button
-          className="bg-blue-600 hover:bg-blue-500 text-white transition-all duration-300"
+          className="bg-blue-600 hover:bg-yellow-300 text-white transition-all duration-300"
           asChild
         >
           <a
@@ -96,7 +96,7 @@ const MembershipSection = () => {
 
         {/* Download PDF Button */}
         <Button
-          className="bg-green-600 hover:bg-green-500 text-white transition-all duration-300"
+          className="bg-yellow-400 hover:bg-blue-500 text-white transition-all duration-300"
           asChild
         >
           <a

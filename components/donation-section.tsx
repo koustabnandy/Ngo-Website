@@ -220,8 +220,12 @@ export default function DonationPage() {
           </div>
         </div>
 
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? (
+        <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-blue-600 hover:bg-yellow-300 text-white transition-colors duration-300"
+          >
+            {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
             </>

@@ -55,15 +55,15 @@ const pastEvents = [
   },
   {
     id: 4,
-  title: "Visit to Srishti (Samparc) Foundation",
-  date: "August 20, 2021",
-  time: "11:00 AM - 2:00 PM",
-  location: "Srishti Foundation, Kolkata",
-  description:
-    "Team NIRVRTI visited the Srishti (Samparc) Foundation, engaging with children and distributing essential items.",
-  image: "/Samparc-Foundation.jpg",
-  facebookUrl:
-    "https://www.facebook.com/reachnirvrti/videos/visit-to-srishti-samparc-foundation-by-team-nirvrti/2862829360669918/",
+    title: "Visit to Srishti (Samparc) Foundation",
+    date: "August 20, 2021",
+    time: "11:00 AM - 2:00 PM",
+    location: "Srishti Foundation, Kolkata",
+    description:
+      "Team NIRVRTI visited the Srishti (Samparc) Foundation, engaging with children and distributing essential items.",
+    image: "/Samparc-Foundation.jpg",
+    facebookUrl:
+      "https://www.facebook.com/reachnirvrti/videos/visit-to-srishti-samparc-foundation-by-team-nirvrti/2862829360669918/",
   },
   {
     id: 5,
@@ -82,9 +82,11 @@ const pastEvents = [
     date: "March 15, 2023",
     time: "5:00 PM - 6:30 PM",
     location: "Online Event",
-    description: "A live conversation with young talented theatre workers and art practitioners from Kolkata, discussing artforms during the pandemic.",
+    description:
+      "A live conversation with young talented theatre workers and art practitioners from Kolkata, discussing artforms during the pandemic.",
     image: "/live-conversation-theatre.png",
-    facebookUrl: "https://www.facebook.com/reachnirvrti/videos/nirvrti-presents-a-live-conversation-with-young-talented-theatre-workers-and-art/679821979378375/",
+    facebookUrl:
+      "https://www.facebook.com/reachnirvrti/videos/nirvrti-presents-a-live-conversation-with-young-talented-theatre-workers-and-art/679821979378375/",
   },
   {
     id: 7,
@@ -92,9 +94,11 @@ const pastEvents = [
     date: "October 12, 2021",
     time: "10:00 AM - 1:00 PM",
     location: "Various Locations, Kolkata",
-    description: "On Saptami, Team NIRVRTI distributed special items to those in need during Durga Puja celebrations.",
+    description:
+      "On Saptami, Team NIRVRTI distributed special items to those in need during Durga Puja celebrations.",
     image: "/Distribution-Drive–Day_3.jpg",
-    facebookUrl: "https://www.facebook.com/reachnirvrti/posts/%E0%A6%A6%E0%A7%81%E0%A6%B0%E0%A7%8D%E0%A6%97%E0%A6%A4%E0%A6%BF%E0%A6%A8%E0%A6%BE%E0%A6%B6%E0%A6%BF%E0%A6%A8%E0%A7%80-%E0%A7%A8day-312102021saptamiour-team-debaaditya-mukhopadhyay-uday-gupta-a/431410255265138/",
+    facebookUrl:
+      "https://www.facebook.com/reachnirvrti/posts/%E0%A6%A6%E0%A7%81%E0%A6%B0%E0%A7%8D%E0%A6%97%E0%A6%A4%E0%A6%BF%E0%A6%A8%E0%A6%BE%E0%A6%B6%E0%A6%BF%E0%A6%A8%E0%A7%80-%E0%A7%A8day-312102021saptamiour-team-debaaditya-mukhopadhyay-uday-gupta-a/431410255265138/",
   },
   {
     id: 8,
@@ -102,9 +106,11 @@ const pastEvents = [
     date: "June 15, 2020",
     time: "9:00 AM - 5:00 PM",
     location: "Rajnagar, Shibrampur, and Bakkhali, West Bengal",
-    description: "Team NIRVRTI, with support from WTF Withthefilms, distributed sanitary napkins to 150 people in various villages.",
+    description:
+      "Team NIRVRTI, with support from WTF Withthefilms, distributed sanitary napkins to 150 people in various villages.",
     image: "/Relief-Distribution-in-Rajnagar.jpg",
-    facebookUrl: "https://www.facebook.com/withthefilms/posts/the-entire-team-of-wtf-withthefilms-is-happy-to-stand-by-nirvrti-to-help-the-amp/275680717144430/",
+    facebookUrl:
+      "https://www.facebook.com/withthefilms/posts/the-entire-team-of-wtf-withthefilms-is-happy-to-stand-by-nirvrti-to-help-the-amp/275680717144430/",
   },
   {
     id: 9,
@@ -112,9 +118,11 @@ const pastEvents = [
     date: "August 10, 2021",
     time: "10:00 AM - 4:00 PM",
     location: "Various Locations, Kolkata",
-    description: "NIRVRTI visited different places in and around Kolkata to collect donated items from friends and well-wishers.",
+    description:
+      "NIRVRTI visited different places in and around Kolkata to collect donated items from friends and well-wishers.",
     image: "/collection-drive.jpg",
-    facebookUrl: "https://www.facebook.com/reachnirvrti/posts/hello-everyone-today-nirvrti-went-to-different-places-in-and-around-kolkata-to-c/348428590229972/",
+    facebookUrl:
+      "https://www.facebook.com/reachnirvrti/posts/hello-everyone-today-nirvrti-went-to-different-places-in-and-around-kolkata-to-c/348428590229972/",
   },
 ]
 
@@ -138,6 +146,7 @@ const EventCard = ({ event }: EventCardProps) => {
       target="_blank"
       rel="noopener noreferrer"
       className="inline-block"
+      aria-label={`View more about ${event.title}`}
     >
       <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border-yellow-100 h-full flex flex-col cursor-pointer">
         <div className="relative h-48 w-full">
@@ -164,16 +173,11 @@ const EventCard = ({ event }: EventCardProps) => {
           <p className="text-gray-700 line-clamp-3">{event.description}</p>
         </CardContent>
         <CardFooter>
-          <Link
-            href="https://www.facebook.com/reachnirvrti"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full"
-          >
+          <div className="w-full">
             <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white transition-all duration-300 transform hover:scale-105">
               More Info
             </Button>
-          </Link>
+          </div>
         </CardFooter>
       </Card>
     </Link>
@@ -184,8 +188,8 @@ const EventsSection = () => {
   return (
     <section id="events" className="py-16 bg-blue-50">
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-yellow-800 mb-12">
-          OUR <span className="text-blue-500">Events</span>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-12">
+          OUR <span className="text-yellow-500">Events</span>
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Explore our initiatives and events focused on community support, cultural engagement,
