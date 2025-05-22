@@ -180,7 +180,7 @@ const MediaSection = () => {
     autoPlayTimerRef.current = setTimeout(() => {
       setCurrentSlide((prev) => (prev === photos.length - 1 ? 0 : prev + 1))
     }, 5000)
-  }, [clearTimers, isAutoPlaying, startProgressBar])
+  }, [clearTimers, isAutoPlaying, startProgressBar, photos.length])
   
   // Handle slide change
   const goToSlide = useCallback((index: number) => {
@@ -201,6 +201,7 @@ const MediaSection = () => {
   
   // Handle touch start
   const handleTouchStart = (e: React.TouchEvent) => {
+    clearTimers() // Pause autoplay during touch
     setTouchPosition(e.touches[0].clientX)
   }
   
@@ -213,8 +214,8 @@ const MediaSection = () => {
     const currentPosition = e.touches[0].clientX
     const diff = touchPosition - currentPosition
     
-    // Minimum swipe distance
-    if (Math.abs(diff) > 50) {
+    // Minimum swipe distance - reduced for better mobile responsiveness
+    if (Math.abs(diff) > 30) {
       if (diff > 0) {
         nextSlide()
       } else {
@@ -222,7 +223,14 @@ const MediaSection = () => {
       }
       
       setTouchPosition(null)
+      startAutoPlay() // Resume autoplay after swipe
     }
+  }
+  
+  // Handle touch end
+  const handleTouchEnd = () => {
+    setTouchPosition(null)
+    startAutoPlay() // Resume autoplay after touch
   }
 
   // Initialize autoplay on mount
@@ -232,7 +240,7 @@ const MediaSection = () => {
     return () => {
       clearTimers()
     }
-  }, [currentSlide, startAutoPlay, clearTimers])
+  }, [startAutoPlay, clearTimers])
   
   // Pause autoplay when tab is not visible
   useEffect(() => {
@@ -330,6 +338,7 @@ const MediaSection = () => {
                 style={{ transform: `translateX(${-currentSlide * 100}%)` }}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
                 {photos.map((photo, index) => (
                   <div
@@ -350,8 +359,9 @@ const MediaSection = () => {
                           alt={photo.alt}
                           fill
                           className="object-contain transition-all duration-500 group-hover:scale-105 filter group-hover:brightness-105"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                          priority={currentSlide === index}
+                          sizes="(max-width: 640px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 80vw, 70vw"
+                          priority={currentSlide === index || index === ((currentSlide + 1) % photos.length)}
+                          quality={currentSlide === index ? 90 : 75}
                           style={{
                             transform: `translateY(${currentSlide === index ? '0' : '5px'})`,
                           }}

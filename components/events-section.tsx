@@ -220,7 +220,7 @@ const EventCard = ({ event }: EventCardProps) => {
       className="inline-block w-full h-full"
       aria-label={`View more about ${event.title}`}
     >
-      <Card className="overflow-hidden transition-all duration-500 hover:shadow-lg border-transparent h-full flex flex-col cursor-pointer bg-white dark:bg-gray-800 rounded-lg transform hover:-translate-y-1 max-w-[280px] mx-auto">
+      <Card className="overflow-hidden transition-all duration-500 hover:shadow-lg border-transparent h-full flex flex-col cursor-pointer bg-white dark:bg-gray-800 rounded-lg transform hover:-translate-y-1 w-full max-w-[280px] mx-auto">
         <div className="relative h-40 w-full overflow-hidden">
           <Image 
             src={event.image} 
@@ -282,6 +282,8 @@ const EventsSection = () => {
   // Determine how many events to show based on screen size
   useEffect(() => {
     const handleResize = () => {
+      const prevVisibleEvents = visibleEvents
+      
       if (window.innerWidth < 640) {
         setVisibleEvents(1)
       } else if (window.innerWidth < 1024) {
@@ -291,6 +293,11 @@ const EventsSection = () => {
       } else {
         setVisibleEvents(3)
       }
+      
+      // Reset current slide when screen size changes to prevent empty slides
+      if (prevVisibleEvents !== visibleEvents) {
+        setCurrentSlide(0)
+      }
     }
     
     handleResize()
@@ -299,7 +306,7 @@ const EventsSection = () => {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [visibleEvents])
   
   // Calculate total number of slides
   const totalSlides = Math.ceil(pastEvents.length / visibleEvents)
@@ -378,6 +385,7 @@ const EventsSection = () => {
   
   // Handle touch start
   const handleTouchStart = (e: React.TouchEvent) => {
+    clearTimers() // Pause autoplay during touch
     setTouchPosition(e.touches[0].clientX)
   }
   
@@ -390,8 +398,8 @@ const EventsSection = () => {
     const currentPosition = e.touches[0].clientX
     const diff = touchPosition - currentPosition
     
-    // Minimum swipe distance
-    if (Math.abs(diff) > 50) {
+    // Minimum swipe distance - reduced for better mobile responsiveness
+    if (Math.abs(diff) > 30) {
       if (diff > 0) {
         nextSlide()
       } else {
@@ -399,7 +407,14 @@ const EventsSection = () => {
       }
       
       setTouchPosition(null)
+      startAutoPlay() // Resume autoplay after swipe
     }
+  }
+  
+  // Handle touch end
+  const handleTouchEnd = () => {
+    setTouchPosition(null)
+    startAutoPlay() // Resume autoplay after touch
   }
   
   // Initialize autoplay on mount
@@ -409,7 +424,7 @@ const EventsSection = () => {
     return () => {
       clearTimers()
     }
-  }, [currentSlide, startAutoPlay, clearTimers])
+  }, [startAutoPlay, clearTimers])
   
   // Pause autoplay when tab is not visible
   useEffect(() => {
@@ -510,6 +525,7 @@ const EventsSection = () => {
                 style={{ transform: `translateX(${-currentSlide * 100}%)` }}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
                 {Array.from({ length: totalSlides }).map((_, slideIndex) => {
                   const startIndex = slideIndex * visibleEvents
