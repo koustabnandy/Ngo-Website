@@ -96,7 +96,7 @@ const pastEvents = [
     location: "Various Locations, Kolkata",
     description:
       "On Saptami, Team NIRVRITI Foundation distributed special items to those in need during Durga Puja celebrations.",
-    image: "/Distribution-Drive-Day_3.jpg",
+    image: "/Distribution-Drive–Day_3.jpg",
     facebookUrl:
       "https://www.facebook.com/reachnirvrti/posts/%E0%A6%A6%E0%A7%81%E0%A6%B0%E0%A7%8D%E0%A6%97%E0%A6%A4%E0%A6%BF%E0%A6%A8%E0%A6%BE%E0%A6%B6%E0%A6%BF%E0%A6%A8%E0%A7%80-%E0%A7%A8day-312102021saptamiour-team-debaaditya-mukhopadhyay-uday-gupta-a/431410255265138/",
   },

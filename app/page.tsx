@@ -16,7 +16,7 @@ import ImpactStats from "@/components/impact-stats"
 import TestimonialsSection from "@/components/testimonials"
 import AccessibilityWidget from "@/components/accessibility-widget"
 import WePledge from "@/components/we-pledge"
-
+import MembersSection from "@/components/members-section"
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
@@ -62,7 +62,7 @@ export default function Home() {
       <div className="my-20">
         <WePledge />
       </div>
-      
+       <MembersSection />
       <ContactSection />
       
       <Footer />
