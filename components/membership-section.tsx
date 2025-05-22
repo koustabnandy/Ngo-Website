@@ -55,11 +55,11 @@ const MembershipSection = () => {
   asChild
 >
   <a
-    href="https://wa.me/919876543210?text=Hello%20Nirvriti!%20I'm%20interested%20in%20the%20membership."
+    href="https://forms.gle/Cnh9qKxuzM8ACqhJ8"
     target="_blank"
     rel="noopener noreferrer"
   >
-    Submit your filled up form
+    Fill the form!
   </a>
 </Button>
 
