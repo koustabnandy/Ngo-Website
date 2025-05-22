@@ -17,21 +17,21 @@ const testimonials = [
     id: 1,
     name: "Priya Sharma",
     role: "Community Member",
-    quote: "The work Nirvrti Foundation does for our community is incredible. Their education support program has helped my children access resources we couldn't afford.",
+    quote: "The work NIRVRITI Foundation does for our community is incredible. Their education support program has helped my children access resources we couldn't afford.",
     image: "/testimonial1.jpg" // Replace with actual image path
   },
   {
     id: 2,
     name: "Rajesh Kumar",
     role: "Volunteer",
-    quote: "I've been volunteering with Nirvrti for 3 years now. The dedication of the team and the impact we make together is truly inspiring.",
+    quote: "I've been volunteering with NIRVRITI Foundation for 3 years now. The dedication of the team and the impact we make together is truly inspiring.",
     image: "/testimonial2.jpg" // Replace with actual image path
   },
   {
     id: 3,
     name: "Ananya Das",
     role: "Donor",
-    quote: "Supporting Nirvrti has been one of the most rewarding decisions I've made. I can see exactly how my contributions help the local community.",
+    quote: "Supporting NIRVRITI Foundation has been one of the most rewarding decisions I've made. I can see exactly how my contributions help the local community.",
     image: "/testimonial3.jpg" // Replace with actual image path
   }
 ]

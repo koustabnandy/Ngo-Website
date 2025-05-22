@@ -28,12 +28,15 @@ const Footer = () => {
               <div className="relative h-12 w-12 rounded-full overflow-hidden">
                 <Image
                   src="/join.jpg?height=48&width=48"
-                  alt="Nirvrti Foundation Logo"
+                  alt="NIRVRITI Foundation Logo"
                   fill
                   className="object-cover"
                 />
               </div>
-              <span className="font-bold text-2xl text-white">Nirvrti</span>
+              <div className="flex flex-col">
+                <span className="font-bold text-2xl text-white">NIRVRITI</span>
+                <span className="text-xs text-blue-200 italic">Bliss in Helping Others</span>
+              </div>
             </Link>
             <p className="text-blue-200 dark:text-gray-300">
               Empowering communities through education, support, and sustainable development initiatives.
@@ -155,7 +158,7 @@ const Footer = () => {
         <div className="border-t border-blue-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-blue-200 dark:text-gray-300 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} Nirvrti Foundation. All rights reserved.
+              © {new Date().getFullYear()} NIRVRITI Foundation - Bliss in Helping Others. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-blue-200 dark:text-gray-300">
               <Link href="#" className="hover:text-white transition-colors duration-300">Privacy Policy</Link>

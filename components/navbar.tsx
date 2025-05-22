@@ -17,10 +17,10 @@ const Navbar = () => {
   }, [])
 
   const navLinks = [
-    { name: "Home", href: "#" },
-    { name: "Achievements", href: "#achievements" },
-    { name: "Membership", href: "#membership" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "Achievements", href: "/#achievements" },
+    { name: "Membership", href: "/#membership" },
+    { name: "Contact", href: "/#contact" },
   ]
 
   return (
@@ -31,12 +31,15 @@ const Navbar = () => {
         <div className="relative h-12 w-12 rounded-full overflow-hidden">
           <Image
             src="/join.jpg?height=48&width=48"
-            alt="Nirvrti Foundation Logo"
+            alt="NIRVRITI Foundation Logo"
             fill
             className="object-cover"
           />
         </div>
-        <span className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Nirvrti</span>
+        <div className="flex flex-col">
+          <span className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">NIRVRITI</span>
+          <span className="text-xs text-gray-600 dark:text-gray-300 italic">Bliss in Helping Others</span>
+        </div>
       </Link>
 
           {/* Desktop Navigation */}

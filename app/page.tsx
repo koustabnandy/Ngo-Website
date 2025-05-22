@@ -15,6 +15,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import ImpactStats from "@/components/impact-stats"
 import TestimonialsSection from "@/components/testimonials"
 import AccessibilityWidget from "@/components/accessibility-widget"
+import WePledge from "@/components/we-pledge"
 
 export default function Home() {
   return (
@@ -56,6 +57,10 @@ export default function Home() {
         <div className="my-20">
           <VideoSection />
         </div>
+      </div>
+      
+      <div className="my-20">
+        <WePledge />
       </div>
       
       <ContactSection />

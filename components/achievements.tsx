@@ -23,7 +23,19 @@ export default function Achievements() {
               key={achievement.id}
               className="bg-white rounded-lg shadow-lg p-6 transform transition-transform hover:scale-105 border-l-4 border-yellow-500"
             >
-              <p className="text-lg font-semibold text-blue-700">{achievement.text}</p>
+              <p className="text-lg font-semibold text-blue-700">
+                {achievement.text.split(/(\d+\+?)/).map((part, index) => {
+                  // Check if the part is a number (possibly followed by a + sign)
+                  if (/^\d+\+?$/.test(part)) {
+                    return (
+                      <span key={index} className="text-3xl font-black text-yellow-500 inline-block transform hover:scale-110 transition-transform duration-300 px-1 bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">
+                        {part}
+                      </span>
+                    );
+                  }
+                  return part;
+                })}
+              </p>
             </div>
           ))}
         </div>

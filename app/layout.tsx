@@ -13,9 +13,9 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: "Nirvrti Foundation - Empowering Communities",
+  title: "NIRVRITI Foundation - Bliss in Helping Others",
   description:
-    "Nirvrti Foundation is an NGO dedicated to making a difference in the lives of students and communities in Haridevpur, Kolkata.",
+    "NIRVRITI Foundation - Bliss in Helping Others is an NGO dedicated to making a difference in the lives of students and communities in Haridevpur, Kolkata.",
   generator: "v0.dev",
 }
 

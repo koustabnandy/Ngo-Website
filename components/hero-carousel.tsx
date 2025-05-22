@@ -30,7 +30,14 @@ const carouselItems = [
     buttonText: "Donate Now",
     buttonLink: "/donate",
   },
-  
+  {
+    id: 4,
+    image: "/482222410_648874787530892_1556423695622188946_n.jpg?height=800&width=1600",
+    title: "Community Impact",
+    description: "Creating lasting change through collaborative community initiatives",
+    buttonText: "Learn More",
+    buttonLink: "#what-we-do",
+  },
 ]
 
 const HeroCarousel = () => {

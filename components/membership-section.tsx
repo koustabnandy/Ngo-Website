@@ -36,7 +36,7 @@ const MembershipSection = () => {
             <CardHeader>
               <CardTitle className="text-2xl text-blue-700 dark:text-blue-400">Membership Benefits</CardTitle>
               <CardDescription className="dark:text-gray-300">
-                As a member of Nirvrti Foundation, you'll enjoy these exclusive benefits
+                As a member of NIRVRITI Foundation, you'll enjoy these exclusive benefits
               </CardDescription>
             </CardHeader>
             <CardContent>

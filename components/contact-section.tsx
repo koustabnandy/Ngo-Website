@@ -135,7 +135,7 @@ const ContactSection = () => {
               asChild
             >
               <a
-                href="https://wa.me/919876543210?text=Hello%20Nirvrti!%20I%20have%20a%20query."
+                href="https://wa.me/919876543210?text=Hello%20NIRVRITI%20Foundation!%20I%20have%20a%20query."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -177,14 +177,27 @@ const ContactSection = () => {
 
           {/* Google Maps */}
           <Card className="p-0 overflow-hidden border-green-100 dark:border-green-900 shadow-md">
-            <iframe
-              src="https://maps.google.com/maps?q=Haridevpur%20Road,%20Kolkata%20-%20700082&t=&z=15&ie=UTF8&iwloc=&output=embed"
-              width="100%"
-              height="300"
-              loading="lazy"
-              className="border-0 w-full"
-              allowFullScreen
-            ></iframe>
+            <div className="relative w-full h-[300px]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14745.037698914645!2d88.3405927!3d22.4883489!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a027127f0c5b9e7%3A0xaa1e0d0f4aca5d52!2sHaridevpur%2C%20Kolkata%2C%20West%20Bengal%20700082!5e0!3m2!1sen!2sin!4v1718183264321!5m2!1sen!2sin"
+                width="100%"
+                height="300"
+                className="border-0"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <div className="p-2 bg-blue-50 dark:bg-gray-700 text-center">
+              <a 
+                href="https://maps.app.goo.gl/tEAsQ6ExrZBWvWVp9" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 dark:text-blue-400 text-sm hover:underline flex items-center justify-center gap-1"
+              >
+                <MapPin size={14} /> Open NIRVRITI Foundation in Google Maps
+              </a>
+            </div>
           </Card>
 
           {/* Govt & Registration Info */}
