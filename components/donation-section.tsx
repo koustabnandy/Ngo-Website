@@ -11,7 +11,7 @@ import { Card } from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 
-export default function DonationPage() {
+export default function DonationSection() {
   const [donationAmount, setDonationAmount] = useState(1000)
   const [customAmount, setCustomAmount] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("education")

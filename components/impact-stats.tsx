@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState, useRef } from 'react'
 import { Users, Calendar, Award, Heart } from 'lucide-react'
 import ScrollAnimation from './scroll-animation'
+import CounterAnimation from './counter-animation'
 
 interface StatProps {
   icon: React.ReactNode
@@ -13,54 +13,18 @@ interface StatProps {
 }
 
 const StatCounter = ({ icon, value, label, suffix = "", duration = 2000 }: StatProps) => {
-  const [count, setCount] = useState(0)
-  const countRef = useRef<HTMLSpanElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.unobserve(entry.target)
-        }
-      },
-      { threshold: 0.1 }
-    )
-    
-    if (countRef.current) {
-      observer.observe(countRef.current)
-    }
-    
-    return () => {
-      if (countRef.current) {
-        observer.unobserve(countRef.current)
-      }
-    }
-  }, [])
-  
-  useEffect(() => {
-    if (!isVisible) return
-    
-    let start = 0
-    const end = value
-    const increment = end / (duration / 16)
-    const timer = setInterval(() => {
-      start += increment
-      setCount(Math.min(Math.floor(start), end))
-      if (start >= end) clearInterval(timer)
-    }, 16)
-    
-    return () => clearInterval(timer)
-  }, [isVisible, value, duration])
-  
   return (
     <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-b-4 border-blue-500 dark:border-blue-600">
       <div className="flex justify-center mb-4 text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full w-16 h-16 mx-auto">
         {icon}
       </div>
       <h3 className="text-4xl font-bold text-blue-700 dark:text-blue-400 mb-2">
-        <span ref={countRef}>{count}</span>{suffix}
+        <CounterAnimation 
+          end={value} 
+          suffix={suffix} 
+          duration={duration} 
+          className="text-4xl font-bold text-blue-700 dark:text-blue-400"
+        />
       </h3>
       <p className="text-gray-600 dark:text-gray-300 font-medium">{label}</p>
     </div>

@@ -12,11 +12,20 @@ import Footer from "@/components/footer"
 import Achievements from "@/components/achievements"
 import VideoSection from "@/components/video-section"
 import ScrollToTop from "@/components/scroll-to-top"
-import ImpactStats from "@/components/impact-stats"
+
 import TestimonialsSection from "@/components/testimonials"
 import AccessibilityWidget from "@/components/accessibility-widget"
 import WePledge from "@/components/we-pledge"
 import MembersSection from "@/components/members-section"
+
+// New components
+import DonationTracker from "@/components/donation-tracker"
+import VolunteerRegistration from "@/components/volunteer-registration"
+
+
+import FAQSection from "@/components/faq-section"
+import SocialMediaFeed from "@/components/social-media-feed"
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
@@ -25,7 +34,9 @@ export default function Home() {
       
       <WhatWeDo />
       
-      
+      <div className="my-20">
+        <DonationTracker />
+      </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="my-20">
@@ -37,7 +48,8 @@ export default function Home() {
         </div>
       </div> 
       
-      
+
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="my-20">
           <MembershipSection />
@@ -45,10 +57,14 @@ export default function Home() {
       </div>
       
       <div className="my-20">
+        <VolunteerRegistration />
+      </div>
+      
+      <div className="my-20">
         <DonationSection />
       </div>
       
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="my-20">
           <MediaSection />
@@ -60,9 +76,18 @@ export default function Home() {
       </div>
       
       <div className="my-20">
+        <SocialMediaFeed />
+      </div>
+      
+      <div className="my-20">
+        <FAQSection />
+      </div>
+      
+      <div className="my-20">
         <WePledge />
       </div>
-       <MembersSection />
+      
+      <MembersSection />
       <ContactSection />
       
       <Footer />
