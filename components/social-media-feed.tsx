@@ -43,66 +43,130 @@ const SocialPostCard = ({ post, index, getPlatformIcon, getPlatformName }: Socia
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.1 }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 25, 
+        mass: 0.8, 
+        delay: index * 0.08 
+      }}
+      whileHover={{ 
+        y: -5,
+        transition: { type: "spring", stiffness: 400, damping: 15 }
+      }}
     >
       <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
         <CardContent className="p-0">
           {post.image && (
-            <div className="relative h-48 w-full">
-              <img
+            <div className="relative h-48 w-full overflow-hidden">
+              <motion.img
                 src={post.image}
                 alt={`Social media post from ${getPlatformName(post.platform)}`}
                 className="w-full h-full object-cover"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "tween", duration: 0.5 }}
               />
-              <div className="absolute top-2 right-2 bg-white dark:bg-gray-800 p-1.5 rounded-full shadow-md">
+              <motion.div 
+                className="absolute top-2 right-2 bg-white dark:bg-gray-800 p-1.5 rounded-full shadow-md"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: index * 0.08 + 0.2, type: "spring", stiffness: 400 }}
+              >
                 {getPlatformIcon(post.platform)}
-              </div>
+              </motion.div>
             </div>
           )}
           
           <div className="p-4">
             <div className="flex items-center gap-2 mb-3">
-              {getPlatformIcon(post.platform, 16)}
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: index * 0.08 + 0.1, type: "spring" }}
+              >
+                {getPlatformIcon(post.platform, 16)}
+              </motion.div>
+              <motion.span 
+                className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                initial={{ opacity: 0, x: -5 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.08 + 0.15 }}
+              >
                 {getPlatformName(post.platform)}
-              </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 ml-auto flex items-center">
+              </motion.span>
+              <motion.span 
+                className="text-xs text-gray-500 dark:text-gray-400 ml-auto flex items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: index * 0.08 + 0.2 }}
+              >
                 <Calendar className="h-3 w-3 mr-1" /> {post.date}
-              </span>
+              </motion.span>
             </div>
             
-            <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-4">
+            <motion.p 
+              className="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.08 + 0.25 }}
+            >
               {post.content}
-            </p>
+            </motion.p>
             
             <div className="flex justify-between items-center">
               <div className="flex space-x-4">
-                <span className="text-xs text-gray-600 dark:text-gray-400 flex items-center">
+                <motion.span 
+                  className="text-xs text-gray-600 dark:text-gray-400 flex items-center"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.08 + 0.3 }}
+                  whileHover={{ scale: 1.1 }}
+                >
                   <Heart className="h-3.5 w-3.5 mr-1 text-red-500" /> {post.likes}
-                </span>
-                <span className="text-xs text-gray-600 dark:text-gray-400 flex items-center">
+                </motion.span>
+                <motion.span 
+                  className="text-xs text-gray-600 dark:text-gray-400 flex items-center"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.08 + 0.35 }}
+                  whileHover={{ scale: 1.1 }}
+                >
                   <MessageCircle className="h-3.5 w-3.5 mr-1 text-blue-500" /> {post.comments}
-                </span>
-                <span className="text-xs text-gray-600 dark:text-gray-400 flex items-center">
+                </motion.span>
+                <motion.span 
+                  className="text-xs text-gray-600 dark:text-gray-400 flex items-center"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.08 + 0.4 }}
+                  whileHover={{ scale: 1.1 }}
+                >
                   <Share2 className="h-3.5 w-3.5 mr-1 text-green-500" /> {post.shares}
-                </span>
+                </motion.span>
               </div>
               
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="p-1 h-auto"
-                asChild
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.08 + 0.45, type: "spring" }}
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <a 
-                  href={post.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label={`View on ${getPlatformName(post.platform)}`}
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="p-1 h-auto"
+                  asChild
                 >
-                  <ExternalLink className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                </a>
-              </Button>
+                  <a 
+                    href={post.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    aria-label={`View on ${getPlatformName(post.platform)}`}
+                  >
+                    <ExternalLink className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  </a>
+                </Button>
+              </motion.div>
             </div>
           </div>
         </CardContent>
@@ -382,40 +446,79 @@ export default function SocialMediaFeed() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activePlatform}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 400, 
+                    damping: 30, 
+                    mass: 0.8,
+                    opacity: { duration: 0.4 }
+                  }}
                 >
                   {/* Mobile swipe indicator - only visible on small screens */}
                   {isMobile && filteredPosts.length > 1 && (
                     <div className="md:hidden flex justify-center mb-4">
                       <motion.div 
                         className="flex items-center text-blue-600 dark:text-blue-400 text-sm bg-blue-50 dark:bg-gray-700 px-3 py-1.5 rounded-full shadow-sm"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 }}
+                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                        animate={{ 
+                          opacity: [0, 1, 1, 0.8, 0.6, 0.8, 1], 
+                          y: 0,
+                          scale: [0.9, 1.05, 1]
+                        }}
+                        transition={{ 
+                          opacity: { 
+                            times: [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1],
+                            duration: 5,
+                            repeat: Infinity,
+                            repeatType: "reverse"
+                          },
+                          scale: { 
+                            times: [0, 0.5, 1],
+                            duration: 1.5,
+                            type: "spring",
+                            stiffness: 200
+                          },
+                          y: { duration: 0.5, type: "spring" }
+                        }}
                       >
                         <motion.div
-                          animate={{ x: [0, 10, 0] }}
+                          animate={{ 
+                            x: [0, 8, 0],
+                            opacity: [1, 0.7, 1]
+                          }}
                           transition={{ 
                             repeat: Infinity, 
-                            duration: 1.5,
-                            repeatType: "loop",
+                            duration: 1.2,
+                            repeatType: "mirror",
                             ease: "easeInOut"
                           }}
                         >
                           <ChevronLeft className="h-4 w-4 inline mr-1" />
                         </motion.div>
-                        Swipe to navigate
-                        <motion.div
-                          animate={{ x: [0, -10, 0] }}
+                        <motion.span
+                          animate={{ opacity: [0.7, 1, 0.7] }}
                           transition={{ 
                             repeat: Infinity, 
-                            duration: 1.5,
-                            repeatType: "loop",
+                            duration: 2,
+                            repeatType: "mirror"
+                          }}
+                        >
+                          Swipe to navigate
+                        </motion.span>
+                        <motion.div
+                          animate={{ 
+                            x: [0, -8, 0],
+                            opacity: [1, 0.7, 1]
+                          }}
+                          transition={{ 
+                            repeat: Infinity, 
+                            duration: 1.2,
+                            repeatType: "mirror",
                             ease: "easeInOut",
-                            delay: 0.5
+                            delay: 0.3
                           }}
                         >
                           <ChevronRight className="h-4 w-4 inline ml-1" />
@@ -451,15 +554,31 @@ export default function SocialMediaFeed() {
                           }}
                           transition={{
                             type: "spring",
-                            stiffness: 300,
-                            damping: 30,
-                            duration: 0.5
+                            stiffness: 280,
+                            damping: 26,
+                            mass: 0.9,
+                            restDelta: 0.001,
+                            restSpeed: 0.001
                           }}
                         >
                           {filteredPosts.map((post, index) => (
-                            <div key={post.id} className="min-w-full px-1">
-                              <SocialPostCard post={post} index={index} getPlatformIcon={getPlatformIcon} getPlatformName={getPlatformName} />
-                            </div>
+                            <motion.div 
+                              key={post.id} 
+                              className="min-w-full px-1"
+                              initial={{ opacity: 0.5, scale: 0.95 }}
+                              animate={{ 
+                                opacity: currentSlide === index ? 1 : 0.7,
+                                scale: currentSlide === index ? 1 : 0.95,
+                                filter: currentSlide === index ? "blur(0px)" : "blur(1px)"
+                              }}
+                              transition={{
+                                opacity: { duration: 0.4 },
+                                scale: { type: "spring", stiffness: 300, damping: 20 },
+                                filter: { duration: 0.3 }
+                              }}
+                            >
+                              <SocialPostCard post={post} index={0} getPlatformIcon={getPlatformIcon} getPlatformName={getPlatformName} />
+                            </motion.div>
                           ))}
                         </motion.div>
                       </div>
@@ -471,22 +590,64 @@ export default function SocialMediaFeed() {
                             onClick={prevSlide}
                             className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-700/90 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-600 z-10 border border-gray-200 dark:border-gray-600"
                             aria-label="Previous slide"
-                            whileHover={{ scale: 1.1, x: -5 }}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            whileHover={{ 
+                              scale: 1.15, 
+                              x: -5,
+                              boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                            }}
                             whileTap={{ scale: 0.9 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                            transition={{ 
+                              type: "spring", 
+                              stiffness: 500, 
+                              damping: 20,
+                              mass: 0.8
+                            }}
                           >
-                            <ChevronLeft className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                            <motion.div
+                              animate={{ x: [0, -3, 0] }}
+                              transition={{ 
+                                repeat: Infinity, 
+                                repeatType: "reverse", 
+                                duration: 1.5,
+                                ease: "easeInOut"
+                              }}
+                            >
+                              <ChevronLeft className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                            </motion.div>
                           </motion.button>
                           
                           <motion.button
                             onClick={nextSlide}
                             className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-700/90 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-600 z-10 border border-gray-200 dark:border-gray-600"
                             aria-label="Next slide"
-                            whileHover={{ scale: 1.1, x: 5 }}
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            whileHover={{ 
+                              scale: 1.15, 
+                              x: 5,
+                              boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                            }}
                             whileTap={{ scale: 0.9 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                            transition={{ 
+                              type: "spring", 
+                              stiffness: 500, 
+                              damping: 20,
+                              mass: 0.8
+                            }}
                           >
-                            <ChevronRight className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                            <motion.div
+                              animate={{ x: [0, 3, 0] }}
+                              transition={{ 
+                                repeat: Infinity, 
+                                repeatType: "reverse", 
+                                duration: 1.5,
+                                ease: "easeInOut"
+                              }}
+                            >
+                              <ChevronRight className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                            </motion.div>
                           </motion.button>
                         </>
                       )}
@@ -503,16 +664,36 @@ export default function SocialMediaFeed() {
                                   ? "w-8 bg-blue-600 dark:bg-blue-400" 
                                   : "w-3 bg-gray-300 dark:bg-gray-600"
                               }`}
-                              whileHover={{ scale: 1.2 }}
-                              whileTap={{ scale: 0.8 }}
+                              whileHover={{ 
+                                scale: 1.3,
+                                y: -2,
+                                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+                              }}
+                              whileTap={{ scale: 0.8, y: 1 }}
                               animate={{ 
-                                scale: currentSlide === index ? 1.1 : 1,
-                                opacity: currentSlide === index ? 1 : 0.7
+                                scale: currentSlide === index ? [1, 1.15, 1.1] : 1,
+                                opacity: currentSlide === index ? 1 : 0.7,
+                                width: currentSlide === index ? "2rem" : "0.75rem",
+                                backgroundColor: currentSlide === index 
+                                  ? ["#2563eb", "#3b82f6", "#2563eb"] // Subtle pulse effect for active dot
+                                  : undefined
                               }}
                               transition={{ 
                                 type: "spring", 
-                                stiffness: 300, 
-                                damping: 20 
+                                stiffness: 500, 
+                                damping: 25,
+                                mass: 0.8,
+                                backgroundColor: {
+                                  repeat: Infinity,
+                                  duration: 2,
+                                  repeatType: "reverse"
+                                },
+                                scale: {
+                                  repeat: currentSlide === index ? Infinity : 0,
+                                  duration: 2,
+                                  repeatType: "reverse"
+                                },
+                                width: { type: "spring", stiffness: 500, damping: 30 }
                               }}
                               aria-label={`Go to slide ${index + 1}`}
                             />
