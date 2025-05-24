@@ -1,5 +1,6 @@
 "use client"
-import React, { useState, FormEvent } from "react"
+import React, { useState, FormEvent, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
@@ -8,11 +9,18 @@ import { Label } from "@/components/ui/label"
 import { Loader2 } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 
 export default function DonationPage() {
+  const router = useRouter()
+  
+  // Redirect to the main page's donation section
+  useEffect(() => {
+    router.push('/#donate')
+  }, [router])
+  
   const [donationAmount, setDonationAmount] = useState(1000)
   const [customAmount, setCustomAmount] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("education")
@@ -218,11 +226,11 @@ export default function DonationPage() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-6 rounded-full text-lg font-medium shadow-md transition-all duration-300 transform hover:scale-105"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-6 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95 mt-4"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...
                   </>
                 ) : (
                   "Donate Now"
@@ -235,7 +243,10 @@ export default function DonationPage() {
       
       <Dialog open={showDonateModal} onOpenChange={setShowDonateModal}>
         <DialogContent className="sm:max-w-md">
-          <h2 className="text-xl font-semibold mb-4 text-center text-blue-700 dark:text-blue-400">Scan to Donate</h2>
+          <DialogTitle className="text-xl font-semibold mb-2 text-center text-blue-700 dark:text-blue-400">Complete Your Donation</DialogTitle>
+          <p className="text-center text-gray-600 dark:text-gray-300 mb-4">
+            Scan the QR code below to make your payment of ₹{customAmount ? customAmount : donationAmount}
+          </p>
           <div className="bg-white p-4 rounded-lg mx-auto w-fit">
             <Image
               src="/NIRVRITI_QR.jpg"
@@ -245,7 +256,10 @@ export default function DonationPage() {
               className="mx-auto"
             />
           </div>
-          <div className="mt-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300 mt-4 mb-2">
+            After completing the payment, please enter the transaction ID or reference number provided by your payment app.
+          </p>
+          <div className="mt-2">
             <Label htmlFor="transactionId" className="text-gray-700 dark:text-gray-200">Transaction ID</Label>
             <Input
               id="transactionId"
@@ -257,17 +271,17 @@ export default function DonationPage() {
             />
           </div>
           <Button
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white mt-4 py-5 rounded-full transition-all duration-300"
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white mt-6 py-6 rounded-full text-lg font-medium shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95"
             onClick={submitToGoogleSheets}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Processing Donation...
               </>
             ) : (
-              "Confirm Donation"
+              "Complete Donation"
             )}
           </Button>
         </DialogContent>

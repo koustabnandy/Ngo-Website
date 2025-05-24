@@ -4,6 +4,7 @@ import { Inter, Montserrat } from "next/font/google"
 import "./globals.css"
 import { AppThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
+import BackgroundWrapper from "@/components/BackgroundWrapper"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const montserrat = Montserrat({ 
@@ -28,6 +29,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${montserrat.variable} font-sans bg-white dark:bg-gray-900 transition-colors duration-500`}
+        suppressHydrationWarning
       >
         <AppThemeProvider
           attribute="class"
@@ -35,7 +37,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          {/* 3D Background Animation */}
+          <BackgroundWrapper />
+          
+          {/* Main Content */}
+          <div className="relative z-10">
+            {children}
+          </div>
           <Toaster />
         </AppThemeProvider>
       </body>

@@ -62,6 +62,10 @@ const Carousel = React.forwardRef<
       {
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
+        dragFree: false,
+        draggable: true,
+        dragThreshold: 10, // Lower threshold for easier dragging on mobile
+        loop: true, // Enable looping for better mobile experience
       },
       plugins
     )

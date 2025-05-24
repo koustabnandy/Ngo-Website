@@ -216,7 +216,7 @@ const MediaSection = () => {
     const diff = touchPosition - currentPosition;
     
     // Minimum swipe distance - reduced for better mobile responsiveness
-    if (Math.abs(diff) > 30) {
+    if (Math.abs(diff) > 15) { // Reduced from 30 to 15 for easier swiping
       if (diff > 0) {
         nextSlide();
       } else {

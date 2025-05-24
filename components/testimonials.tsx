@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Quote } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 import { 
   Carousel,
   CarouselContent,
@@ -74,18 +75,55 @@ const TestimonialsSection = () => {
           opts={{
             loop: true,
             align: "center",
+            dragFree: false,
+            draggable: true,
+            dragThreshold: 10, // Lower threshold for easier dragging on mobile
           }}
         >
           <CarouselContent>
             {testimonials.map((testimonial) => (
               <CarouselItem key={testimonial.id} className="md:basis-4/5 lg:basis-3/4">
-                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 md:p-10 mx-2">
+                <motion.div 
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 md:p-10 mx-2"
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                    duration: 0.8
+                  }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)",
+                    transition: { duration: 0.3 }
+                  }}
+                >
                   <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                    <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0">
-                      <div className="absolute -top-2 -left-2 text-blue-500 dark:text-blue-400">
+                    <motion.div 
+                      className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0"
+                      initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      transition={{ 
+                        delay: 0.2,
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 20
+                      }}
+                    >
+                      <motion.div 
+                        className="absolute -top-2 -left-2 text-blue-500 dark:text-blue-400"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                      >
                         <Quote size={24} />
-                      </div>
-                      <div className="rounded-full overflow-hidden border-4 border-blue-100 dark:border-blue-900">
+                      </motion.div>
+                      <motion.div 
+                        className="rounded-full overflow-hidden border-4 border-blue-100 dark:border-blue-900"
+                        whileHover={{ scale: 1.05, borderColor: "#3b82f6" }}
+                        transition={{ duration: 0.3 }}
+                      >
                         <Image 
                           src={testimonial.image} 
                           alt={testimonial.name}
@@ -93,8 +131,8 @@ const TestimonialsSection = () => {
                           height={96}
                           className="object-cover"
                         />
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                     <div className="flex-1 text-center md:text-left">
                       <p className="text-gray-700 dark:text-gray-200 text-lg italic mb-4">"{testimonial.quote}"</p>
                       <div>

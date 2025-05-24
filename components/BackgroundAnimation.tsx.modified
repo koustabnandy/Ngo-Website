@@ -1,0 +1,455 @@
+"use client";
+
+import { useRef, useEffect, useState } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { OrbitControls, useTexture, Sphere } from '@react-three/drei';
+import * as THREE from 'three';
+import { useSpring, animated } from '@react-spring/three';
+import useThemeDetector from '@/hooks/useThemeDetector';
+
+// Animated floating particles
+const Particles = ({ count = 100, mousePosition, isDarkMode, onPositionsUpdate }) => {
+  const mesh = useRef();
+  const positionsRef = useRef([]);
+  const sizesRef = useRef([]);
+  const speedsRef = useRef([]);
+  const colorsRef = useRef([]);
+  const [initialized, setInitialized] = useState(false);
+  
+  // Colors based on theme
+  const lightModeColors = ['#88ccff', '#90cdf4', '#4299e1', '#3182ce', '#2b6cb0'];
+  const darkModeColors = ['#4a88ff', '#2563eb', '#1d4ed8', '#3b82f6', '#60a5fa'];
+  
+  // Initialize particles
+  useEffect(() => {
+    const tempPositions = [];
+    const tempSizes = [];
+    const tempSpeeds = [];
+    const tempColors = [];
+    
+    for (let i = 0; i < count; i++) {
+      // Create random positions in a sphere
+      const radius = 7.5 + Math.random() * 7.5; // Distance from center
+      const theta = Math.random() * Math.PI * 2; // Angle around y-axis
+      const phi = Math.acos((Math.random() * 2) - 1); // Angle from y-axis
+      
+      // Convert spherical to cartesian coordinates
+      const x = radius * Math.sin(phi) * Math.cos(theta);
+      const y = radius * Math.sin(phi) * Math.sin(theta);
+      const z = radius * Math.cos(phi);
+      
+      tempPositions.push([x, y, z]);
+      
+      // Varied sizes with some particles being larger
+      const size = Math.random() < 0.1 
+        ? Math.random() * 0.8 + 0.3 // 10% larger particles
+        : Math.random() * 0.4 + 0.05; // 90% smaller particles
+      
+      tempSizes.push(size);
+      
+      // Varied speeds
+      const speed = Math.random() * 0.01 + 0.002;
+      const angle = Math.random() * Math.PI * 2;
+      
+      tempSpeeds.push({
+        x: Math.cos(angle) * speed,
+        y: Math.sin(angle) * speed,
+        z: (Math.random() - 0.5) * speed
+      });
+      
+      // Random color from palette
+      const colorSet = isDarkMode ? darkModeColors : lightModeColors;
+      tempColors.push(colorSet[Math.floor(Math.random() * colorSet.length)]);
+    }
+    
+    positionsRef.current = tempPositions;
+    sizesRef.current = tempSizes;
+    speedsRef.current = tempSpeeds;
+    colorsRef.current = tempColors;
+    setInitialized(true);
+  }, [count, isDarkMode]);
+  
+  // Animation loop
+  useFrame((state, delta) => {
+    if (!mesh.current || !initialized) return;
+    
+    // Rotate the entire particle system
+    mesh.current.rotation.y += 0.0005;
+    mesh.current.rotation.x += 0.0002;
+    
+    // Update each particle position
+    const positions = positionsRef.current;
+    
+    for (let i = 0; i < positions.length; i++) {
+      // Add some sine wave motion
+      const time = state.clock.getElapsedTime();
+      const waveX = Math.sin(time * 0.5 + i * 0.1) * 0.02;
+      const waveY = Math.cos(time * 0.3 + i * 0.05) * 0.02;
+      
+      positions[i][0] += speedsRef.current[i].x + waveX;
+      positions[i][1] += speedsRef.current[i].y + waveY;
+      positions[i][2] += speedsRef.current[i].z;
+      
+      // Reset particles that go too far
+      const distance = Math.sqrt(
+        positions[i][0] * positions[i][0] + 
+        positions[i][1] * positions[i][1] + 
+        positions[i][2] * positions[i][2]
+      );
+      
+      if (distance > 15) {
+        // Reset to a random position on the sphere surface
+        const radius = 7.5;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        
+        positions[i][0] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[i][1] = radius * Math.sin(phi) * Math.sin(theta);
+        positions[i][2] = radius * Math.cos(phi);
+      }
+      
+      // Influence particles with mouse position
+      if (mousePosition.x !== undefined && mousePosition.y !== undefined) {
+        const mouseInfluence = 0.0008;
+        const dx = (mousePosition.x * 10 - positions[i][0]) * mouseInfluence;
+        const dy = (mousePosition.y * 10 - positions[i][1]) * mouseInfluence;
+        
+        positions[i][0] += dx;
+        positions[i][1] += dy;
+      }
+    }
+    
+    // Update positions for connection lines without triggering re-renders
+    if (onPositionsUpdate) {
+      onPositionsUpdate([...positions]);
+    }
+    
+    // Force update the meshes
+    if (mesh.current.children) {
+      mesh.current.children.forEach((child, i) => {
+        if (i < positions.length) {
+          child.position.set(positions[i][0], positions[i][1], positions[i][2]);
+        }
+      });
+    }
+  });
+
+  if (!initialized) return null;
+
+  return (
+    <group ref={mesh}>
+      {positionsRef.current.map((position, i) => (
+        <mesh key={i} position={position}>
+          <sphereGeometry args={[sizesRef.current[i], 8, 8]} />
+          <meshBasicMaterial 
+            color={colorsRef.current[i]} 
+            transparent 
+            opacity={0.7} 
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
+// Animated gradient sphere
+const GradientSphere = ({ isDarkMode }) => {
+  const mesh = useRef();
+  const { viewport } = useThree();
+  
+  // Create shader material for gradient effect
+  const uniforms = {
+    time: { value: 0 },
+    color1: { value: new THREE.Color(isDarkMode ? '#1a365d' : '#e6f0ff') },
+    color2: { value: new THREE.Color(isDarkMode ? '#3182ce' : '#90cdf4') },
+    resolution: { value: new THREE.Vector2(viewport.width, viewport.height) }
+  };
+  
+  // Update uniforms when theme changes
+  useEffect(() => {
+    uniforms.color1.value = new THREE.Color(isDarkMode ? '#1a365d' : '#e6f0ff');
+    uniforms.color2.value = new THREE.Color(isDarkMode ? '#3182ce' : '#90cdf4');
+  }, [isDarkMode, uniforms]);
+  
+  // Animation for pulsing
+  const { scale } = useSpring({
+    from: { scale: 1 },
+    to: async (next) => {
+      while (true) {
+        await next({ scale: 1.05 });
+        await next({ scale: 0.95 });
+      }
+    },
+    config: { duration: 3000 },
+  });
+  
+  useFrame((state) => {
+    if (!mesh.current) return;
+    
+    // Update time uniform for animated gradient
+    uniforms.time.value = state.clock.getElapsedTime() * 0.5;
+    
+    // Gentle rotation
+    mesh.current.rotation.y += 0.0005;
+    mesh.current.rotation.x += 0.0002;
+  });
+  
+  // Custom shader material for gradient effect
+  const gradientMaterial = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: `
+      varying vec2 vUv;
+      varying vec3 vPosition;
+      
+      void main() {
+        vUv = uv;
+        vPosition = position;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform float time;
+      uniform vec3 color1;
+      uniform vec3 color2;
+      varying vec2 vUv;
+      varying vec3 vPosition;
+      
+      void main() {
+        // Create animated gradient
+        float noise = sin(vPosition.x * 2.0 + time) * sin(vPosition.y * 2.0 + time) * sin(vPosition.z * 2.0 + time);
+        float pattern = abs(noise * 0.5 + 0.5);
+        
+        // Mix colors based on pattern
+        vec3 color = mix(color1, color2, pattern);
+        
+        // Add pulsing glow
+        float pulse = abs(sin(time * 0.5) * 0.5 + 0.5);
+        float alpha = 0.15 + pulse * 0.1;
+        
+        gl_FragColor = vec4(color, alpha);
+      }
+    `,
+    transparent: true,
+    wireframe: true
+  });
+  
+  return (
+    <>
+      {/* Inner sphere with gradient */}
+      <animated.mesh ref={mesh} scale={scale}>
+        <sphereGeometry args={[3, 64, 64]} />
+        <primitive attach="material" object={gradientMaterial} />
+      </animated.mesh>
+      
+      {/* Outer glow sphere */}
+      <animated.mesh scale={scale.to(s => s * 1.2)}>
+        <sphereGeometry args={[3, 32, 32]} />
+        <meshBasicMaterial 
+          color={isDarkMode ? '#3182ce' : '#90cdf4'} 
+          transparent 
+          opacity={0.05} 
+        />
+      </animated.mesh>
+    </>
+  );
+};
+
+// Animated connection lines between particles
+const ConnectionLines = ({ positions, isDarkMode, maxDistance = 3 }) => {
+  const linesRef = useRef();
+  const [connections, setConnections] = useState([]);
+  const positionsRef = useRef(positions);
+  const frameCountRef = useRef(0);
+  
+  // Update the ref when positions change
+  useEffect(() => {
+    positionsRef.current = positions;
+  }, [positions]);
+  
+  // Use useFrame for more efficient updates
+  useFrame(() => {
+    // Only update connections every 10 frames to improve performance
+    frameCountRef.current += 1;
+    if (frameCountRef.current < 10) return;
+    frameCountRef.current = 0;
+    
+    if (positionsRef.current.length === 0) return;
+    
+    const newConnections = [];
+    const currentPositions = positionsRef.current;
+    
+    // Limit the number of connections to improve performance
+    const maxConnections = 100;
+    let connectionCount = 0;
+    
+    // Check each pair of particles
+    for (let i = 0; i < currentPositions.length && connectionCount < maxConnections; i += 2) {
+      for (let j = i + 1; j < currentPositions.length && connectionCount < maxConnections; j += 2) {
+        const p1 = currentPositions[i];
+        const p2 = currentPositions[j];
+        
+        // Calculate distance
+        const dx = p1[0] - p2[0];
+        const dy = p1[1] - p2[1];
+        const dz = p1[2] - p2[2];
+        const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        
+        // Only connect particles within maxDistance
+        if (distance < maxDistance) {
+          // Calculate opacity based on distance (closer = more opaque)
+          const opacity = 1 - (distance / maxDistance);
+          
+          newConnections.push({
+            points: [
+              new THREE.Vector3(p1[0], p1[1], p1[2]),
+              new THREE.Vector3(p2[0], p2[1], p2[2])
+            ],
+            opacity
+          });
+          
+          connectionCount++;
+        }
+      }
+    }
+    
+    // Use a ref instead of state to avoid re-renders
+    connectionsRef.current = newConnections;
+  });
+  
+  return (
+    <group ref={linesRef}>
+      {/* Render a fixed number of line placeholders that will be updated by the useFrame hook */}
+      {Array.from({ length: 50 }).map((_, i) => (
+        <line key={i} visible={i < connectionsRef.current.length}>
+          <bufferGeometry attach="geometry" />
+          <lineBasicMaterial
+            attach="material"
+            color={isDarkMode ? '#4a88ff' : '#88ccff'}
+            transparent
+            opacity={0.1}
+            linewidth={1}
+          />
+        </line>
+      ))}
+    </group>
+  );
+};
+
+// Main scene component
+const Scene = ({ mousePosition, isDarkMode, scrollY }) => {
+  const particlePositionsRef = useRef([]);
+  const sceneRef = useRef();
+  
+  // Animation for scene based on scroll
+  const { rotation } = useSpring({
+    rotation: [0, scrollY * 0.01, 0],
+    config: { mass: 1, tension: 170, friction: 26 }
+  });
+  
+  // Handle particle position updates without state changes
+  const handlePositionsUpdate = (positions) => {
+    particlePositionsRef.current = positions;
+  };
+  
+  return (
+    <animated.group ref={sceneRef} rotation={rotation}>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} intensity={0.8} />
+      
+      {/* Main sphere */}
+      <GradientSphere isDarkMode={isDarkMode} />
+      
+      {/* Particles */}
+      <Particles 
+        count={100} // Reduced count for better performance
+        mousePosition={mousePosition} 
+        isDarkMode={isDarkMode} 
+        onPositionsUpdate={handlePositionsUpdate}
+      />
+      
+      {/* Connection lines */}
+      <ConnectionLines 
+        positions={particlePositionsRef.current} 
+        isDarkMode={isDarkMode} 
+        maxDistance={3}
+      />
+    </animated.group>
+  );
+};
+
+// Main component with mouse tracking and scroll tracking
+const BackgroundAnimation = () => {
+  const isDarkMode = useThemeDetector();
+  const mousePositionRef = useRef({ x: 0, y: 0 });
+  const scrollYRef = useRef(0);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Handle mouse movement with throttling
+  const handleMouseMove = (event) => {
+    // Only update every 100ms to reduce state updates
+    if (!mousePositionRef.current.lastUpdate || Date.now() - mousePositionRef.current.lastUpdate > 100) {
+      // Normalize mouse position to be between -1 and 1
+      mousePositionRef.current = {
+        x: (event.clientX / window.innerWidth) * 2 - 1,
+        y: -(event.clientY / window.innerHeight) * 2 + 1,
+        lastUpdate: Date.now()
+      };
+    }
+  };
+  
+  // Handle scroll and mobile detection
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollYRef.current = window.scrollY * 0.01;
+      
+      // Hide animation when scrolled far down for better performance
+      if (window.scrollY > 1000) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    };
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial checks
+    handleScroll();
+    checkMobile();
+    
+    // Add event listeners
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+  
+  if (!isVisible) return null;
+  
+  return (
+    <div 
+      className="fixed inset-0 -z-10 opacity-70 pointer-events-none"
+      onMouseMove={handleMouseMove}
+    >
+      <Canvas 
+        camera={{ position: [0, 0, 10], fov: isMobile ? 60 : 50 }}
+        dpr={isMobile ? 0.5 : 1} // Reduced DPR for better performance
+        frameloop="demand" // Only render when needed
+        performance={{ min: 0.1, max: 0.5 }} // Reduced performance for better efficiency
+      >
+        <Scene 
+          mousePosition={mousePositionRef.current} 
+          isDarkMode={isDarkMode} 
+          scrollY={scrollYRef.current}
+        />
+      </Canvas>
+    </div>
+  );
+};
+
+export default BackgroundAnimation;

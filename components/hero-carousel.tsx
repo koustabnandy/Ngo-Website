@@ -85,8 +85,8 @@ const HeroCarousel = () => {
     const currentPosition = e.touches[0].clientX
     const diff = touchPosition - currentPosition
     
-    // Minimum swipe distance for better mobile responsiveness
-    if (Math.abs(diff) > 30) {
+    // Enhanced swipe sensitivity for better mobile experience
+    if (Math.abs(diff) > 10) { // Reduced threshold for easier swiping
       if (diff > 0) {
         nextSlide()
       } else {
@@ -94,14 +94,22 @@ const HeroCarousel = () => {
       }
       
       setTouchPosition(null)
-      startAutoPlay()
+      
+      // Delay autoplay restart to prevent immediate slide change after user interaction
+      setTimeout(() => {
+        startAutoPlay()
+      }, 1000)
     }
   }
   
   // Handle touch end
   const handleTouchEnd = () => {
     setTouchPosition(null)
-    startAutoPlay()
+    
+    // Delay autoplay restart to prevent immediate slide change after user interaction
+    setTimeout(() => {
+      startAutoPlay()
+    }, 1000)
   }
 
   // Initialize autoplay
@@ -144,54 +152,67 @@ const HeroCarousel = () => {
     }
   }, [])
 
-  // Animation variants
+  // Enhanced animation variants with more dynamic transitions
   const slideVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.95,
+      scale: 0.92,
+      rotateY: direction > 0 ? -10 : 10,
     }),
     center: {
       x: 0,
       opacity: 1,
       scale: 1,
+      rotateY: 0,
       transition: {
-        x: { type: 'spring', stiffness: 300, damping: 30 },
-        opacity: { duration: 0.5 },
-        scale: { duration: 0.5 }
+        x: { type: 'spring', stiffness: 350, damping: 25 },
+        opacity: { duration: 0.6, ease: 'easeOut' },
+        scale: { duration: 0.7, ease: 'easeOut' },
+        rotateY: { duration: 0.8, ease: 'easeOut' }
       }
     },
     exit: (direction: number) => ({
       x: direction < 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.95,
+      scale: 0.92,
+      rotateY: direction > 0 ? 10 : -10,
       transition: {
-        x: { type: 'spring', stiffness: 300, damping: 30 },
-        opacity: { duration: 0.5 },
-        scale: { duration: 0.5 }
+        x: { type: 'spring', stiffness: 350, damping: 25 },
+        opacity: { duration: 0.6, ease: 'easeIn' },
+        scale: { duration: 0.5, ease: 'easeIn' },
+        rotateY: { duration: 0.5, ease: 'easeIn' }
       }
     })
   };
 
   const contentVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.2,
-        duration: 0.6
+        staggerChildren: 0.15,
+        delayChildren: 0.3,
+        duration: 0.8,
+        ease: "easeOut"
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6 }
+      scale: 1,
+      transition: { 
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+        duration: 0.8,
+        ease: "easeOut"
+      }
     }
   };
 
@@ -228,9 +249,12 @@ const HeroCarousel = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-10" />
           <motion.div 
             className="relative h-full w-full"
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 6 }}
+            initial={{ scale: 1.15, filter: "blur(8px)" }}
+            animate={{ scale: 1, filter: "blur(0px)" }}
+            transition={{ 
+              scale: { duration: 8, ease: "easeOut" },
+              filter: { duration: 1.5, ease: "easeOut" }
+            }}
           >
             <Image
               src={carouselItems[currentSlide].image || "/placeholder.svg"}
@@ -275,11 +299,20 @@ const HeroCarousel = () => {
         onClick={handlePrev}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full shadow-md"
         aria-label="Previous slide"
-        whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.4)" }}
-        whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0, x: -20 }}
+        whileHover={{ 
+          scale: 1.15, 
+          backgroundColor: "rgba(255,255,255,0.5)",
+          boxShadow: "0 0 15px rgba(255,255,255,0.5)"
+        }}
+        whileTap={{ scale: 0.85 }}
+        initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5 }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 300, 
+          damping: 20,
+          delay: 0.5 
+        }}
       >
         <ChevronLeft size={20} />
       </motion.button>
@@ -288,11 +321,20 @@ const HeroCarousel = () => {
         onClick={handleNext}
         className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full shadow-md"
         aria-label="Next slide"
-        whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.4)" }}
-        whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0, x: 20 }}
+        whileHover={{ 
+          scale: 1.15, 
+          backgroundColor: "rgba(255,255,255,0.5)",
+          boxShadow: "0 0 15px rgba(255,255,255,0.5)"
+        }}
+        whileTap={{ scale: 0.85 }}
+        initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5 }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 300, 
+          damping: 20,
+          delay: 0.5 
+        }}
       >
         <ChevronRight size={20} />
       </motion.button>

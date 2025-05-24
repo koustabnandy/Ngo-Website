@@ -214,6 +214,9 @@ interface EventCardProps {
 
 const EventCard = ({ event }: EventCardProps) => {
   const [imageError, setImageError] = useState(false);
+  
+  // Special handling for the problematic image
+  const imageSrc = event.id === 7 ? "/Distribution-Drive-Day_3.jpg" : event.image;
 
   return (
     <Link
@@ -227,7 +230,7 @@ const EventCard = ({ event }: EventCardProps) => {
         <div className="relative h-44 w-full overflow-hidden group">
           {!imageError ? (
             <Image 
-              src={event.image} 
+              src={imageSrc} 
               alt={event.title} 
               fill 
               className="object-cover transition-transform duration-500 group-hover:scale-105" 
@@ -441,8 +444,8 @@ const EventsSection = () => {
     const currentPosition = e.touches[0].clientX
     const diff = touchPosition - currentPosition
     
-    // Minimum swipe distance for better mobile responsiveness
-    if (Math.abs(diff) > 20) {
+    // Enhanced swipe sensitivity for better mobile experience
+    if (Math.abs(diff) > 10) { // Reduced threshold for easier swiping
       if (diff > 0) {
         nextSlide()
       } else {
@@ -450,13 +453,27 @@ const EventsSection = () => {
       }
       
       setTouchPosition(null)
+      
+      // Add visual feedback for swipe
+      const carousel = document.querySelector('.events-carousel') as HTMLElement;
+      if (carousel) {
+        carousel.style.transition = 'transform 0.3s ease-out';
+        carousel.style.transform = `translateX(${diff > 0 ? '-5px' : '5px'})`;
+        setTimeout(() => {
+          carousel.style.transform = 'translateX(0)';
+        }, 300);
+      }
     }
   }, [nextSlide, prevSlide, touchPosition])
   
   // Handle touch end
   const handleTouchEnd = useCallback(() => {
     setTouchPosition(null)
-    startAutoPlay() // Resume autoplay after touch
+    
+    // Add a small delay before resuming autoplay
+    setTimeout(() => {
+      startAutoPlay()
+    }, 1000)
   }, [startAutoPlay])
   
   // Start autoplay on mount
@@ -672,7 +689,7 @@ const EventsSection = () => {
                 <AnimatePresence initial={false} mode="wait">
                   <motion.div 
                     key={currentSlide}
-                    className="flex w-full h-full"
+                    className="flex w-full h-full events-carousel"
                     initial={{ opacity: 0.4, x: 100 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0.4, x: -100 }}

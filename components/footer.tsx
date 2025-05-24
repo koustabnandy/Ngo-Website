@@ -1,28 +1,15 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Heart } from "lucide-react"
 
 const Footer = () => {
-  const [email, setEmail] = useState("")
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle newsletter signup logic
-    console.log("Newsletter signup:", email)
-    setEmail("")
-    // Show success message
-    alert("Thank you for subscribing to our newsletter!")
-  }
   
   return (
     <footer className="bg-blue-900 dark:bg-gray-950 text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-2 mb-6">
               <div className="relative h-12 w-12 rounded-full overflow-hidden">
@@ -127,31 +114,6 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-semibold mb-6 border-b border-blue-800 pb-2">Newsletter</h3>
-            <p className="text-blue-200 dark:text-gray-300 mb-4">
-              Subscribe to our newsletter to receive updates on our activities and events.
-            </p>
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <div className="flex">
-                <Input
-                  type="email"
-                  placeholder="Your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-blue-800 border-blue-700 text-white placeholder:text-blue-300 rounded-l-md focus:ring-blue-500 focus:border-blue-500"
-                />
-                <Button 
-                  type="submit" 
-                  className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-medium rounded-r-md"
-                >
-                  Subscribe
-                </Button>
-              </div>
-            </form>
           </div>
         </div>
         
