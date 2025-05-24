@@ -19,7 +19,6 @@ import WePledge from "@/components/we-pledge"
 import MembersSection from "@/components/members-section"
 
 // New components
-import DonationTracker from "@/components/donation-tracker"
 import VolunteerRegistration from "@/components/volunteer-registration"
 
 
@@ -34,9 +33,6 @@ export default function Home() {
       
       <WhatWeDo />
       
-      <div className="my-20">
-        <DonationTracker />
-      </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="my-20">
