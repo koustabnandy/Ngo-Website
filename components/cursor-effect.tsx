@@ -21,6 +21,12 @@ export default function CursorEffect() {
   const dotY = useSpring(mouseY, { damping: 50, stiffness: 800 })
   
   useEffect(() => {
+    // Disable on mobile/touch devices
+    if ('ontouchstart' in window || window.innerWidth < 768) {
+      setIsVisible(false)
+      return; // Exit early for mobile devices
+    }
+    
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX)
       mouseY.set(e.clientY)
@@ -59,11 +65,6 @@ export default function CursorEffect() {
     window.addEventListener('mousemove', handleElementChange)
     document.addEventListener('mouseleave', handleMouseLeave)
     document.addEventListener('mouseenter', handleMouseEnter)
-    
-    // Disable on mobile/touch devices
-    if ('ontouchstart' in window) {
-      setIsVisible(false)
-    }
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)

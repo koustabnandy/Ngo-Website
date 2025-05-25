@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="bg-blue-900 dark:bg-gray-950 text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-2 mb-6">
               <div className="relative h-12 w-12 rounded-full overflow-hidden">
@@ -84,29 +84,6 @@ const Footer = () => {
                 <li key={item}>
                   <Link 
                     href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="text-blue-200 hover:text-white transition-colors duration-300 flex items-center"
-                  >
-                    <span className="mr-2">›</span> {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-semibold mb-6 border-b border-blue-800 pb-2">Our Programs</h3>
-            <ul className="space-y-3">
-              {[
-                "Education Support", 
-                "Community Kitchen", 
-                "Health Initiatives", 
-                "Cultural Programs",
-                "Skill Development",
-                "Emergency Relief"
-              ].map((item) => (
-                <li key={item}>
-                  <Link 
-                    href="#"
                     className="text-blue-200 hover:text-white transition-colors duration-300 flex items-center"
                   >
                     <span className="mr-2">›</span> {item}

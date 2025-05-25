@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
 interface AnimatedTextProps {
   text: string
@@ -25,7 +25,25 @@ export default function AnimatedText({
   animation = 'fade'
 }: AnimatedTextProps) {
   const [isInView, setIsInView] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
   const ref = useRef<HTMLDivElement>(null)
+  
+  // Check for mobile device on component mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,6 +76,18 @@ export default function AnimatedText({
   
   // Define animation variants based on the selected animation type
   const getAnimationVariants = () => {
+    // For mobile or reduced motion preference, use simpler animations
+    if (isMobile || prefersReducedMotion) {
+      return {
+        hidden: { opacity: 0 },
+        visible: { 
+          opacity: 1,
+          transition: { duration: 0.3 }
+        }
+      }
+    }
+    
+    // Full animations for desktop
     switch (animation) {
       case 'fade':
         return {
@@ -118,12 +148,20 @@ export default function AnimatedText({
     }
   }
   
+  // Adjust stagger timing for mobile
+  const getStaggerValue = () => {
+    return isMobile || prefersReducedMotion ? staggerChildren * 0.5 : staggerChildren;
+  };
+  
   const variants = {
     container: {
       hidden: { opacity: 0 },
       visible: (i = 1) => ({
         opacity: 1,
-        transition: { staggerChildren: staggerChildren, delayChildren: 0.1 * i }
+        transition: { 
+          staggerChildren: getStaggerValue(), 
+          delayChildren: (isMobile || prefersReducedMotion) ? 0.05 * i : 0.1 * i 
+        }
       })
     },
     item: getAnimationVariants()
@@ -131,7 +169,10 @@ export default function AnimatedText({
   
   // Split text based on type
   const renderText = () => {
-    if (type === 'chars') {
+    // For mobile with 'chars' type, switch to 'words' for better performance
+    const effectiveType = (isMobile && type === 'chars') ? 'words' : type;
+    
+    if (effectiveType === 'chars') {
       return text.split('').map((char, index) => (
         <motion.span
           key={index}
@@ -141,7 +182,7 @@ export default function AnimatedText({
           {char === ' ' ? '\u00A0' : char}
         </motion.span>
       ))
-    } else if (type === 'words') {
+    } else if (effectiveType === 'words') {
       return text.split(' ').map((word, index) => {
         const isHighlighted = highlightWords.includes(word)
         return (
@@ -155,7 +196,7 @@ export default function AnimatedText({
           </motion.span>
         )
       })
-    } else if (type === 'lines') {
+    } else if (effectiveType === 'lines') {
       return text.split('\n').map((line, index) => (
         <motion.div
           key={index}

@@ -1,10 +1,10 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, Clock, MapPin, Users, Heart, Award } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 
 const volunteerOpportunities = [
   {
@@ -48,10 +48,58 @@ const volunteerOpportunities = [
 export default function VolunteerRegistration() {
   // Form URL - same as membership form
   const formUrl = "https://forms.gle/Cnh9qKxuzM8ACqhJ8";
+  
+  // Check if user prefers reduced motion
+  const prefersReducedMotion = useReducedMotion();
+  
+  // State to track if we're on mobile
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check for mobile device on component mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Function to open form in new tab
   const openForm = () => {
     window.open(formUrl, "_blank", "noopener,noreferrer");
+  };
+  
+  // Simplified animations for mobile or reduced motion preferences
+  const getAnimationSettings = (index) => {
+    // If user prefers reduced motion or is on mobile, use simpler animations
+    if (prefersReducedMotion || isMobile) {
+      return {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { 
+          duration: 0.3,
+          delay: index * 0.1, // Reduced delay for mobile
+        }
+      };
+    }
+    
+    // Full animations for desktop
+    return {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      transition: { 
+        duration: 0.5, 
+        delay: index * 0.15, 
+        ease: [0.43, 0.13, 0.23, 0.96] 
+      }
+    };
   };
 
   return (
@@ -71,61 +119,61 @@ export default function VolunteerRegistration() {
         <div className="max-w-6xl mx-auto">
           <div className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {volunteerOpportunities.map((opportunity, index) => (
-                <motion.div
-                  key={opportunity.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.5, 
-                    delay: index * 0.15, 
-                    ease: [0.43, 0.13, 0.23, 0.96] 
-                  }}
-                >
-                  <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-500 ease-in-out transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-                          {opportunity.icon}
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-2">
-                            {opportunity.title}
-                          </h3>
-                          <p className="text-gray-600 dark:text-gray-300 mb-4">
-                            {opportunity.description}
-                          </p>
-                          
-                          <div className="space-y-2 text-sm">
-                            <div className="flex items-center gap-2">
-                              <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
-                              <span className="text-gray-700 dark:text-gray-300">{opportunity.commitment}</span>
+              {volunteerOpportunities.map((opportunity, index) => {
+                const animationProps = getAnimationSettings(index);
+                
+                return (
+                  <motion.div
+                    key={opportunity.id}
+                    initial={animationProps.initial}
+                    animate={animationProps.animate}
+                    transition={animationProps.transition}
+                  >
+                    <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out border border-gray-100 dark:border-gray-700">
+                      <CardContent className="p-6">
+                        <div className="flex items-start gap-4">
+                          <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                            {opportunity.icon}
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-2">
+                              {opportunity.title}
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-300 mb-4">
+                              {opportunity.description}
+                            </p>
+                            
+                            <div className="space-y-2 text-sm">
+                              <div className="flex items-center gap-2">
+                                <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                                <span className="text-gray-700 dark:text-gray-300">{opportunity.commitment}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <MapPin className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                                <span className="text-gray-700 dark:text-gray-300">{opportunity.location}</span>
+                              </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <MapPin className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
-                              <span className="text-gray-700 dark:text-gray-300">{opportunity.location}</span>
+                            
+                            <div className="mt-4 flex flex-wrap gap-2">
+                              {opportunity.skills.map((skill) => (
+                                <span 
+                                  key={skill} 
+                                  className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
                             </div>
                           </div>
-                          
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            {opportunity.skills.map((skill) => (
-                              <span 
-                                key={skill} 
-                                className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
             </div>
             
-            <div className="text-center mt-12 mb-4">
+            <div className="text-center mt-12 mb-4 relative z-50">
               <a 
                 href="https://forms.gle/Cnh9qKxuzM8ACqhJ8"
                 target="_blank"
@@ -151,6 +199,9 @@ export default function VolunteerRegistration() {
           </div>
         </div>
       </div>
+      
+      {/* Direct link outside of any animations or complex components */}
+      
     </section>
   )
 }
