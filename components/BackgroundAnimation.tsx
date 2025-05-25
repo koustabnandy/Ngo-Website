@@ -7,13 +7,27 @@ import * as THREE from 'three';
 import { useSpring, animated } from '@react-spring/three';
 import useThemeDetector from '@/hooks/useThemeDetector';
 
+// Define types for our component props and state
+interface ParticleProps {
+  count?: number;
+  mousePosition: { x: number; y: number };
+  isDarkMode: boolean;
+  onPositionsUpdate: (positions: number[][]) => void;
+}
+
+interface ParticleSpeed {
+  x: number;
+  y: number;
+  z: number;
+}
+
 // Animated floating particles
-const Particles = ({ count = 100, mousePosition, isDarkMode, onPositionsUpdate }) => {
-  const mesh = useRef();
-  const [positions, setPositions] = useState([]);
-  const [sizes, setSizes] = useState([]);
-  const [speeds, setSpeeds] = useState([]);
-  const [colors, setColors] = useState([]);
+const Particles = ({ count = 100, mousePosition, isDarkMode, onPositionsUpdate }: ParticleProps) => {
+  const mesh = useRef<THREE.Group>(null);
+  const [positions, setPositions] = useState<number[][]>([]);
+  const [sizes, setSizes] = useState<number[]>([]);
+  const [speeds, setSpeeds] = useState<ParticleSpeed[]>([]);
+  const [colors, setColors] = useState<string[]>([]);
   
   // Colors based on theme
   const lightModeColors = ['#88ccff', '#90cdf4', '#4299e1', '#3182ce', '#2b6cb0'];
@@ -152,9 +166,13 @@ const Particles = ({ count = 100, mousePosition, isDarkMode, onPositionsUpdate }
   );
 };
 
+interface GradientSphereProps {
+  isDarkMode: boolean;
+}
+
 // Animated gradient sphere
-const GradientSphere = ({ isDarkMode }) => {
-  const mesh = useRef();
+const GradientSphere = ({ isDarkMode }: GradientSphereProps) => {
+  const mesh = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
   
   // Create shader material for gradient effect
@@ -259,10 +277,21 @@ const GradientSphere = ({ isDarkMode }) => {
   );
 };
 
+interface ConnectionLinesProps {
+  positions: number[][];
+  isDarkMode: boolean;
+  maxDistance?: number;
+}
+
+interface Connection {
+  points: THREE.Vector3[];
+  opacity: number;
+}
+
 // Animated connection lines between particles
-const ConnectionLines = ({ positions, isDarkMode, maxDistance = 3 }) => {
-  const linesRef = useRef();
-  const [connections, setConnections] = useState([]);
+const ConnectionLines = ({ positions, isDarkMode, maxDistance = 3 }: ConnectionLinesProps) => {
+  const linesRef = useRef<THREE.Group>(null);
+  const [connections, setConnections] = useState<Connection[]>([]);
   
   // Calculate connections between particles
   useEffect(() => {
@@ -329,10 +358,16 @@ const ConnectionLines = ({ positions, isDarkMode, maxDistance = 3 }) => {
   );
 };
 
+interface SceneProps {
+  mousePosition: { x: number; y: number };
+  isDarkMode: boolean;
+  scrollY: number;
+}
+
 // Main scene component
-const Scene = ({ mousePosition, isDarkMode, scrollY }) => {
-  const [particlePositions, setParticlePositions] = useState([]);
-  const sceneRef = useRef();
+const Scene = ({ mousePosition, isDarkMode, scrollY }: SceneProps) => {
+  const [particlePositions, setParticlePositions] = useState<number[][]>([]);
+  const sceneRef = useRef<THREE.Group>(null);
   
   // Enhanced animation for scene based on scroll with smoother response
   const { rotation } = useSpring({
@@ -346,7 +381,7 @@ const Scene = ({ mousePosition, isDarkMode, scrollY }) => {
   });
   
   // Handle particle position updates
-  const handlePositionsUpdate = (positions) => {
+  const handlePositionsUpdate = (positions: number[][]) => {
     setParticlePositions(positions);
   };
   
@@ -379,12 +414,12 @@ const Scene = ({ mousePosition, isDarkMode, scrollY }) => {
 // Main component with mouse tracking and scroll tracking
 const BackgroundAnimation = () => {
   const isDarkMode = useThemeDetector();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [scrollY, setScrollY] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
   
   // Handle mouse movement
-  const handleMouseMove = (event) => {
+  const handleMouseMove = (event: React.MouseEvent) => {
     // Normalize mouse position to be between -1 and 1
     setMousePosition({
       x: (event.clientX / window.innerWidth) * 2 - 1,
@@ -410,7 +445,7 @@ const BackgroundAnimation = () => {
   }, []);
   
   // Performance optimization - reduce animation quality on mobile
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   
   useEffect(() => {
     const checkMobile = () => {

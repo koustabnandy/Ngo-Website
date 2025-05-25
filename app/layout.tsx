@@ -5,6 +5,7 @@ import "./globals.css"
 import { AppThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import BackgroundWrapper from "@/components/BackgroundWrapper"
+import FuturisticLayout from "@/components/futuristic-layout"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const montserrat = Montserrat({ 
@@ -40,9 +41,11 @@ export default function RootLayout({
           {/* 3D Background Animation */}
           <BackgroundWrapper />
           
-          {/* Main Content */}
+          {/* Main Content with Futuristic Layout */}
           <div className="relative z-10">
-            {children}
+            <FuturisticLayout>
+              {children}
+            </FuturisticLayout>
           </div>
           <Toaster />
         </AppThemeProvider>

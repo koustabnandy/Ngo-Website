@@ -6,34 +6,34 @@
 
 @keyframes pulse {
   0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1.03); } /* Reduced scale for smoother effect */
   100% { transform: scale(1); }
 }
 
 @keyframes slideInFromLeft {
-  0% { transform: translateX(-30px); opacity: 0; }
+  0% { transform: translateX(-20px); opacity: 0; } /* Reduced distance for smoother effect */
   100% { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes slideInFromRight {
-  0% { transform: translateX(30px); opacity: 0; }
+  0% { transform: translateX(20px); opacity: 0; } /* Reduced distance for smoother effect */
   100% { transform: translateX(0); opacity: 1; }
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 4s cubic-bezier(0.43, 0.13, 0.23, 0.96) infinite; /* Smoother easing and longer duration */
 }
 
 .animate-pulse-slow {
-  animation: pulse 3s ease-in-out infinite;
+  animation: pulse 4s cubic-bezier(0.43, 0.13, 0.23, 0.96) infinite; /* Smoother easing and longer duration */
 }
 
 .animate-slide-left {
-  animation: slideInFromLeft 0.5s ease-out forwards;
+  animation: slideInFromLeft 0.7s cubic-bezier(0.43, 0.13, 0.23, 0.96) forwards; /* Smoother easing and longer duration */
 }
 
 .animate-slide-right {
-  animation: slideInFromRight 0.5s ease-out forwards;
+  animation: slideInFromRight 0.7s cubic-bezier(0.43, 0.13, 0.23, 0.96) forwards; /* Smoother easing and longer duration */
 }
 
 /* Staggered animation delays */

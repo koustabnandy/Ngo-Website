@@ -1,8 +1,8 @@
 "use client"
 
+import React from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Calendar, Clock, MapPin, Users, Heart, Award } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -46,6 +46,14 @@ const volunteerOpportunities = [
 ]
 
 export default function VolunteerRegistration() {
+  // Form URL - same as membership form
+  const formUrl = "https://forms.gle/Cnh9qKxuzM8ACqhJ8";
+
+  // Function to open form in new tab
+  const openForm = () => {
+    window.open(formUrl, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <section id="volunteer" className="py-16 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4">
@@ -61,101 +69,86 @@ export default function VolunteerRegistration() {
         </div>
         
         <div className="max-w-6xl mx-auto">
-          <Tabs defaultValue="opportunities" className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 dark:bg-gray-800 h-10 rounded-full overflow-hidden border border-blue-100 dark:border-gray-700 p-1">
-              <TabsTrigger 
-                value="opportunities" 
-                className="text-sm rounded-full data-[state=active]:bg-blue-600 data-[state=active]:text-white dark:data-[state=active]:bg-blue-700 dark:data-[state=active]:text-white dark:text-gray-200 transition-all duration-300"
-              >
-                Opportunities
-              </TabsTrigger>
-              <TabsTrigger 
-                value="register" 
-                className="text-sm rounded-full data-[state=active]:bg-blue-600 data-[state=active]:text-white dark:data-[state=active]:bg-blue-700 dark:data-[state=active]:text-white dark:text-gray-200 transition-all duration-300"
-              >
-                Register
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="opportunities" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {volunteerOpportunities.map((opportunity, index) => (
-                  <motion.div
-                    key={opportunity.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                  >
-                    <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-                            {opportunity.icon}
+          <div className="mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {volunteerOpportunities.map((opportunity, index) => (
+                <motion.div
+                  key={opportunity.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.5, 
+                    delay: index * 0.15, 
+                    ease: [0.43, 0.13, 0.23, 0.96] 
+                  }}
+                >
+                  <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-500 ease-in-out transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                          {opportunity.icon}
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-2">
+                            {opportunity.title}
+                          </h3>
+                          <p className="text-gray-600 dark:text-gray-300 mb-4">
+                            {opportunity.description}
+                          </p>
+                          
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                              <span className="text-gray-700 dark:text-gray-300">{opportunity.commitment}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                              <span className="text-gray-700 dark:text-gray-300">{opportunity.location}</span>
+                            </div>
                           </div>
-                          <div>
-                            <h3 className="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-2">
-                              {opportunity.title}
-                            </h3>
-                            <p className="text-gray-600 dark:text-gray-300 mb-4">
-                              {opportunity.description}
-                            </p>
-                            
-                            <div className="space-y-2 text-sm">
-                              <div className="flex items-center gap-2">
-                                <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
-                                <span className="text-gray-700 dark:text-gray-300">{opportunity.commitment}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <MapPin className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
-                                <span className="text-gray-700 dark:text-gray-300">{opportunity.location}</span>
-                              </div>
-                            </div>
-                            
-                            <div className="mt-4 flex flex-wrap gap-2">
-                              {opportunity.skills.map((skill) => (
-                                <span 
-                                  key={skill} 
-                                  className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full"
-                                >
-                                  {skill}
-                                </span>
-                              ))}
-                            </div>
+                          
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            {opportunity.skills.map((skill) => (
+                              <span 
+                                key={skill} 
+                                className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full"
+                              >
+                                {skill}
+                              </span>
+                            ))}
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-              
-              <div className="text-center mt-8">
-                <Button 
-                  onClick={() => window.open("https://forms.gle/Cnh9qKxuzM8ACqhJ8", "_blank")}
-                  className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-8 py-6 rounded-lg text-lg font-medium shadow-md"
-                >
-                  Apply Now
-                </Button>
-              </div>
-            </TabsContent>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
             
-            <TabsContent value="register" className="mt-0">
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-xl text-center">
-                <h3 className="text-2xl font-bold text-blue-700 dark:text-blue-400 mb-4">
-                  Apply to Volunteer with Us
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
-                  Thank you for your interest in volunteering with us! Please click the button below to fill out our volunteer application form.
-                </p>
-                <Button 
-                  onClick={() => window.open("https://forms.gle/Cnh9qKxuzM8ACqhJ8", "_blank")}
-                  className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-8 py-6 rounded-lg text-lg font-medium shadow-md"
-                >
-                  Apply Now
-                </Button>
-              </div>
-            </TabsContent>
-          </Tabs>
+            <div className="text-center mt-12 mb-4">
+              <a 
+                href="https://forms.gle/Cnh9qKxuzM8ACqhJ8"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ 
+                  display: 'inline-block',
+                  padding: '16px 32px',
+                  backgroundColor: '#2563eb',
+                  color: 'white',
+                  borderRadius: '8px',
+                  fontSize: '18px',
+                  fontWeight: '500',
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  cursor: 'pointer',
+                  zIndex: 10,
+                  position: 'relative'
+                }}
+              >
+                Apply Now
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

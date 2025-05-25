@@ -608,7 +608,7 @@ const EventsSection = () => {
                 className="text-sm rounded-full data-[state=active]:bg-blue-600 data-[state=active]:text-white dark:data-[state=active]:bg-blue-700 dark:data-[state=active]:text-white dark:text-gray-200 transition-all duration-300 flex items-center justify-center"
               >
                 <motion.span whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
-                  Upcoming Events
+                  Upcoming
                 </motion.span>
               </TabsTrigger>
               <TabsTrigger 
