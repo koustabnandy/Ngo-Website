@@ -18,7 +18,7 @@ import AccessibilityWidget from "@/components/accessibility-widget"
 import WePledge from "@/components/we-pledge"
 import MembersSection from "@/components/members-section"
 
-// New components
+// New components 
 import VolunteerRegistration from "@/components/volunteer-registration"
 import FAQSection from "@/components/faq-section"
 import SocialMediaFeed from "@/components/social-media-feed"
@@ -58,12 +58,12 @@ export default function Home() {
           <EventsSection />
         </div>
         
-        {/* Achievements with parallax */}
-        <ParallaxSection direction="right" speed={0.2} className="my-20">
+        {/* Achievements section */}
+        <div className="my-20">
           <div className="neo-card p-8">
             <Achievements />
           </div>
-        </ParallaxSection>
+        </div>
       </div> 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,12 +113,12 @@ export default function Home() {
         <FAQSection />
       </div>
       
-      {/* We Pledge section with parallax */}
-      <ParallaxSection direction="left" speed={0.3} className="my-20">
+      {/* We Pledge section */}
+      <div className="my-20">
         <div className="neo-card mx-4 sm:mx-8 lg:mx-auto max-w-7xl p-8">
           <WePledge />
         </div>
-      </ParallaxSection>
+      </div>
       
       {/* Members section with tilt effect */}
       <TiltCard className="max-w-7xl mx-auto my-20">
