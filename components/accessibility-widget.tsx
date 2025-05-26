@@ -1,5 +1,3 @@
-// c:/Users/rajde/OneDrive/Desktop/Frontend/ngo/Ngo-Website/components/accessibility-widget.tsx
-
 "use client"
 
 import { useState } from "react"

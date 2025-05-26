@@ -27,14 +27,13 @@ import SocialMediaFeed from "@/components/social-media-feed"
 import ParallaxSection from "@/components/parallax-section"
 import TiltCard from "@/components/tilt-card"
 import AnimatedText from "@/components/animated-text"
-import CursorEffect from "@/components/cursor-effect"
+
 import GridBackground from "@/components/grid-background"
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 relative">
-      {/* Futuristic cursor effect */}
-      <CursorEffect />
+      {/* Cursor effect removed */}
       
       {/* Grid background for futuristic feel */}
       <GridBackground className="fixed inset-0 -z-10" />
