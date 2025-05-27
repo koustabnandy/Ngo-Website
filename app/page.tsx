@@ -1,4 +1,4 @@
-// c:/Users/rajde/OneDrive/Desktop/Frontend/ngo/Ngo-Website/app/page.tsx
+
 
 import Navbar from "@/components/navbar"
 import HeroCarousel from "@/components/hero-carousel"
@@ -25,7 +25,7 @@ import SocialMediaFeed from "@/components/social-media-feed"
  
  
 import ParallaxSection from "@/components/parallax-section"
-import TiltCard from "@/components/tilt-card"
+//import TiltCard from "@/components/tilt-card" // Removed as requested
 import AnimatedText from "@/components/animated-text"
 
 import GridBackground from "@/components/grid-background"
@@ -72,15 +72,15 @@ export default function Home() {
         </div>
       </div>
       
-      {/* Volunteer section with tilt effect */}
+      {/* Volunteer section without tilt effect */}
       <div className="my-20">
-        <TiltCard className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="gradient-border">
             <div className="bg-white dark:bg-gray-900 p-8 rounded-2xl">
               <VolunteerRegistration />
             </div>
           </div>
-        </TiltCard>
+        </div>
       </div>
       
       {/* Donation section with parallax */}
@@ -119,10 +119,10 @@ export default function Home() {
         </div>
       </div>
       
-      {/* Members section with tilt effect */}
-      <TiltCard className="max-w-7xl mx-auto my-20">
+      {/* Members section without tilt effect */}
+      <div className="max-w-7xl mx-auto my-20">
         <MembersSection />
-      </TiltCard>
+      </div>
       
       {/* Contact section with glass effect */}
       <div className="glass-effect mx-4 sm:mx-8 lg:mx-auto max-w-7xl p-8 rounded-2xl my-20">

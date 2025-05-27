@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import Image from 'next/image'
 import SectionHeader from './section-header'
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface PledgeImage {
@@ -30,6 +30,7 @@ const WePledge = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [touchPosition, setTouchPosition] = useState<number | null>(null)
   const [isHovered, setIsHovered] = useState(false)
+  const [fullscreenImage, setFullscreenImage] = useState<PledgeImage | null>(null)
   
   // Refs
   const autoPlayTimerRef = useRef<NodeJS.Timeout | null>(null)
@@ -194,7 +195,8 @@ const WePledge = () => {
                       >
                         {image.src && (
                           <div 
-                            className="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64"
+                            className="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-64 cursor-pointer"
+                            onClick={() => setFullscreenImage(image)}
                           >
                             <Image
                               src={image.src}
@@ -257,6 +259,45 @@ const WePledge = () => {
           )}
         </div>
       </div>
+
+      {/* Fullscreen Image Modal */}
+      <AnimatePresence>
+        {fullscreenImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+            onClick={() => setFullscreenImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              className="relative w-full h-full max-w-7xl max-h-[90vh] m-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative w-full h-full">
+                <Image
+                  src={fullscreenImage.src}
+                  alt={fullscreenImage.alt}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <button 
+                className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                onClick={() => setFullscreenImage(null)}
+              >
+                <X className="h-6 w-6 text-gray-800 dark:text-white" />
+              </button>
+              <div className="absolute bottom-4 left-0 right-0 text-center bg-black bg-opacity-50 py-2 px-4">
+                <h2 className="text-xl font-bold text-white">{fullscreenImage.alt}</h2>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
