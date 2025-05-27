@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState, FormEvent, useEffect } from "react"
+import type React from "react"
+import { useState, type FormEvent, useEffect } from "react"
 import Image from "next/image"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
@@ -10,9 +11,12 @@ import { Loader2, Heart, CreditCard, Check, Info } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
-export default function DonationSection() {
+// Import the success component
+import DonationSuccessAnimation from "./donation-success-animation"
+
+export default function EnhancedDonationSection() {
   const [donationAmount, setDonationAmount] = useState(1000)
   const [customAmount, setCustomAmount] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("education")
@@ -20,6 +24,7 @@ export default function DonationSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [transactionId, setTransactionId] = useState("")
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [donationCompleted, setDonationCompleted] = useState(false)
   const [formErrors, setFormErrors] = useState({
     fullName: false,
     email: false,
@@ -33,18 +38,18 @@ export default function DonationSection() {
     category: "education",
     amount: 1000,
   })
-  
+
   // Reset form errors when user types in a field
   useEffect(() => {
-    if (formData.fullName) setFormErrors(prev => ({ ...prev, fullName: false }))
+    if (formData.fullName) setFormErrors((prev) => ({ ...prev, fullName: false }))
   }, [formData.fullName])
-  
+
   useEffect(() => {
-    if (formData.email) setFormErrors(prev => ({ ...prev, email: false }))
+    if (formData.email) setFormErrors((prev) => ({ ...prev, email: false }))
   }, [formData.email])
-  
+
   useEffect(() => {
-    if (formData.phoneNumber) setFormErrors(prev => ({ ...prev, phoneNumber: false }))
+    if (formData.phoneNumber) setFormErrors((prev) => ({ ...prev, phoneNumber: false }))
   }, [formData.phoneNumber])
 
   const donationCategories = [
@@ -62,24 +67,19 @@ export default function DonationSection() {
 
   const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    
-    // Only allow digits
+
     if (/^\d*$/.test(value)) {
       setCustomAmount(value)
-      
-      // Only update donation amount if there's a value
       if (value) {
         setDonationAmount(Number(value))
       } else {
-        // If custom amount is cleared, default to the first predefined amount
         setDonationAmount(donationAmounts[0])
       }
     }
   }
-  
-  // Format the amount with commas for display
+
   const formatAmount = (amount: number) => {
-    return amount.toLocaleString('en-IN')
+    return amount.toLocaleString("en-IN")
   }
 
   const validateForm = () => {
@@ -87,14 +87,14 @@ export default function DonationSection() {
     const errors = {
       fullName: false,
       email: false,
-      phoneNumber: false
+      phoneNumber: false,
     }
-    
+
     if (!formData.fullName) {
       errors.fullName = true
       isValid = false
     }
-    
+
     if (!formData.email) {
       errors.email = true
       isValid = false
@@ -107,7 +107,7 @@ export default function DonationSection() {
         variant: "destructive",
       })
     }
-    
+
     if (!formData.phoneNumber) {
       errors.phoneNumber = true
       isValid = false
@@ -120,10 +120,9 @@ export default function DonationSection() {
         variant: "destructive",
       })
     }
-    
+
     if (!isValid) {
       setFormErrors(errors)
-      
       if (!formData.fullName || !formData.email || !formData.phoneNumber) {
         toast({
           title: "Missing Fields",
@@ -132,15 +131,14 @@ export default function DonationSection() {
         })
       }
     }
-    
+
     return isValid
   }
 
   const handleSubmit = (e?: FormEvent) => {
     if (e) e.preventDefault()
-    
-    // Validate amount
-    if (customAmount && parseInt(customAmount) < 10) {
+
+    if (customAmount && Number.parseInt(customAmount) < 10) {
       toast({
         title: "Invalid Amount",
         description: "Please enter a donation amount of at least ₹10.",
@@ -148,7 +146,7 @@ export default function DonationSection() {
       })
       return
     }
-    
+
     if (!validateForm()) return
     setShowDonateModal(true)
   }
@@ -163,7 +161,7 @@ export default function DonationSection() {
       return
     }
 
-    const finalAmount = customAmount ? parseInt(customAmount) : donationAmount
+    const finalAmount = customAmount ? Number.parseInt(customAmount) : donationAmount
     setIsSubmitting(true)
 
     const formDataToSubmit = {
@@ -177,9 +175,8 @@ export default function DonationSection() {
     }
 
     try {
-      // Add a slight delay to show the loading animation (can be removed in production)
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+
       await fetch(
         "https://script.google.com/macros/s/AKfycbwAfC1eWtBLEv8lnQ3MkqkHSj0WEvLcyS24AHEFx3rbgcow8WANlSHQkrFHz4uOQRJQ/exec",
         {
@@ -189,22 +186,37 @@ export default function DonationSection() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formDataToSubmit),
-        }
+        },
       )
 
-      // Show success message
-      setShowSuccessMessage(true)
-      
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-        setShowSuccessMessage(false)
-      }, 3000)
-      
+      // Show success animation instead of simple message
+      setDonationCompleted(true)
+      setShowDonateModal(false)
+
       toast({
         title: "Thank You for Your Donation!",
         description: `Your donation of ₹${formatAmount(finalAmount)} has been recorded successfully.`,
         variant: "default",
       })
+
+      // Reset form after showing success
+      setTimeout(() => {
+        setFormData({
+          fullName: "",
+          email: "",
+          phoneNumber: "",
+          category: "education",
+          amount: 1000,
+        })
+        setDonationAmount(1000)
+        setCustomAmount("")
+        setTransactionId("")
+        setFormErrors({
+          fullName: false,
+          email: false,
+          phoneNumber: false,
+        })
+      }, 3000)
     } catch (error) {
       console.error("Error submitting form:", error)
       toast({
@@ -214,30 +226,31 @@ export default function DonationSection() {
       })
     } finally {
       setIsSubmitting(false)
-      setShowDonateModal(false)
-      
-      // Reset form
-      setFormData({
-        fullName: "",
-        email: "",
-        phoneNumber: "",
-        category: "education",
-        amount: 1000,
-      })
-      setDonationAmount(1000)
-      setCustomAmount("")
-      setTransactionId("")
-      setFormErrors({
-        fullName: false,
-        email: false,
-        phoneNumber: false,
-      })
     }
   }
 
+  const resetDonationFlow = () => {
+    setDonationCompleted(false)
+  }
+
+  // Show success animation after donation completion
+  if (donationCompleted) {
+    return (
+      <div className="container py-12 sm:py-16 px-4 sm:px-6 max-w-3xl mx-auto my-8 sm:my-12">
+        <DonationSuccessAnimation
+          amount={customAmount ? Number.parseInt(customAmount) : donationAmount}
+          onReset={resetDonationFlow}
+        />
+      </div>
+    )
+  }
+
   return (
-    <div id="donate" className="container py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-b from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-sm max-w-3xl mx-auto my-8 sm:my-12">
-      <motion.div 
+    <div
+      id="donate"
+      className="container py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-b from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-sm max-w-3xl mx-auto my-8 sm:my-12"
+    >
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -254,8 +267,8 @@ export default function DonationSection() {
         </p>
       </motion.div>
 
-      <motion.form 
-        onSubmit={handleSubmit} 
+      <motion.form
+        onSubmit={handleSubmit}
         className="space-y-6 sm:space-y-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -272,9 +285,7 @@ export default function DonationSection() {
                   id="fullName"
                   placeholder="Your Name"
                   value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   className={`border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 transition-all h-9 sm:h-10 text-sm sm:text-base ${
                     formErrors.fullName ? "border-red-500 dark:border-red-500" : ""
                   }`}
@@ -293,20 +304,23 @@ export default function DonationSection() {
                   type="email"
                   placeholder="you@example.com"
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className={`border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 transition-all h-9 sm:h-10 text-sm sm:text-base ${
                     formErrors.email ? "border-red-500 dark:border-red-500" : ""
                   }`}
                   required
                 />
                 {formErrors.email && (
-                  <p className="text-red-500 text-[10px] sm:text-xs mt-0.5 sm:mt-1">Please enter a valid email address</p>
+                  <p className="text-red-500 text-[10px] sm:text-xs mt-0.5 sm:mt-1">
+                    Please enter a valid email address
+                  </p>
                 )}
               </div>
               <div className="space-y-1.5 sm:space-y-2">
-                <Label htmlFor="phoneNumber" className="text-gray-700 dark:text-gray-200 font-medium text-sm sm:text-base">
+                <Label
+                  htmlFor="phoneNumber"
+                  className="text-gray-700 dark:text-gray-200 font-medium text-sm sm:text-base"
+                >
                   Phone Number <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -314,20 +328,22 @@ export default function DonationSection() {
                   type="tel"
                   placeholder="1234567890"
                   value={formData.phoneNumber}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phoneNumber: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                   className={`border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 transition-all h-9 sm:h-10 text-sm sm:text-base ${
                     formErrors.phoneNumber ? "border-red-500 dark:border-red-500" : ""
                   }`}
                   required
                 />
                 {formErrors.phoneNumber && (
-                  <p className="text-red-500 text-[10px] sm:text-xs mt-0.5 sm:mt-1">Please enter a valid 10-digit phone number</p>
+                  <p className="text-red-500 text-[10px] sm:text-xs mt-0.5 sm:mt-1">
+                    Please enter a valid 10-digit phone number
+                  </p>
                 )}
               </div>
               <div className="space-y-1.5 sm:space-y-2">
-                <Label className="text-gray-700 dark:text-gray-200 font-medium text-sm sm:text-base">Donation Category</Label>
+                <Label className="text-gray-700 dark:text-gray-200 font-medium text-sm sm:text-base">
+                  Donation Category
+                </Label>
                 <RadioGroup
                   defaultValue="education"
                   onValueChange={(val) => {
@@ -338,8 +354,17 @@ export default function DonationSection() {
                 >
                   {donationCategories.map((cat) => (
                     <div key={cat.value} className="flex items-center space-x-2">
-                      <RadioGroupItem value={cat.value} id={cat.value} className="text-blue-600 dark:text-blue-400 h-4 w-4 sm:h-5 sm:w-5" />
-                      <Label htmlFor={cat.value} className="text-gray-700 dark:text-gray-200 cursor-pointer text-sm sm:text-base">{cat.label}</Label>
+                      <RadioGroupItem
+                        value={cat.value}
+                        id={cat.value}
+                        className="text-blue-600 dark:text-blue-400 h-4 w-4 sm:h-5 sm:w-5"
+                      />
+                      <Label
+                        htmlFor={cat.value}
+                        className="text-gray-700 dark:text-gray-200 cursor-pointer text-sm sm:text-base"
+                      >
+                        {cat.label}
+                      </Label>
                     </div>
                   ))}
                 </RadioGroup>
@@ -352,17 +377,15 @@ export default function DonationSection() {
           <div className="bg-blue-50 dark:bg-gray-800 p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center">
               <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400 mr-2" />
-              <h3 className="font-medium text-sm sm:text-base text-gray-800 dark:text-gray-200">Select Donation Amount</h3>
+              <h3 className="font-medium text-sm sm:text-base text-gray-800 dark:text-gray-200">
+                Select Donation Amount
+              </h3>
             </div>
           </div>
           <CardContent className="pt-4 sm:pt-6 px-3 sm:px-6">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-4">
               {donationAmounts.map((amount) => (
-                <motion.div
-                  key={amount}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                >
+                <motion.div key={amount} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                   <Card
                     className={`cursor-pointer p-2 sm:p-4 text-center border-2 transition-all duration-200 ${
                       donationAmount === amount && !customAmount
@@ -371,11 +394,13 @@ export default function DonationSection() {
                     } dark:bg-gray-800`}
                     onClick={() => handleAmountChange(amount)}
                   >
-                    <span className={`text-sm sm:text-base font-medium ${
-                      donationAmount === amount && !customAmount
-                        ? "text-blue-700 dark:text-blue-300"
-                        : "text-gray-800 dark:text-gray-200"
-                    }`}>
+                    <span
+                      className={`text-sm sm:text-base font-medium ${
+                        donationAmount === amount && !customAmount
+                          ? "text-blue-700 dark:text-blue-300"
+                          : "text-gray-800 dark:text-gray-200"
+                      }`}
+                    >
                       ₹{formatAmount(amount)}
                     </span>
                     {donationAmount === amount && !customAmount && (
@@ -387,7 +412,7 @@ export default function DonationSection() {
                 </motion.div>
               ))}
             </div>
-            
+
             <div className="relative mt-2 sm:mt-3">
               <Input
                 type="text"
@@ -395,12 +420,12 @@ export default function DonationSection() {
                 value={customAmount}
                 onChange={handleCustomAmountChange}
                 className={`pl-8 border-2 h-10 sm:h-12 text-sm sm:text-base ${
-                  customAmount 
-                    ? "border-blue-500 dark:border-blue-400" 
-                    : "border-gray-200 dark:border-gray-700"
+                  customAmount ? "border-blue-500 dark:border-blue-400" : "border-gray-200 dark:border-gray-700"
                 } focus:ring-2 focus:ring-blue-500 transition-all`}
               />
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-sm sm:text-base">₹</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-sm sm:text-base">
+                ₹
+              </span>
               <div className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-0.5 sm:mt-1 ml-1">
                 Enter any amount above ₹10
               </div>
@@ -409,11 +434,7 @@ export default function DonationSection() {
         </Card>
 
         <div className="flex justify-center mt-6 sm:mt-8">
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="w-full sm:w-auto"
-          >
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
             <Button
               type="submit"
               disabled={isSubmitting}
@@ -441,12 +462,13 @@ export default function DonationSection() {
               Complete Your Donation
             </DialogTitle>
             <DialogDescription className="text-center text-sm sm:text-base text-gray-600 dark:text-gray-300">
-              Scan the QR code below to make your payment of ₹{customAmount ? formatAmount(parseInt(customAmount)) : formatAmount(donationAmount)}
+              Scan the QR code below to make your payment of ₹
+              {customAmount ? formatAmount(Number.parseInt(customAmount)) : formatAmount(donationAmount)}
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="flex flex-col items-center">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
@@ -463,14 +485,22 @@ export default function DonationSection() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-md pointer-events-none"></div>
               </div>
             </motion.div>
-            
+
             <div className="bg-blue-50 dark:bg-gray-800 p-2 sm:p-3 rounded-lg text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 flex items-start">
               <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-500 mr-1.5 sm:mr-2 mt-0.5 flex-shrink-0" />
-              <p>After completing the payment, please enter the transaction ID or reference number provided by your payment app.</p>
+              <p>
+                After completing the payment, please enter the transaction ID or reference number provided by your
+                payment app.
+              </p>
             </div>
-            
+
             <div className="w-full space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
-              <Label htmlFor="transactionId" className="text-sm sm:text-base text-gray-700 dark:text-gray-200 font-medium">Transaction ID</Label>
+              <Label
+                htmlFor="transactionId"
+                className="text-sm sm:text-base text-gray-700 dark:text-gray-200 font-medium"
+              >
+                Transaction ID
+              </Label>
               <Input
                 id="transactionId"
                 placeholder="Enter transaction ID or reference number"
@@ -480,12 +510,8 @@ export default function DonationSection() {
                 required
               />
             </div>
-            
-            <motion.div 
-              className="w-full"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
+
+            <motion.div className="w-full" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
                 className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white w-full py-4 sm:py-6 rounded-lg shadow-md transition-all duration-300 text-sm sm:text-base"
                 onClick={submitToGoogleSheets}
@@ -507,77 +533,6 @@ export default function DonationSection() {
           </div>
         </DialogContent>
       </Dialog>
-      
-      {/* Loading animation */}
-      <AnimatePresence>
-        {isSubmitting && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
-          >
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="bg-white dark:bg-gray-800 p-5 sm:p-8 rounded-xl shadow-2xl max-w-[90vw] sm:max-w-md"
-            >
-              <Loader2 className="h-12 w-12 sm:h-16 sm:w-16 text-blue-600 dark:text-blue-400 animate-spin mx-auto" />
-              <p className="text-center mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-200 font-medium">Processing your donation...</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      
-      {/* Success animation */}
-      <AnimatePresence>
-        {showSuccessMessage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
-          >
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="bg-white dark:bg-gray-800 p-5 sm:p-8 rounded-xl shadow-2xl max-w-[90vw] sm:max-w-md"
-            >
-              <motion.div 
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ 
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 15,
-                  delay: 0.1
-                }}
-                className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-3 sm:mb-4"
-              >
-                <Check className="h-8 w-8 sm:h-10 sm:w-10 text-green-600 dark:text-green-400" />
-              </motion.div>
-              <motion.h3 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-lg sm:text-xl font-bold text-center text-gray-800 dark:text-gray-100 mb-2"
-              >
-                Thank You for Your Donation!
-              </motion.h3>
-              <motion.p 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-center text-sm sm:text-base text-gray-600 dark:text-gray-300"
-              >
-                Your contribution will help us make a difference in our community.
-              </motion.p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }
