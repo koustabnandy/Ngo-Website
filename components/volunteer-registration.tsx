@@ -8,7 +8,7 @@ const volunteerOpportunities = [
   {
     id: "teaching",
     title: "Teaching Assistant",
-    commitment: "4-6 hours/week",
+    commitment: "Event-based",
     location: "Various Schools, Kolkata",
     skills: ["Teaching", "Patience", "Communication"],
     description: "Help children with their studies and assist teachers in classroom activities.",
@@ -35,7 +35,7 @@ const volunteerOpportunities = [
   {
     id: "healthcare",
     title: "Healthcare Assistant",
-    commitment: "8-10 hours/month",
+    commitment: "Event-based",
     location: "Medical Camps, Kolkata",
     skills: ["Basic Medical Knowledge", "Empathy", "Organization"],
     description: "Assist healthcare professionals during medical camps and health awareness programs.",

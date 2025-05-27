@@ -22,8 +22,8 @@ import MembersSection from "@/components/members-section"
 import VolunteerRegistration from "@/components/volunteer-registration"
 import FAQSection from "@/components/faq-section"
 import SocialMediaFeed from "@/components/social-media-feed"
-
-
+ 
+ 
 import ParallaxSection from "@/components/parallax-section"
 import TiltCard from "@/components/tilt-card"
 import AnimatedText from "@/components/animated-text"
@@ -63,7 +63,7 @@ export default function Home() {
             <Achievements />
           </div>
         </div>
-      </div> 
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Membership section with glass effect */}
