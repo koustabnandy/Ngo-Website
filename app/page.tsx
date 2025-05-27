@@ -18,7 +18,7 @@ import VolunteerRegistration from "@/components/volunteer-registration"
 import FAQSection from "@/components/faq-section"
 import SocialMediaFeed from "@/components/social-media-feed"
 import ParallaxSection from "@/components/parallax-section"
-import TiltCard from "@/components/tilt-card"
+
 import GridBackground from "@/components/grid-background"
 
 export default function Home() {
@@ -54,14 +54,12 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="my-20">
-        <TiltCard className="max-w-7xl mx-auto">
-          <div className="gradient-border">
-            <div className="bg-white dark:bg-gray-900 p-8 rounded-2xl">
-              <VolunteerRegistration />
-            </div>
+      <div className="my-20 max-w-7xl mx-auto">
+        <div className="gradient-border">
+          <div className="bg-white dark:bg-gray-900 p-8 rounded-2xl">
+            <VolunteerRegistration />
           </div>
-        </TiltCard>
+        </div>
       </div>
 
       {/* Enhanced Donation Section with Success Animation */}
@@ -95,9 +93,9 @@ export default function Home() {
         </div>
       </div>
 
-      <TiltCard className="max-w-7xl mx-auto my-20">
+      <div className="max-w-7xl mx-auto my-20">
         <MembersSection />
-      </TiltCard>
+      </div>
 
       <div className="glass-effect mx-4 sm:mx-8 lg:mx-auto max-w-7xl p-8 rounded-2xl my-20">
         <ContactSection />
