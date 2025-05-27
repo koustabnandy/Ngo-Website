@@ -4,8 +4,8 @@ import type React from "react"
 
 import Image from "next/image"
 import { Card } from "@/components/ui/card"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { motion } from "framer-motion"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 type MemberType = {
   name: string
@@ -14,6 +14,8 @@ type MemberType = {
 }
 
 export default function MembersSection() {
+  const [fullscreenMember, setFullscreenMember] = useState<MemberType | null>(null);
+  
   const committeeMembers: MemberType[] = [
     { name: "PARTHA MUKHOPADHYAY", role: "President", image: "mpartha.jpg" },
     { name: "ANAMIKA GUPTA", role: "Treasurer", image: "manamika.jpg" },
@@ -43,14 +45,62 @@ export default function MembersSection() {
           <h2 className="text-2xl font-semibold text-center text-blue-700 dark:text-blue-300 mb-8">
             Committee Members
           </h2>
-          <MemberCarousel members={committeeMembers} itemsToShow={5} />
+          <MemberCarousel 
+            members={committeeMembers} 
+            itemsToShow={5} 
+            onMemberClick={(member) => setFullscreenMember(member)}
+          />
         </div>
 
         <div>
           <h2 className="text-2xl font-semibold text-center text-blue-700 dark:text-blue-300 mb-8">Members</h2>
-          <MemberCarousel members={regularMembers} itemsToShow={4} />
+          <MemberCarousel 
+            members={regularMembers} 
+            itemsToShow={4} 
+            onMemberClick={(member) => setFullscreenMember(member)}
+          />
         </div>
       </div>
+      
+      {/* Fullscreen Member Modal */}
+      <AnimatePresence>
+        {fullscreenMember && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+            onClick={() => setFullscreenMember(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              className="relative w-full h-full max-w-4xl max-h-[90vh] m-4 flex flex-col items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative w-full max-w-md aspect-square">
+                <Image
+                  src={fullscreenMember.image}
+                  alt={fullscreenMember.name}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
+              <div className="mt-6 text-center bg-black bg-opacity-50 py-4 px-6 rounded-lg">
+                <h2 className="text-2xl font-bold text-white">{fullscreenMember.name}</h2>
+                <p className="text-xl text-yellow-400 mt-2">{fullscreenMember.role}</p>
+              </div>
+              <button 
+                className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                onClick={() => setFullscreenMember(null)}
+              >
+                <X className="h-6 w-6 text-gray-800 dark:text-white" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
@@ -58,9 +108,10 @@ export default function MembersSection() {
 interface MemberCarouselProps {
   members: MemberType[]
   itemsToShow: number
+  onMemberClick: (member: MemberType) => void
 }
 
-function MemberCarousel({ members, itemsToShow }: MemberCarouselProps) {
+function MemberCarousel({ members, itemsToShow, onMemberClick }: MemberCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [visibleItems, setVisibleItems] = useState(itemsToShow)
   const carouselRef = useRef<HTMLDivElement>(null)
@@ -283,7 +334,7 @@ function MemberCarousel({ members, itemsToShow }: MemberCarouselProps) {
                 }}
                 className="px-1 sm:px-0"
               >
-                <MemberCard member={member} />
+                <MemberCard member={member} onClick={() => onMemberClick(member)} />
               </motion.div>
             ))}
           </div>
@@ -330,7 +381,7 @@ function MemberCarousel({ members, itemsToShow }: MemberCarouselProps) {
                         }}
                         className="px-1 sm:px-0"
                       >
-                        <MemberCard member={member} />
+                        <MemberCard member={member} onClick={() => onMemberClick(member)} />
                       </motion.div>
                     ))}
                     {/* Fill empty slots in the last slide */}
@@ -404,7 +455,7 @@ function MemberCarousel({ members, itemsToShow }: MemberCarouselProps) {
   )
 }
 
-function MemberCard({ member }: { member: MemberType }) {
+function MemberCard({ member, onClick }: { member: MemberType; onClick: () => void }) {
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
@@ -414,8 +465,9 @@ function MemberCard({ member }: { member: MemberType }) {
         stiffness: 400,
         damping: 17,
       }}
+      onClick={onClick}
     >
-      <Card className="overflow-hidden dark:bg-gray-700 h-full shadow-md hover:shadow-xl border-2 border-transparent hover:border-blue-300 dark:hover:border-blue-500">
+      <Card className="overflow-hidden dark:bg-gray-700 h-full shadow-md hover:shadow-xl border-2 border-transparent hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
         <div className="aspect-square relative overflow-hidden">
           {member.name && member.image && (
             <Image
