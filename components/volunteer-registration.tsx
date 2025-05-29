@@ -108,12 +108,7 @@ export default function VolunteerRegistration() {
             
             <div className="text-center mt-16 mb-8">
               <div className="glass-effect inline-block p-1 rounded-xl">
-                <button 
-                  onClick={() => window.open("https://forms.gle/Cnh9qKxuzM8ACqhJ8", "_blank")}
-                  className="px-10 py-5 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold text-lg rounded-lg shadow-lg"
-                >
-                  Apply as a Volunteer
-                </button>
+                
               </div>
               <p className="text-gray-500 dark:text-gray-400 mt-4">
                 Make a difference today by joining our volunteer team

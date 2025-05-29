@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { Facebook, Twitter, Instagram, Linkedin, Youtube, Heart } from "lucide-react"
+import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react"
 
 const Footer = () => {
   
@@ -38,15 +38,7 @@ const Footer = () => {
               >
                 <Facebook size={18} />
               </a>
-              <a 
-                href="https://twitter.com/reachnirvrti" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-2 bg-blue-800 hover:bg-blue-700 rounded-full transition-colors duration-300"
-                aria-label="Twitter"
-              >
-                <Twitter size={18} />
-              </a>
+
               <a 
                 href="https://instagram.com/reachnirvrti" 
                 target="_blank" 
@@ -105,11 +97,7 @@ const Footer = () => {
               <Link href="#" className="hover:text-white transition-colors duration-300">Cookie Policy</Link>
             </div>
           </div>
-          <div className="text-center mt-6 text-blue-200 dark:text-gray-300 text-sm flex items-center justify-center">
-            <span>Made with</span>
-            <Heart size={14} className="mx-1 text-red-400" />
-            <span>for the community</span>
-          </div>
+
         </div>
       </div>
     </footer>

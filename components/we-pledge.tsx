@@ -204,10 +204,7 @@ const WePledge = () => {
                               fill
                               className="object-cover"
                             />
-                            <div className="absolute inset-0 bg-black bg-opacity-30 hover:bg-opacity-10 transition-opacity duration-300 flex items-end">
-                              <div className="p-4 text-white">
-                                <h3 className="text-lg font-semibold">{image.alt}</h3>
-                              </div>
+                            <div className="absolute inset-0 bg-black bg-opacity-30 hover:bg-opacity-10 transition-opacity duration-300">
                             </div>
                           </div>
                         )}
@@ -291,9 +288,7 @@ const WePledge = () => {
               >
                 <X className="h-6 w-6 text-gray-800 dark:text-white" />
               </button>
-              <div className="absolute bottom-4 left-0 right-0 text-center bg-black bg-opacity-50 py-2 px-4">
-                <h2 className="text-xl font-bold text-white">{fullscreenImage.alt}</h2>
-              </div>
+
             </motion.div>
           </motion.div>
         )}

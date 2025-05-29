@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
-import { Facebook, Instagram, Twitter, Youtube, ExternalLink, Heart, MessageCircle, Share2, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
+import { Facebook, Instagram, Youtube, ExternalLink, Heart, MessageCircle, Share2, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 
 // Custom CSS for hiding scrollbars while allowing scrolling
 const scrollbarHideStyles = `
@@ -20,7 +20,7 @@ const scrollbarHideStyles = `
 
 interface SocialPost {
   id: string
-  platform: "facebook" | "instagram" | "twitter" | "youtube"
+  platform: "facebook" | "instagram" | "youtube"
   content: string
   image?: string
   date: string
@@ -220,17 +220,7 @@ const socialPosts: SocialPost[] = [
     shares: 22,
     url: "https://www.instagram.com/",
   },
-  {
-    id: "tw-1",
-    platform: "twitter",
-    content: "NIRVRITI Foundation conducted a dry food distribution drive across multiple locations in Kolkata to support those affected by the pandemic. Together, we can make a difference! #COVID19Relief #FoodSecurity",
-    image: "/Dry-Food-Distribution.png",
-    date: "July 10, 2021",
-    likes: 76,
-    comments: 14,
-    shares: 31,
-    url: "https://twitter.com/",
-  },
+
   {
     id: "yt-1",
     platform: "youtube",
@@ -374,8 +364,6 @@ export default function SocialMediaFeed() {
         return <Facebook size={size} className="text-blue-600" />
       case "instagram":
         return <Instagram size={size} className="text-pink-600" />
-      case "twitter":
-        return <Twitter size={size} className="text-blue-400" />
       case "youtube":
         return <Youtube size={size} className="text-red-600" />
       default:
@@ -389,8 +377,6 @@ export default function SocialMediaFeed() {
         return "Facebook"
       case "instagram":
         return "Instagram"
-      case "twitter":
-        return "Twitter"
       case "youtube":
         return "YouTube"
       default:
@@ -435,11 +421,12 @@ export default function SocialMediaFeed() {
                 <Instagram className="h-4 w-4 mr-1" /> <span className="hidden sm:inline">Instagram</span>
               </TabsTrigger>
               <TabsTrigger 
-                value="twitter" 
-                className="rounded-full data-[state=active]:bg-blue-600 data-[state=active]:text-white dark:data-[state=active]:bg-blue-700 dark:data-[state=active]:text-white dark:text-gray-200 transition-all duration-300 whitespace-nowrap flex-shrink-0"
+                value="youtube" 
+                className="rounded-full data-[state=active]:bg-red-600 data-[state=active]:text-white dark:data-[state=active]:bg-red-700 dark:data-[state=active]:text-white dark:text-gray-200 transition-all duration-300 whitespace-nowrap flex-shrink-0"
               >
-                <Twitter className="h-4 w-4 mr-1" /> <span className="hidden sm:inline">Twitter</span>
+                <Youtube className="h-4 w-4 mr-1" /> <span className="hidden sm:inline">YouTube</span>
               </TabsTrigger>
+
             </TabsList>
             
             <TabsContent value={activePlatform} className="mt-0">
@@ -745,21 +732,7 @@ export default function SocialMediaFeed() {
                   <Instagram className="h-6 w-6 text-pink-600" />
                 </a>
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="rounded-full p-3 h-auto w-auto"
-                asChild
-              >
-                <a 
-                  href="https://twitter.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label="Twitter"
-                >
-                  <Twitter className="h-6 w-6 text-blue-400" />
-                </a>
-              </Button>
+
               <Button 
                 variant="outline" 
                 size="lg" 
