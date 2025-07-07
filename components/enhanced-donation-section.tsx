@@ -178,7 +178,7 @@ export default function EnhancedDonationSection() {
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
       await fetch(
-        "https://script.google.com/macros/s/AKfycbwAfC1eWtBLEv8lnQ3MkqkHSj0WEvLcyS24AHEFx3rbgcow8WANlSHQkrFHz4uOQRJQ/exec",
+        "https://script.google.com/macros/s/AKfycbz3gnm_sDSM5C_JjszTiX_9lrDQLhvsOvqwmElw_4wdmR67j-GLu4iCRu_F5s9ZywM_qg/exec",
         {
           method: "POST",
           mode: "no-cors",

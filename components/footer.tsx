@@ -89,7 +89,7 @@ const Footer = () => {
         <div className="border-t border-blue-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-blue-200 dark:text-gray-300 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} NIRVRITI Foundation - Bliss in Helping Others. All rights reserved.
+              © {new Date().getFullYear()} Haridevpur NIRVRITI Foundation - Bliss in Helping Others. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-blue-200 dark:text-gray-300">
               <Link href="#" className="hover:text-white transition-colors duration-300">Privacy Policy</Link>

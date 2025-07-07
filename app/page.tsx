@@ -17,6 +17,7 @@ import MembersSection from "@/components/members-section"
 import VolunteerRegistration from "@/components/volunteer-registration"
 import FAQSection from "@/components/faq-section"
 import SocialMediaFeed from "@/components/social-media-feed"
+import VolunteerReviews from "@/components/volunteer-reviews"
 import ParallaxSection from "@/components/parallax-section"
 
 import GridBackground from "@/components/grid-background"
@@ -81,6 +82,10 @@ export default function Home() {
 
       <div className="my-20 glass-effect mx-4 sm:mx-8 lg:mx-auto max-w-7xl p-8 rounded-2xl">
         <SocialMediaFeed />
+      </div>
+
+      <div className="my-20 glass-effect mx-4 sm:mx-8 lg:mx-auto max-w-7xl p-8 rounded-2xl">
+        <VolunteerReviews />
       </div>
 
       <div className="my-20">

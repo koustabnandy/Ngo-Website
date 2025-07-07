@@ -61,7 +61,7 @@ const ImpactStats = () => {
         />
         <StatCounter 
           icon={<Award size={36} />} 
-          value={4} 
+          value={6} 
           label="Years of Service" 
           suffix="+"
         />
